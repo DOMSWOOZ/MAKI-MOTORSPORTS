@@ -670,24 +670,57 @@ let leadsDB = [
 ];
 
 // ============================================================================
-// 3. FUTURISTIC VIRTUAL TERMINAL GATEKEEPER (PASSCODE: 335is)
+// 3. CONCRETE & NEON ENCLAVE GATEKEEPER (PASSCODE: 335is)
 // ============================================================================
+
+function playEnclaveTone(freq = 520, type = 'sine', duration = 0.06) {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+    gain.gain.setValueAtTime(0.04, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + duration);
+  } catch (e) {
+    // Ignore audio context restriction
+  }
+}
 
 function openTerminalGate() {
   if (isAdminUnlocked) {
     switchMode('admin');
     return;
   }
+  playEnclaveTone(640, 'sine', 0.08);
   const modal = document.getElementById('terminal-modal');
   const input = document.getElementById('terminal-code-input');
   const status = document.getElementById('terminal-status-msg');
+  const badge = document.getElementById('enclave-lock-badge');
+  const slotLed = document.getElementById('enclave-slot-led');
+
   modal.classList.remove('hidden');
   modal.classList.add('flex');
   input.value = '';
+
+  if (badge) {
+    badge.className = 'w-10 h-10 bg-[#181b22] border border-[#2f3543] flex items-center justify-center text-[#00f0ff] shadow-inner';
+    badge.innerHTML = `<i data-lucide="lock" class="w-4 h-4"></i>`;
+  }
+  if (slotLed) {
+    slotLed.className = 'w-2 h-2 rounded-full bg-[#00f0ff] shadow-[0_0_8px_#00f0ff]';
+  }
   status.innerHTML = `
-    <span class="text-slate-400">STATUS: AWAITING CHASSIS PASSCODE...</span>
-    <span class="text-[11px] text-slate-600">Encrypted Session</span>
+    <span class="text-slate-400">STATUS: STANDBY // AWAITING CIPHER</span>
+    <span class="text-[#00f0ff]/70">AES-256 ENCLAVE</span>
   `;
+  refreshIcons();
   setTimeout(() => input.focus(), 80);
 }
 
@@ -697,30 +730,74 @@ function closeTerminalGate() {
   modal.classList.remove('flex');
 }
 
+function handleEnclaveInput(val) {
+  playEnclaveTone(580, 'sine', 0.04);
+  const slotLed = document.getElementById('enclave-slot-led');
+  if (slotLed) {
+    slotLed.className = val && val.length > 0
+      ? 'w-2 h-2 rounded-full bg-[#e2fd52] shadow-[0_0_10px_#e2fd52] animate-ping'
+      : 'w-2 h-2 rounded-full bg-[#00f0ff] shadow-[0_0_8px_#00f0ff]';
+  }
+}
+
+function pressEnclaveKey(key) {
+  const input = document.getElementById('terminal-code-input');
+  if (!input) return;
+  if (key === 'CLR') {
+    playEnclaveTone(240, 'triangle', 0.08);
+    input.value = '';
+  } else {
+    playEnclaveTone(620, 'sine', 0.05);
+    input.value = (input.value || '') + key;
+  }
+  handleEnclaveInput(input.value);
+  input.focus();
+}
+
 function handleTerminalSubmit(e) {
-  e.preventDefault();
+  if (e) e.preventDefault();
   const input = document.getElementById('terminal-code-input');
   const status = document.getElementById('terminal-status-msg');
-  const bootLog = document.getElementById('terminal-boot-log');
+  const badge = document.getElementById('enclave-lock-badge');
+  const slotLed = document.getElementById('enclave-slot-led');
   const code = (input.value || '').trim().toLowerCase();
 
   if (code === '335is') {
     isAdminUnlocked = true;
-    bootLog.innerHTML += `
-      <div class="text-emerald-400 font-bold pt-1">&gt; PASSCODE [335is] ACCEPTED — N54 OVERBOOST TELEMETRY UNLOCKED.</div>
-      <div class="text-maki-lightBlue">&gt; Mounting Pit Wall Modules (Intake // Database // Condition Calculator // Job Queue)...</div>
+    playEnclaveTone(880, 'triangle', 0.12);
+    setTimeout(() => playEnclaveTone(1320, 'sine', 0.18), 110);
+
+    if (badge) {
+      badge.className = 'w-10 h-10 bg-[#e2fd52]/15 border border-[#e2fd52] flex items-center justify-center text-[#e2fd52] shadow-[0_0_15px_rgba(226,253,82,0.4)]';
+      badge.innerHTML = `<i data-lucide="unlock" class="w-4 h-4"></i>`;
+    }
+    if (slotLed) {
+      slotLed.className = 'w-2 h-2 rounded-full bg-[#e2fd52] shadow-[0_0_12px_#e2fd52]';
+    }
+    status.innerHTML = `
+      <span class="text-[#e2fd52] font-bold animate-pulse">CIPHER [335IS] VERIFIED // ENGINE STARTED</span>
+      <span class="text-[#e2fd52]">UNLOCKED</span>
     `;
-    status.innerHTML = `<span class="text-emerald-400 font-bold animate-pulse">ENGINE STARTED // LAUNCHING PIT WALL OS...</span>`;
+    refreshIcons();
 
     setTimeout(() => {
       closeTerminalGate();
       switchMode('admin');
-    }, 650);
+    }, 550);
   } else {
-    bootLog.innerHTML += `
-      <div class="text-red-400">&gt; ERROR: INVALID ACCESS TOKEN "${input.value}". IMMOBILIZER LOCK ACTIVE.</div>
+    playEnclaveTone(160, 'sawtooth', 0.22);
+    if (badge) {
+      badge.className = 'w-10 h-10 bg-red-500/15 border border-red-500/60 flex items-center justify-center text-red-400';
+      badge.innerHTML = `<i data-lucide="shield-alert" class="w-4 h-4"></i>`;
+    }
+    if (slotLed) {
+      slotLed.className = 'w-2 h-2 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444]';
+    }
+    status.innerHTML = `
+      <span class="text-red-400 font-bold">ACCESS DENIED // INVALID CHASSIS CIPHER</span>
+      <span class="text-red-400/80">LOCKED</span>
     `;
-    status.innerHTML = `<span class="text-red-400 font-bold">ACCESS DENIED // ENTER VALID MASTER MECHANIC CODE</span>`;
+    refreshIcons();
     input.value = '';
     input.focus();
   }
