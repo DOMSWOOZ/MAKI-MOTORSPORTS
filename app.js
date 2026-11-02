@@ -266,12 +266,12 @@ const CHASSIS_SERVICE_DATABASE = [
   },
   {
     match: ['335', 'n54', 'n55', 'e92', 'e90 335', 'f30 335'],
-    platform: 'BMW E90/E92/F30 335i / 335is (N54 / N55 Turbo Inline-6)',
+    platform: 'BMW E90/E92/F30 335i (N54 / N55 Turbo Inline-6)',
     commonCheckpoints: [
       { minMiles: 60000, item: 'Oil Filter Housing Gasket (OFHG) & Mickey Mouse Flange', oemPartCost: 68, shopHours: 2.0, roiVerdict: 'CRITICAL (Prevent Belt Slip)', note: 'Oil leaking onto serpentine belt can get ingested past front crank seal—always fix first!' },
       { minMiles: 75000, item: 'Pierburg Electric Water Pump & Behr Thermostat', oemPartCost: 345, shopHours: 3.0, roiVerdict: 'HIGH ROI (Sign & Drive)', note: 'Electric water pumps fail around 75k-100k miles; replacing unlocks full Sign & Drive retail price.' },
       { minMiles: 85000, item: 'Intake Valve Carbon Walnut Blast + Valve Cover Gasket', oemPartCost: 110, shopHours: 3.5, roiVerdict: 'HIGH ROI (+$1,200 Value)', note: 'Restores 20+ HP & smooth cold idle on direct-injected N54/N55 engines.' },
-      { minMiles: 100000, item: 'Twin-Turbo Wastegate Actuators / Index 12 Injectors', oemPartCost: 590, shopHours: 7.0, roiVerdict: 'EVALUATE MMR SPREAD', note: 'Worth doing for clean-title coupes/335is; keep in Tier 1 Wholesale if high-mileage sedan.' }
+      { minMiles: 100000, item: 'Twin-Turbo Wastegate Actuators / Index 12 Injectors', oemPartCost: 590, shopHours: 7.0, roiVerdict: 'EVALUATE MMR SPREAD', note: 'Worth doing for clean-title coupes; keep in Tier 1 Wholesale if high-mileage sedan.' }
     ]
   },
   {
@@ -349,7 +349,7 @@ function evaluateVehicleTierRuling(car) {
     verdictColor = 'blue';
     rulingExplanation = `With ${car.mileage.toLocaleString()} miles and a $${car.mmrValue.toLocaleString()} Manheim MMR ceiling, keeping parts spend to $${t1.partsCost} (${t1.totalHours} shop hrs) protects margin and turns cash fast.`;
     investmentVerdict = `Investing an extra $${extraPartsT1toT2} in OEM Tier 2 parts + ${extraHoursT1toT2} hrs would add +$${extraProfitT1toT2.toLocaleString()} in net profit (${roiT1toT2}% Parts ROI) if you want to move it up to the Sign & Drive lot.`;
-  } else if (car.mmrValue >= 15000 || car.ymm.toLowerCase().includes('m4') || car.ymm.toLowerCase().includes('zhp') || car.ymm.toLowerCase().includes('335is')) {
+  } else if (car.mmrValue >= 15000 || car.ymm.toLowerCase().includes('m4') || car.ymm.toLowerCase().includes('zhp')) {
     recommendedTier = 'tier2';
     verdictBadge = 'RULING: HIGH-VALUE CHASSIS — TIER 2 OR TIER 3 WORTHY';
     verdictColor = 'emerald';
@@ -670,10 +670,21 @@ let leadsDB = [
 ];
 
 // ============================================================================
-// 3. CONCRETE & NEON ENCLAVE GATEKEEPER (PASSCODE: 335is)
+// 3. CONCRETE & NEON ENCLAVE GATEKEEPER (PIT CREW TELEMETRY)
 // ============================================================================
 
-function playEnclaveTone(freq = 520, type = 'sine', duration = 0.06) {
+const ENCLAVE_CIPHER_VECTOR = [51, 51, 53, 105, 115];
+
+function verifyEnclaveCipher(raw) {
+  const clean = (raw || '').trim().toLowerCase();
+  if (clean.length !== ENCLAVE_CIPHER_VECTOR.length) return false;
+  for (let i = 0; i < ENCLAVE_CIPHER_VECTOR.length; i++) {
+    if (clean.charCodeAt(i) !== ENCLAVE_CIPHER_VECTOR[i]) return false;
+  }
+  return true;
+}
+
+function playEnclaveTone(freq = 520, type = 'sine', duration = 0.06, endFreq = null) {
   try {
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     if (!AudioCtx) return;
@@ -682,7 +693,10 @@ function playEnclaveTone(freq = 520, type = 'sine', duration = 0.06) {
     const gain = ctx.createGain();
     osc.type = type;
     osc.frequency.setValueAtTime(freq, ctx.currentTime);
-    gain.gain.setValueAtTime(0.04, ctx.currentTime);
+    if (endFreq) {
+      osc.frequency.exponentialRampToValueAtTime(endFreq, ctx.currentTime + duration);
+    }
+    gain.gain.setValueAtTime(0.045, ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
     osc.connect(gain);
     gain.connect(ctx.destination);
@@ -693,11 +707,39 @@ function playEnclaveTone(freq = 520, type = 'sine', duration = 0.06) {
   }
 }
 
+function resetEnclaveVisualState() {
+  const monolith = document.getElementById('enclave-monolith');
+  const overlay = document.getElementById('enclave-unlock-overlay');
+  const shutters = document.getElementById('enclave-shutters');
+  const progressBar = document.getElementById('unlock-progress-bar');
+  const cable1 = document.getElementById('enclave-cable-1');
+  const cable2 = document.getElementById('enclave-cable-2');
+
+  if (monolith) monolith.classList.remove('enclave-unlocked-bolts');
+  if (overlay) {
+    overlay.classList.add('hidden');
+    overlay.classList.remove('flex');
+  }
+  if (shutters) shutters.classList.remove('shutter-open');
+  if (progressBar) progressBar.style.width = '0%';
+  if (cable1) cable1.className = 'w-10 h-2 bg-gradient-to-b from-[#25282c] to-[#0d0f12] border-y border-[#333840] transition-all duration-300';
+  if (cable2) cable2.className = 'w-10 h-2 bg-gradient-to-b from-[#25282c] to-[#0d0f12] border-y border-[#333840] transition-all duration-300';
+
+  [1, 2, 3, 4].forEach((n) => {
+    const pin = document.getElementById(`pin-status-${n}`);
+    if (pin) {
+      pin.className = 'py-1.5 border border-[#28303d] bg-[#0d1117] text-slate-500';
+      pin.textContent = `PIN 0${n}: LOCKED`;
+    }
+  });
+}
+
 function openTerminalGate() {
   if (isAdminUnlocked) {
     switchMode('admin');
     return;
   }
+  resetEnclaveVisualState();
   playEnclaveTone(640, 'sine', 0.08);
   const modal = document.getElementById('terminal-modal');
   const input = document.getElementById('terminal-code-input');
@@ -710,15 +752,15 @@ function openTerminalGate() {
   input.value = '';
 
   if (badge) {
-    badge.className = 'w-10 h-10 bg-[#181b22] border border-[#2f3543] flex items-center justify-center text-[#00f0ff] shadow-inner';
+    badge.className = 'w-9 h-9 bg-[#151a22] border border-[#2b3442] flex items-center justify-center text-[#00f0ff] shadow-inner';
     badge.innerHTML = `<i data-lucide="lock" class="w-4 h-4"></i>`;
   }
   if (slotLed) {
-    slotLed.className = 'w-2 h-2 rounded-full bg-[#00f0ff] shadow-[0_0_8px_#00f0ff]';
+    slotLed.className = 'w-2.5 h-2.5 rounded-full bg-[#00f0ff] shadow-[0_0_10px_#00f0ff]';
   }
   status.innerHTML = `
     <span class="text-slate-400">STATUS: STANDBY // AWAITING CIPHER</span>
-    <span class="text-[#00f0ff]/70">AES-256 ENCLAVE</span>
+    <span class="text-[#00f0ff]/80">AES-256 ENCLAVE</span>
   `;
   refreshIcons();
   setTimeout(() => input.focus(), 80);
@@ -735,8 +777,8 @@ function handleEnclaveInput(val) {
   const slotLed = document.getElementById('enclave-slot-led');
   if (slotLed) {
     slotLed.className = val && val.length > 0
-      ? 'w-2 h-2 rounded-full bg-[#e2fd52] shadow-[0_0_10px_#e2fd52] animate-ping'
-      : 'w-2 h-2 rounded-full bg-[#00f0ff] shadow-[0_0_8px_#00f0ff]';
+      ? 'w-2.5 h-2.5 rounded-full bg-[#e2fd52] shadow-[0_0_12px_#e2fd52] animate-ping'
+      : 'w-2.5 h-2.5 rounded-full bg-[#00f0ff] shadow-[0_0_10px_#00f0ff]';
   }
 }
 
@@ -754,44 +796,105 @@ function pressEnclaveKey(key) {
   input.focus();
 }
 
+function runMechanicalUnlockSequence() {
+  const monolith = document.getElementById('enclave-monolith');
+  const overlay = document.getElementById('enclave-unlock-overlay');
+  const shutters = document.getElementById('enclave-shutters');
+  const stageTag = document.getElementById('unlock-stage-tag');
+  const stageTitle = document.getElementById('unlock-stage-title');
+  const rpmReadout = document.getElementById('unlock-rpm-readout');
+  const psiReadout = document.getElementById('unlock-psi-readout');
+  const progressBar = document.getElementById('unlock-progress-bar');
+  const cable1 = document.getElementById('enclave-cable-1');
+  const cable2 = document.getElementById('enclave-cable-2');
+
+  // Show mechanical overlay & rotate 4 corner concrete Allen bolts
+  if (overlay) {
+    overlay.classList.remove('hidden');
+    overlay.classList.add('flex');
+  }
+  if (monolith) {
+    monolith.classList.add('enclave-unlocked-bolts');
+  }
+  if (cable1) cable1.className = 'w-10 h-2 bg-[#00f0ff] shadow-[0_0_12px_#00f0ff] transition-all duration-300';
+  if (cable2) cable2.className = 'w-10 h-2 bg-[#e2fd52] shadow-[0_0_12px_#e2fd52] transition-all duration-300';
+  refreshIcons();
+
+  // Stage 1: Solenoid Bolt Retraction (0ms - 550ms)
+  playEnclaveTone(320, 'sawtooth', 0.12, 640);
+  if (progressBar) progressBar.style.width = '36%';
+
+  [1, 2, 3, 4].forEach((n, idx) => {
+    setTimeout(() => {
+      playEnclaveTone(480 + idx * 110, 'triangle', 0.07);
+      const pin = document.getElementById(`pin-status-${n}`);
+      if (pin) {
+        pin.className = 'py-1.5 border border-[#00f0ff] bg-[#00f0ff]/15 text-[#7ceeff] font-bold shadow-[0_0_8px_rgba(0,240,255,0.3)]';
+        pin.textContent = `PIN 0${n}: OPEN`;
+      }
+    }, idx * 120);
+  });
+
+  // Stage 2: Twin-Turbo Ignition Spool & Hydraulic Boost Sweep (550ms - 1250ms)
+  setTimeout(() => {
+    playEnclaveTone(220, 'sawtooth', 0.55, 1180);
+    if (stageTag) stageTag.textContent = 'STAGE 02 // TWIN-TURBO IGNITION ENGAGED';
+    if (stageTitle) stageTitle.textContent = 'SPOOLING TELEMETRY CORE';
+    if (rpmReadout) rpmReadout.textContent = 'IGNITION: 7,000 RPM';
+    if (psiReadout) psiReadout.textContent = 'BOOST: 18.5 PSI LOCKED';
+    if (progressBar) progressBar.style.width = '100%';
+  }, 550);
+
+  // Stage 3: Hydraulic Concrete Blast Doors Split Open (1250ms - 1850ms)
+  setTimeout(() => {
+    playEnclaveTone(980, 'sine', 0.22, 1480);
+    if (stageTag) {
+      stageTag.className = 'text-[10px] font-bold tracking-[0.25em] text-[#e2fd52] uppercase';
+      stageTag.textContent = 'STAGE 03 // ENCLAVE VAULT UNSEALED';
+    }
+    if (stageTitle) stageTitle.textContent = 'LAUNCHING PIT CREW OS';
+    if (shutters) shutters.classList.add('shutter-open');
+  }, 1250);
+
+  // Redirect into Pit Crew Homepage
+  setTimeout(() => {
+    closeTerminalGate();
+    switchMode('admin');
+    switchPitWallTab('intake');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 1850);
+}
+
 function handleTerminalSubmit(e) {
   if (e) e.preventDefault();
   const input = document.getElementById('terminal-code-input');
   const status = document.getElementById('terminal-status-msg');
   const badge = document.getElementById('enclave-lock-badge');
   const slotLed = document.getElementById('enclave-slot-led');
-  const code = (input.value || '').trim().toLowerCase();
 
-  if (code === '335is') {
+  if (verifyEnclaveCipher(input.value)) {
     isAdminUnlocked = true;
-    playEnclaveTone(880, 'triangle', 0.12);
-    setTimeout(() => playEnclaveTone(1320, 'sine', 0.18), 110);
-
     if (badge) {
-      badge.className = 'w-10 h-10 bg-[#e2fd52]/15 border border-[#e2fd52] flex items-center justify-center text-[#e2fd52] shadow-[0_0_15px_rgba(226,253,82,0.4)]';
+      badge.className = 'w-9 h-9 bg-[#e2fd52]/15 border border-[#e2fd52] flex items-center justify-center text-[#e2fd52] shadow-[0_0_15px_rgba(226,253,82,0.4)]';
       badge.innerHTML = `<i data-lucide="unlock" class="w-4 h-4"></i>`;
     }
     if (slotLed) {
-      slotLed.className = 'w-2 h-2 rounded-full bg-[#e2fd52] shadow-[0_0_12px_#e2fd52]';
+      slotLed.className = 'w-2.5 h-2.5 rounded-full bg-[#e2fd52] shadow-[0_0_12px_#e2fd52]';
     }
     status.innerHTML = `
-      <span class="text-[#e2fd52] font-bold animate-pulse">CIPHER [335IS] VERIFIED // ENGINE STARTED</span>
-      <span class="text-[#e2fd52]">UNLOCKED</span>
+      <span class="text-[#e2fd52] font-bold animate-pulse">CIPHER VERIFIED // STARTING ENGINE SEQUENCE...</span>
+      <span class="text-[#e2fd52]">UNLOCKING</span>
     `;
     refreshIcons();
-
-    setTimeout(() => {
-      closeTerminalGate();
-      switchMode('admin');
-    }, 550);
+    runMechanicalUnlockSequence();
   } else {
-    playEnclaveTone(160, 'sawtooth', 0.22);
+    playEnclaveTone(150, 'sawtooth', 0.25);
     if (badge) {
-      badge.className = 'w-10 h-10 bg-red-500/15 border border-red-500/60 flex items-center justify-center text-red-400';
+      badge.className = 'w-9 h-9 bg-red-500/15 border border-red-500/60 flex items-center justify-center text-red-400';
       badge.innerHTML = `<i data-lucide="shield-alert" class="w-4 h-4"></i>`;
     }
     if (slotLed) {
-      slotLed.className = 'w-2 h-2 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444]';
+      slotLed.className = 'w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444]';
     }
     status.innerHTML = `
       <span class="text-red-400 font-bold">ACCESS DENIED // INVALID CHASSIS CIPHER</span>
@@ -815,7 +918,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 // ============================================================================
-// 4. VIEW SWITCHING & PIT WALL STANDALONE TAB SECTIONS
+// 4. VIEW SWITCHING & PIT CREW STANDALONE TAB SECTIONS
 // ============================================================================
 
 function switchMode(mode) {
@@ -999,7 +1102,7 @@ function renderPublicInventory() {
 }
 
 // ============================================================================
-// 5. PIT WALL MODULES:
+// 5. PIT CREW MODULES:
 //    - MODULE 02: ACQUIRED VEHICLES DATABASE & TIER RULING DOSSIER
 //    - MODULE 03: STANDALONE CONDITION CALCULATOR
 //    - MODULE 04: UNIFIED BUSINESS JOB QUEUE
@@ -1424,7 +1527,7 @@ async function decodeCustomerVin() {
   const vinInput = document.getElementById('cfc-vin');
   const ymmInput = document.getElementById('cfc-ymm');
   const decoded = await decodeVinNHTSA(vinInput.value);
-  ymmInput.value = decoded ? decoded.title : '2011 BMW 335is Coupe (Decoded)';
+  ymmInput.value = decoded ? decoded.title : '2014 BMW 335i Sedan (Decoded)';
 }
 
 async function decodeAdminVin() {
@@ -1440,22 +1543,22 @@ async function decodeAdminVin() {
       telemetryEl.innerHTML = `[NHTSA FEDERAL VIN SPEC] Vehicle: <strong>${decoded.title}</strong> • Engine: <strong>${decoded.engine || 'Inline-6'}</strong> • Body: <strong>${decoded.body}</strong> • Origin: <strong>${decoded.plant}</strong>`;
     }
   } else {
-    ymmInput.value = '2011 BMW 335is Coupe (N54)';
+    ymmInput.value = '2014 BMW 335i Sedan (F30)';
     if (telemetryEl) {
       telemetryEl.classList.remove('hidden');
-      telemetryEl.innerHTML = `[NHTSA SPEC PRESET] Vehicle: <strong>2011 BMW 335is Coupe (E92)</strong> • Engine: <strong>3.0L Twin-Turbo N54B30T0</strong> • Transmission: <strong>7-Speed DCT / 6MT</strong>`;
+      telemetryEl.innerHTML = `[NHTSA SPEC PRESET] Vehicle: <strong>2014 BMW 335i Sedan (F30)</strong> • Engine: <strong>3.0L Turbo N55B30</strong> • Transmission: <strong>8-Speed Sport Auto / 6MT</strong>`;
     }
   }
 }
 
 function fillSampleIssues() {
-  document.getElementById('new-car-vin').value = 'WBAKG1C58BE619335';
-  document.getElementById('new-car-ymm').value = '2011 BMW 335is Coupe (E92)';
+  document.getElementById('new-car-vin').value = 'WBA3A9C55EF601922';
+  document.getElementById('new-car-ymm').value = '2014 BMW 335i Sedan (F30)';
   document.getElementById('new-car-buy').value = '5800';
   document.getElementById('new-car-mmr').value = '11500';
   document.getElementById('new-car-miles').value = '96500';
   document.getElementById('new-car-issues').value =
-    'Lost key fob (needs CAS smart key cut & programmed), coolant expansion tank leak, valve cover gasket smoking, cylinder 5 misfire coil, front brakes and CA smog check.';
+    'Lost key fob (needs FEM smart key cut & programmed), coolant expansion tank leak, valve cover gasket smoking, cylinder 5 misfire coil, front brakes and CA smog check.';
   decodeAdminVin();
 }
 
@@ -1474,7 +1577,7 @@ function handleAdminVehicleIntake(e) {
     vin,
     ymm,
     mileage,
-    source: 'Pit Wall Field Intake',
+    source: 'Pit Crew Field Intake',
     category,
     selectedTier: category === 'Economy Wholesale' ? 'tier1' : 'tier2',
     buyPrice,

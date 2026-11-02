@@ -1,5 +1,5 @@
 # MAKI MOTORSPORTS LLC
-### Licensed California Auto Dealer (`#46615`), Master Mechanic Shop & Pit Wall Telemetry OS
+### Licensed California Auto Dealer (`#46615`), Master Mechanic Shop & Pit Crew Telemetry OS
 
 [![HTML5 & ES6+](https://img.shields.io/badge/JavaScript-ES6%2B-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38bdf8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
@@ -16,7 +16,7 @@
 
 ## Executive Overview
 
-**Maki Motorsports LLC** combines a public-facing **Stockton, CA dealership & Master Mechanic storefront** with a passcode-gated **Pit Wall Telemetry & Reconditioning OS** (`Passcode: 335is`) designed for rapid field use on desktop, mobile, and foldable displays (including Samsung Galaxy Z Fold 7 & Fold 8).
+**Maki Motorsports LLC** combines a public-facing **Stockton, CA dealership & Master Mechanic storefront** with an encrypted **Cast-Concrete & Neon Enclave (`Pit Crew`)** back-office OS designed for rapid field use on desktop, mobile, and foldable displays (including Samsung Galaxy Z Fold 7 & Fold 8).
 
 Because every vehicle is acquired, diagnosed, keyed, and reconditioned in-house by a Master Mechanic equipped with automotive locksmith/immobilizer programming tools, Maki Motorsports eliminates third-party retail shop markups—unlocking higher cash-for-cars payouts for local sellers and transparent 3-tier inventory options for buyers.
 
@@ -34,11 +34,11 @@ graph TD
         Mech["Interactive Master Mechanic & Shop Services<br/>(Click Category/Issue -> Auto-Populates Quote Request Form)"]
     end
 
-    subgraph Gate ["Pit Wall Telemetry Gatekeeper"]
-        Terminal["N54 Virtual DME Terminal Modal<br/>(Passcode: 335is + START ENGINE Ignition)"]
+    subgraph Gate ["Cast-Concrete & Neon Enclave Gatekeeper"]
+        Terminal["3D Concrete Enclave Hardware Interface<br/>(Confidential Cipher + START ENGINE Mechanical Unlock Sequence)"]
     end
 
-    subgraph PitWall ["Pit Wall / Crew Back-Office OS (4 Standalone Modules)"]
+    subgraph PitCrew ["Pit Crew Back-Office OS (4 Standalone Modules)"]
         Mod1["01 Log Acquired Car<br/>(Field VIN Intake + Mechanic Shorthand Parser)"]
         Mod2["02 Acquired Database<br/>(Tier Status Ruling, Investment Verdict, Upgrade Paths & Chassis Table)"]
         Mod3["03 Condition Calculator<br/>(Standalone Tier 1, Tier 2 & Tier 3 Cost/Profit Simulator)"]
@@ -52,7 +52,7 @@ graph TD
     end
 
     Nav --> Terminal
-    Terminal -->|Passcode: 335is| PitWall
+    Terminal -->|Encrypted Cipher| PitCrew
     CFC --> NHTSA
     CFC -->|Pushes Lead| Mod4
     Mech -->|Auto-Fills & Submits Job| Mod4
@@ -78,11 +78,11 @@ graph TD
 * **Private Direct Cash-for-Cars Program**: Allows local sellers to decode their 17-digit VIN via the federal NHTSA vPIC API and submit vehicles running, broken, or with lost keys directly into the internal Business Job Queue.
 * **Interactive Master Mechanic & Shop Services**: Features 4 interactive service categories (**Oil & Preventative Maintenance**, **Brakes, Suspension & Chassis**, **Key Programming & Locksmith**, **Diagnostics, Smog & Engine Work**) with 16 clickable sub-service pills. Clicking any category or sub-issue automatically populates the request form below and scrolls to the vehicle/contact fields.
 
-### 2. Pit Wall / Crew Gatekeeper (`Passcode: 335is`)
-* **Motorsports Telemetry Terminal**: Clicking **`Pit Wall / Crew`** in the top navigation bar opens an N54-inspired virtual DME terminal.
-* **Ignition Authentication**: Entering chassis code **`335is`** and pressing the glowing crimson **`START ENGINE`** button unlocks the 4-module dealer back-office.
+### 2. Cast-Concrete & Neon Enclave Gatekeeper (`Pit Crew`)
+* **3D Concrete Hardware Interface**: Clicking **`Pit Crew`** in the top navigation bar opens a weathered cast-concrete hardware enclave with debossed `MAKI MOTORSPORTS ///` stencil branding, 4 corner industrial Allen bolts, twin side telemetry cables, a recessed neon cipher aperture, and 3D sculpted tactile concrete keycaps.
+* **3-Stage Mechanical Ignition & Unlock Sequence**: Entering the confidential chassis cipher and pressing **`START ENGINE`** triggers an animated mechanical sequence—rotating the 4 corner hex bolts, spooling dual counter-rotating boost rings (`7,000 RPM // 18.5 PSI`), and splitting open the hydraulic concrete blast shutters before redirecting into the **Pit Crew** homepage.
 
-### 3. Pit Wall Back-Office OS (Foldable & Mobile Ready)
+### 3. Pit Crew Back-Office OS (Foldable & Mobile Ready)
 * **`01 Log Acquired Car`**:
   * Field intake form supporting live 17-digit NHTSA VIN decoding, purchase price, MMR baseline, mileage, and **Mechanic Shorthand** notes (e.g., `lost key`, `coolant leak`, `valve cover gasket`, `misfire`, `smog / p0420`, `front bumper`, `brakes`, `turbo rattle`).
   * Submitting a vehicle automatically parses every issue, builds 3 reconditioning tiers, and routes directly to **`02 Acquired Database`**.
@@ -109,7 +109,7 @@ graph TD
 | Layer | Technologies |
 | :--- | :--- |
 | **Frontend Architecture** | Semantic HTML5, Vanilla ES6+ JavaScript State Engine |
-| **Styling & Layout** | Tailwind CSS 3.4, Custom Scrollbars, Responsive Grid for Mobile & Galaxy Z Fold 7/8 |
+| **Styling & Layout** | Tailwind CSS 3.4, Custom 3D Cast-Concrete & Neon Enclave CSS, Responsive Grid for Mobile & Galaxy Z Fold 7/8 |
 | **Typography & Icons** | Chakra Petch (Motorsports Display), Inter (UI), JetBrains Mono, Lucide Icons |
 | **External APIs** | NHTSA vPIC Federal VIN Decoder REST API (`vpic.nhtsa.dot.gov`) |
 | **Hosting & CI/CD** | Vercel Production Hosting + GitHub Pages Mirror |
@@ -123,10 +123,11 @@ maki-motorsports/
 ├── assets/
 │   ├── auction-inspect-1.jpg   # Real field inspection photography (BMW E46 under-hood)
 │   ├── auction-inspect-2.jpg   # Master Mechanic hands-on engine bay diagnostics
+│   ├── enclave-keypad.jpg      # Concrete & Neon Enclave hardware design reference
 │   └── maki-graphic.png        # Maki Motorsports crest graphic
-├── index.html                  # Public Storefront + Pit Wall Terminal + 4 Back-Office Views
+├── index.html                  # Public Storefront + Concrete Enclave Modal + 4 Pit Crew Views
 ├── app.js                      # Rules Engine, Chassis DB, 3-Tier Calculator & Job Queue Logic
-├── styles.css                  # Custom scrollbar & smooth scroll utilities
+├── styles.css                  # Cast-Concrete Enclave hardware textures, 3D keycaps & animations
 └── README.md                   # System documentation & architecture guide
 ```
 
@@ -143,7 +144,7 @@ cd MAKI-MOTORSPORTS
 npx serve . -l 4173
 ```
 
-Open `http://localhost:4173` in your browser. Click **`Pit Wall / Crew`** and enter **`335is`** to unlock the dealer back-office.
+Open `http://localhost:4173` in your browser and click **`Pit Crew`** to launch the Concrete & Neon Enclave gateway.
 
 ---
 

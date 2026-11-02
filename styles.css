@@ -17,3 +17,131 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Cast-Concrete Hardware Enclosure Surface & Bevel */
+.enclave-concrete-body {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.14) 0%, transparent 45%),
+    radial-gradient(circle at 0% 70%, rgba(0, 240, 255, 0.14) 0%, transparent 38%),
+    linear-gradient(145deg, #565c63 0%, #3d4248 38%, #2b3036 78%, #1e2227 100%);
+  box-shadow:
+    inset 2px 2px 4px rgba(255, 255, 255, 0.22),
+    inset -4px -6px 12px rgba(0, 0, 0, 0.75),
+    -12px 18px 38px rgba(0, 240, 255, 0.08),
+    0 35px 95px rgba(0, 0, 0, 0.95);
+  clip-path: polygon(
+    22px 0%,
+    calc(100% - 22px) 0%,
+    100% 22px,
+    100% calc(100% - 22px),
+    calc(100% - 22px) 100%,
+    22px 100%,
+    0% calc(100% - 22px),
+    0% 22px
+  );
+}
+
+/* Subtle weathered concrete pitting overlay */
+.enclave-concrete-grain {
+  background-image:
+    radial-gradient(rgba(0, 0, 0, 0.38) 1px, transparent 0),
+    radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 0);
+  background-size: 11px 11px, 17px 17px;
+  background-position: 0 0, 5px 7px;
+}
+
+/* Deeply Debossed / Carved Concrete Stencil Text */
+.enclave-debossed-title {
+  color: #1c2024;
+  text-shadow:
+    0px 1.5px 1px rgba(255, 255, 255, 0.28),
+    0px -1.5px 2px rgba(0, 0, 0, 0.9);
+  letter-spacing: 0.08em;
+}
+
+/* Recessed Glass & Neon Screen Cavity */
+.enclave-screen-well {
+  background: #0b0e13;
+  box-shadow:
+    inset 0 10px 28px rgba(0, 0, 0, 0.98),
+    inset 0 0 22px rgba(0, 240, 255, 0.22),
+    0 2px 1px rgba(255, 255, 255, 0.15);
+}
+
+/* 3D Sculpted Tactile Concrete Keycap */
+.enclave-keycap {
+  background: linear-gradient(180deg, #2e343d 0%, #1d2229 55%, #14181d 100%);
+  border: 1px solid #3c4450;
+  border-bottom: 4px solid #090b0e;
+  border-radius: 5px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 4px 10px rgba(0, 0, 0, 0.85),
+    0 0 10px rgba(0, 240, 255, 0.12);
+  color: #7ceeff;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.85);
+  transition: all 0.1s ease;
+}
+.enclave-keycap:hover {
+  background: linear-gradient(180deg, #373f4a 0%, #232a33 55%, #181d24 100%);
+  border-color: rgba(0, 240, 255, 0.65);
+  color: #ffffff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 4px 12px rgba(0, 0, 0, 0.9),
+    0 0 16px rgba(0, 240, 255, 0.45);
+}
+.enclave-keycap:active,
+.enclave-keycap.key-pressed {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.7),
+    0 0 18px rgba(0, 240, 255, 0.7);
+}
+
+/* Orange/Amber CLR Keycap from Reference Hardware */
+.enclave-keycap-clr {
+  background: linear-gradient(180deg, #422b24 0%, #2b1b17 55%, #1d120f 100%);
+  border: 1px solid #6e3b2b;
+  border-bottom: 4px solid #0d0706;
+  border-radius: 5px;
+  color: #ff8c52;
+  text-shadow: 0 0 10px rgba(255, 120, 50, 0.85);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 180, 140, 0.15),
+    0 4px 10px rgba(0, 0, 0, 0.85),
+    0 0 10px rgba(255, 110, 40, 0.15);
+  transition: all 0.1s ease;
+}
+.enclave-keycap-clr:hover {
+  border-color: #ff8c52;
+  color: #ffb38a;
+  box-shadow: 0 0 16px rgba(255, 120, 50, 0.45);
+}
+.enclave-keycap-clr:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+/* Mechanical Corner Hex Bolt Unsealing Rotation */
+.enclave-hex-bolt {
+  transition: transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+.enclave-unlocked-bolts .enclave-hex-bolt {
+  transform: rotate(-180deg) scale(0.92);
+  border-color: #00f0ff !important;
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.75), inset 0 0 8px rgba(0, 240, 255, 0.5) !important;
+}
+
+/* Mechanical Blast Shutter Doors Split Animation */
+.shutter-door-top,
+.shutter-door-bottom {
+  transition: transform 0.65s cubic-bezier(0.7, 0, 0.2, 1);
+}
+.shutter-open .shutter-door-top {
+  transform: translateY(-102%);
+}
+.shutter-open .shutter-door-bottom {
+  transform: translateY(102%);
+}
