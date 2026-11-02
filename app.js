@@ -675,6 +675,12 @@ let leadsDB = [
 
 const ENCLAVE_CIPHER_VECTOR = [51, 51, 53, 105, 115];
 
+function refreshIcons() {
+  if (window.lucide && typeof window.lucide.createIcons === 'function') {
+    window.lucide.createIcons();
+  }
+}
+
 function verifyEnclaveCipher(raw) {
   const clean = (raw || '').trim().toLowerCase();
   if (clean.length !== ENCLAVE_CIPHER_VECTOR.length) return false;
@@ -708,6 +714,7 @@ function playEnclaveTone(freq = 520, type = 'sine', duration = 0.06, endFreq = n
 }
 
 function resetEnclaveVisualState() {
+  const wrapper = document.getElementById('enclave-unit-wrapper');
   const monolith = document.getElementById('enclave-monolith');
   const overlay = document.getElementById('enclave-unlock-overlay');
   const shutters = document.getElementById('enclave-shutters');
@@ -715,6 +722,10 @@ function resetEnclaveVisualState() {
   const cable1 = document.getElementById('enclave-cable-1');
   const cable2 = document.getElementById('enclave-cable-2');
 
+  if (wrapper) {
+    wrapper.style.transform = '';
+    wrapper.style.opacity = '';
+  }
   if (monolith) monolith.classList.remove('enclave-unlocked-bolts');
   if (overlay) {
     overlay.classList.add('hidden');
@@ -797,6 +808,7 @@ function pressEnclaveKey(key) {
 }
 
 function runMechanicalUnlockSequence() {
+  const wrapper = document.getElementById('enclave-unit-wrapper');
   const monolith = document.getElementById('enclave-monolith');
   const overlay = document.getElementById('enclave-unlock-overlay');
   const shutters = document.getElementById('enclave-shutters');
@@ -807,6 +819,10 @@ function runMechanicalUnlockSequence() {
   const progressBar = document.getElementById('unlock-progress-bar');
   const cable1 = document.getElementById('enclave-cable-1');
   const cable2 = document.getElementById('enclave-cable-2');
+
+  // Switch the underlying page to the Pit Crew Homepage immediately so it is ready behind the keypad
+  switchMode('admin');
+  switchPitWallTab('intake');
 
   // Show mechanical overlay & rotate 4 corner concrete Allen bolts
   if (overlay) {
@@ -820,9 +836,9 @@ function runMechanicalUnlockSequence() {
   if (cable2) cable2.className = 'w-10 h-2 bg-[#e2fd52] shadow-[0_0_12px_#e2fd52] transition-all duration-300';
   refreshIcons();
 
-  // Stage 1: Solenoid Bolt Retraction (0ms - 550ms)
+  // Stage 1: Solenoid Bolt Retraction (0ms - 500ms)
   playEnclaveTone(320, 'sawtooth', 0.12, 640);
-  if (progressBar) progressBar.style.width = '36%';
+  if (progressBar) progressBar.style.width = '38%';
 
   [1, 2, 3, 4].forEach((n, idx) => {
     setTimeout(() => {
@@ -832,37 +848,40 @@ function runMechanicalUnlockSequence() {
         pin.className = 'py-1.5 border border-[#00f0ff] bg-[#00f0ff]/15 text-[#7ceeff] font-bold shadow-[0_0_8px_rgba(0,240,255,0.3)]';
         pin.textContent = `PIN 0${n}: OPEN`;
       }
-    }, idx * 120);
+    }, idx * 105);
   });
 
-  // Stage 2: Twin-Turbo Ignition Spool & Hydraulic Boost Sweep (550ms - 1250ms)
+  // Stage 2: Twin-Turbo Ignition Spool & Hydraulic Boost Sweep (500ms - 1100ms)
   setTimeout(() => {
-    playEnclaveTone(220, 'sawtooth', 0.55, 1180);
+    playEnclaveTone(220, 'sawtooth', 0.5, 1180);
     if (stageTag) stageTag.textContent = 'STAGE 02 // TWIN-TURBO IGNITION ENGAGED';
     if (stageTitle) stageTitle.textContent = 'SPOOLING TELEMETRY CORE';
     if (rpmReadout) rpmReadout.textContent = 'IGNITION: 7,000 RPM';
     if (psiReadout) psiReadout.textContent = 'BOOST: 18.5 PSI LOCKED';
     if (progressBar) progressBar.style.width = '100%';
-  }, 550);
+  }, 500);
 
-  // Stage 3: Hydraulic Concrete Blast Doors Split Open (1250ms - 1850ms)
+  // Stage 3: Hydraulic Concrete Blast Doors Split + Keypad Unit Retracts Away (1100ms - 1600ms)
   setTimeout(() => {
     playEnclaveTone(980, 'sine', 0.22, 1480);
     if (stageTag) {
       stageTag.className = 'text-[10px] font-bold tracking-[0.25em] text-[#e2fd52] uppercase';
       stageTag.textContent = 'STAGE 03 // ENCLAVE VAULT UNSEALED';
     }
-    if (stageTitle) stageTitle.textContent = 'LAUNCHING PIT CREW OS';
+    if (stageTitle) stageTitle.textContent = 'ENTERING PIT CREW HOMEPAGE';
     if (shutters) shutters.classList.add('shutter-open');
-  }, 1250);
+    if (wrapper) {
+      wrapper.style.transform = 'scale(0.92) translateY(-18px)';
+      wrapper.style.opacity = '0';
+    }
+  }, 1100);
 
-  // Redirect into Pit Crew Homepage
+  // Automatically dismiss the Enclave Modal (same action as [ESC]) to reveal Pit Crew Homepage
   setTimeout(() => {
     closeTerminalGate();
-    switchMode('admin');
-    switchPitWallTab('intake');
+    resetEnclaveVisualState();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, 1850);
+  }, 1600);
 }
 
 function handleTerminalSubmit(e) {
