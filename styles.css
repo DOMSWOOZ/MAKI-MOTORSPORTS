@@ -1,0 +1,19 @@
+/* Custom scrollbar and fine-tuned styling for MAKI MOTORSPORTS */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #090B10;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E2536;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00A3FF;
+}
+
+html {
+  scroll-behavior: smooth;
+}
