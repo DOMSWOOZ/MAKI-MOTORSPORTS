@@ -1,85 +1,85 @@
 // ============================================================================
-// MAKI MOTORSPORTS LLC - DEALER, MASTER MECHANIC & KEY PROGRAMMING SYSTEM
+// MAKI MOTORSPORTS LLC - ALL-MAKES DEALER, MASTER MECHANIC & PIT CREW SYSTEM
 // ============================================================================
 
 // 1. MASTER MECHANIC & KEY PROGRAMMING ISSUE PARSER (3-TIER KNOWLEDGE BASE)
 const MECHANIC_KNOWLEDGE_BASE = [
   {
-    keywords: ['key', 'fob', 'lost key', 'no key', 'immobilizer', 'cas', 'fem', 'bdc', 'ews', 'transponder', 'ignition lock'],
-    category: 'Key Cutting & Immobilizer Programming',
-    tier1: { task: 'In-House Laser Cut Emergency Blade + Program Transponder Chip to Immobilizer (EWS/CAS)', parts: 28, hours: 0.8 },
-    tier2: { task: 'Cut & Program New OEM-Style Smart Key Fob (CAS/FEM/BDC) + Clear Lost Key Slots in EEPROM', parts: 65, hours: 1.2 },
-    tier3: { task: 'Program 2x Comfort Access Smart Key Fobs + New Ignition Slot / Start Button + Full Module Sync', parts: 145, hours: 2.0 }
+    keywords: ['key', 'fob', 'lost key', 'no key', 'immobilizer', 'smart key', 'transponder', 'ignition lock', 'spare key'],
+    category: 'Key Cutting & Smart Fob Programming',
+    tier1: { task: 'Cut Emergency Door/Ignition Blade + Program Basic Transponder Chip In-House', parts: 28, hours: 0.8 },
+    tier2: { task: 'Cut & Program New OEM-Style Smart Key Fob + Clear Lost Key Slots from Immobilizer', parts: 65, hours: 1.2 },
+    tier3: { task: 'Program 2x New Proximity Smart Key Fobs + Ignition Switch Service + Full Diagnostic Sync', parts: 145, hours: 2.0 }
   },
   {
     keywords: ['coolant', 'expansion tank', 'overheat', 'water pump', 'thermostat', 'radiator'],
     category: 'Cooling System',
-    tier1: { task: 'Replace failed coolant component (Aftermarket/URO) + bleed system', parts: 65, hours: 1.5 },
-    tier2: { task: 'OE Behr/Mahle Expansion Tank, Thermostat & Water Pump Refresh + BMW Blue Coolant', parts: 235, hours: 3.0 },
-    tier3: { task: 'Full Cooling System Overhaul (CSF All-Aluminum Radiator, EMP Stewart Pump, Silicone Hoses)', parts: 690, hours: 4.5 }
+    tier1: { task: 'Replace leaking hose/thermostat housing + pressure test & refill coolant', parts: 65, hours: 1.5 },
+    tier2: { task: 'OEM Water Pump, Thermostat & Radiator Hose Refresh + Full Coolant Flush', parts: 215, hours: 2.8 },
+    tier3: { task: 'Complete Cooling Overhaul (New Radiator, Water Pump, Thermostat, Fans & All Hoses)', parts: 540, hours: 4.5 }
   },
   {
-    keywords: ['valve cover', 'oil leak', 'gasket', 'ofhg', 'oil filter housing', 'oil pan'],
-    category: 'Engine Seals & Leaks',
-    tier1: { task: 'Valve Cover Gasket & Oil Filter Housing Gasket (Victor Reinz) + degrease block', parts: 55, hours: 2.5 },
-    tier2: { task: 'OEM Elring Gasket Set + New Valve Cover + CCV Breather Hose Kit + LiquiMoly 5W-40 Change', parts: 260, hours: 3.5 },
-    tier3: { task: 'Complete Engine Reseal (Valve Cover, OFHG, Oil Pan Gasket, Rear Main, VANOS Seals)', parts: 580, hours: 9.0 }
+    keywords: ['valve cover', 'oil leak', 'gasket', 'oil filter housing', 'oil pan', 'timing cover'],
+    category: 'Engine Seals & Oil Leaks',
+    tier1: { task: 'Replace Valve Cover Gasket & Oil Filter Seal + degrease engine bay', parts: 55, hours: 2.0 },
+    tier2: { task: 'OEM Valve Cover Gasket Set + PCV Valve + Fresh Full Synthetic Oil & Filter Service', parts: 185, hours: 3.0 },
+    tier3: { task: 'Complete Engine Reseal (Valve Cover, Oil Pan Gasket, Rear Main / Front Crank Seal)', parts: 490, hours: 7.5 }
   },
   {
-    keywords: ['misfire', 'coil', 'spark plug', 'rough idle', 'p030', 'injector'],
-    category: 'Ignition & Fuel',
-    tier1: { task: 'Replace faulty Ignition Coil(s) + NGK Copper Spark Plugs & clear codes', parts: 68, hours: 1.0 },
-    tier2: { task: 'Full Set of 6 Bosch/Eldor Ignition Coils + NGK Laser Iridium Plugs + Smoke Test', parts: 215, hours: 1.5 },
-    tier3: { task: 'High-Output Dinan Coils, Index 12/OEM Injectors, Walnut Blast Intake Valves', parts: 820, hours: 4.5 }
+    keywords: ['misfire', 'coil', 'spark plug', 'rough idle', 'p030', 'injector', 'tune-up', 'tune up'],
+    category: 'Ignition & Tune-Up',
+    tier1: { task: 'Replace faulty Ignition Coil(s) + Spark Plugs & clear misfire codes', parts: 68, hours: 1.0 },
+    tier2: { task: 'Full Set of OEM Iridium Spark Plugs + Denso/Bosch Ignition Coils + Throttle Body Clean', parts: 210, hours: 1.5 },
+    tier3: { task: 'Full Ignition Overhaul + Fuel Injector Cleaning/Replacement + Intake Valve Service', parts: 640, hours: 4.0 }
   },
   {
-    keywords: ['smog', 'p0420', 'cat', 'o2', 'check engine', 'cel', 'emissions', 'evap'],
-    category: 'CA Smog & Emissions',
-    tier1: { task: 'Fix vacuum/exhaust leak, replace downstream O2 sensor & run CA Smog drive cycle', parts: 75, hours: 1.5 },
-    tier2: { task: 'Upstream + Downstream Bosch O2 Sensors, Smoke Test EVAP, Official CA STAR Smog Cert', parts: 195, hours: 2.0 },
-    tier3: { task: 'CARB-Approved High-Flow Replacement Manifold/Cats + All Sensors + Dyno Diagnostic', parts: 790, hours: 4.0 }
+    keywords: ['smog', 'p0420', 'cat', 'o2', 'check engine', 'cel', 'emissions', 'evap', 'lean'],
+    category: 'CA Smog & Check Engine',
+    tier1: { task: 'Fix vacuum/exhaust leak, replace faulty O2 sensor & complete CA Smog drive cycle', parts: 75, hours: 1.5 },
+    tier2: { task: 'Upstream + Downstream O2/AFR Sensors, EVAP Smoke Test & Official CA STAR Smog Certificate', parts: 195, hours: 2.0 },
+    tier3: { task: 'CARB-Compliant Replacement Catalytic Converter + All O2 Sensors + Full Emissions Cert', parts: 760, hours: 3.5 }
   },
   {
     keywords: ['brake', 'rotor', 'pad', 'caliper', 'squeak'],
-    category: 'Brakes & Stopping',
-    tier1: { task: 'Centric Daily Driver Brake Pads + resurface/replace worn front rotors', parts: 95, hours: 1.5 },
-    tier2: { task: 'Zimmermann Coated Rotors + Akebono Ceramic Low-Dust Pads (Front & Rear) + DOT4 Flush', parts: 340, hours: 2.5 },
-    tier3: { task: 'Cross-Drilled & Slotted Big Brake Upgrade + Painted Calipers + Stainless Lines', parts: 890, hours: 4.0 }
+    category: 'Brakes & Rotors',
+    tier1: { task: 'Install daily-driver ceramic brake pads + resurface/replace worn front rotors', parts: 95, hours: 1.5 },
+    tier2: { task: 'New Coated Front & Rear Brake Rotors + Ceramic Low-Dust Pads + Brake Fluid Flush', parts: 310, hours: 2.5 },
+    tier3: { task: 'Heavy-Duty / Performance Slotted Rotors, New Calipers, Ceramic Pads & Stainless Lines', parts: 740, hours: 4.0 }
   },
   {
     keywords: ['bumper', 'paint', 'dent', 'fender', 'clear coat', 'cosmetic', 'hood', 'trim'],
     category: 'Body & Exterior',
-    tier1: { task: 'Re-clip/align bumper brackets, color-matched touch-up & buff headlights', parts: 45, hours: 1.5 },
-    tier2: { task: 'CAPA Certified Replacement Bumper + Local Paint Blend + 2-Stage Machine Polish', parts: 390, hours: 3.5 },
-    tier3: { task: 'M-Sport / M3 Style Aero Conversion + Full Booth Paint Correction & Ceramic Coating', parts: 1350, hours: 8.0 }
+    tier1: { task: 'Re-clip/align bumper brackets, touch-up paint & restore cloudy headlights', parts: 45, hours: 1.5 },
+    tier2: { task: 'CAPA Certified Replacement Bumper Cover + Color-Matched Paint Blend + Machine Polish', parts: 380, hours: 3.5 },
+    tier3: { task: 'Full Panel Refinish + Paint Correction + Interior/Exterior Ceramic Detail', parts: 1150, hours: 7.5 }
   },
   {
-    keywords: ['suspension', 'control arm', 'strut', 'shock', 'clunk', 'bushing', 'coilover'],
-    category: 'Suspension & Chassis',
-    tier1: { task: 'Replace torn Front Control Arm Thrust Bushings & sway bar links', parts: 85, hours: 1.5 },
-    tier2: { task: 'Lemförder Control Arm Kit + Sachs OEM Struts/Shocks + 4-Wheel Alignment', parts: 460, hours: 4.0 },
-    tier3: { task: 'Bilstein B14 / KW Adjustable Coilovers + Poly Subframe Bushings + Corner Balance', parts: 1280, hours: 6.5 }
+    keywords: ['suspension', 'control arm', 'strut', 'shock', 'clunk', 'bushing', 'tie rod'],
+    category: 'Suspension & Steering',
+    tier1: { task: 'Replace worn sway bar end-links & front control arm bushings', parts: 85, hours: 1.5 },
+    tier2: { task: 'New Front Lower Control Arms, Quick-Strut Assemblies & 4-Wheel Alignment', parts: 420, hours: 3.5 },
+    tier3: { task: 'Complete Front & Rear Suspension Refresh (Struts, Shocks, Control Arms, Tie Rods, Alignment)', parts: 980, hours: 6.0 }
   },
   {
     keywords: ['tire', 'wheel', 'curb', 'alignment', 'bald'],
     category: 'Wheels & Tires',
-    tier1: { task: 'Mount 2 matching high-tread used/budget tires to pass safety inspection', parts: 130, hours: 1.0 },
-    tier2: { task: 'Full Set of 4 New All-Season Performance Tires + Road Force Balance + Alignment', parts: 540, hours: 1.5 },
-    tier3: { task: 'Refinished Forged/Apex Style Wheels + Michelin Pilot Sport 4S Tires', parts: 1490, hours: 2.0 }
+    tier1: { task: 'Mount 2 matching high-tread tires + balance to pass safety inspection', parts: 130, hours: 1.0 },
+    tier2: { task: 'Full Set of 4 New All-Season Tires + Computer Balance + 4-Wheel Alignment', parts: 490, hours: 1.5 },
+    tier3: { task: 'Refinished Alloy Wheels + 4 Premium Michelin / Bridgestone Tires + Alignment', parts: 1190, hours: 2.0 }
   },
   {
     keywords: ['turbo', 'wastegate', 'boost', 'charge pipe', 'intercooler'],
-    category: 'Forced Induction / Turbo',
-    tier1: { task: 'Adjust wastegate actuator rod + replace cracked plastic charge pipe + boost solenoids', parts: 145, hours: 2.5 },
-    tier2: { task: 'Rebuilt OEM CHRA Turbo Cartridges + Gasket Installation Kit + Aluminum Charge Pipe', parts: 590, hours: 7.0 },
-    tier3: { task: 'Upgraded Billet Hybrid Turbos + Stepped Intercooler + Silicone Inlets', parts: 1650, hours: 10.0 }
+    category: 'Turbo & Boost System',
+    tier1: { task: 'Replace cracked boost/charge pipe & vacuum lines + test wastegate actuator', parts: 135, hours: 2.0 },
+    tier2: { task: 'Rebuilt OEM Turbocharger Cartridge + Oil Feed Lines + Upgraded Charge Pipe', parts: 560, hours: 6.0 },
+    tier3: { task: 'New Complete OEM Turbocharger Assembly + Intercooler + All Boost Sensors', parts: 1380, hours: 8.5 }
   },
   {
     keywords: ['ac', 'air conditioning', 'compressor', 'warm', 'freon', 'blower'],
-    category: 'HVAC / AC System',
-    tier1: { task: 'Replace Schrader valves/O-rings, vacuum test & R134a recharge', parts: 55, hours: 1.0 },
-    tier2: { task: 'Denso OEM A/C Compressor + Receiver Drier + Expansion Valve + Full Evac/Recharge', parts: 330, hours: 3.0 },
-    tier3: { task: 'Complete HVAC Refresh (Compressor, Condenser, Blower Motor & Final Stage Resistor)', parts: 620, hours: 5.0 }
+    category: 'A/C & Climate Control',
+    tier1: { task: 'Replace A/C valve cores/O-rings, vacuum leak test & R134a/R1234yf recharge', parts: 55, hours: 1.0 },
+    tier2: { task: 'New Denso OEM A/C Compressor + Condenser Drier + Full Vacuum Evac & Recharge', parts: 320, hours: 3.0 },
+    tier3: { task: 'Complete A/C Overhaul (Compressor, Condenser, Expansion Valve & Cabin Blower Motor)', parts: 590, hours: 4.5 }
   }
 ];
 
@@ -92,38 +92,38 @@ const PUBLIC_SERVICE_CATALOG = [
     title: 'Oil & Preventative Maintenance',
     icon: 'droplets',
     accent: 'maki-lightBlue',
-    subtitle: 'Full synthetic service, gaskets, cooling & fluid flushes',
+    subtitle: 'Full synthetic oil changes, gaskets, cooling & fluid flushes',
     subIssues: [
-      'Full Synthetic Oil & OEM Filter Service (LiquiMoly / Mobil1)',
-      'Valve Cover Gasket & Oil Filter Housing Gasket Leak Repair',
-      'Cooling System Overhaul (Expansion Tank, Water Pump & Thermostat)',
-      'Spark Plugs, Ignition Coils & Intake Carbon Cleaning'
+      'Full Synthetic Oil & OEM Filter Service',
+      'Valve Cover Gasket & Engine Oil Leak Repair',
+      'Cooling System Service (Water Pump, Thermostat & Radiator)',
+      'Spark Plugs, Ignition Coils & 100k-Mile Tune-Up'
     ]
   },
   {
     id: 'brakes-susp',
-    title: 'Brakes, Suspension & Chassis',
+    title: 'Brakes, Suspension & Steering',
     icon: 'disc',
     accent: 'maki-red',
-    subtitle: 'Pads, rotors, control arms, coilovers & wheel bearings',
+    subtitle: 'Brake pads, rotors, struts, control arms & wheel bearings',
     subIssues: [
-      'Front & Rear Brake Pads + Coated Rotors Replacement',
-      'Control Arms, Thrust Bushings & Tie Rod Clunk Repair',
-      'Coilover / Lowering Spring & Strut Installation',
-      'Big Brake Kit Upgrade + DOT4 Brake Fluid Flush'
+      'Front & Rear Brake Pads + Rotors Replacement',
+      'Control Arms, Ball Joints & Suspension Clunk Repair',
+      'Struts, Shocks & Ride Quality Refresh',
+      'Brake Fluid Flush & Safety Inspection'
     ]
   },
   {
     id: 'keys-elec',
-    title: 'Key Programming & Locksmith',
+    title: 'Key Programming & Automotive Locksmith',
     icon: 'key-round',
     accent: 'emerald-400',
-    subtitle: 'Laser key cutting, smart fobs, lost-all-keys & immobilizer',
+    subtitle: 'Smart key fobs, laser key cutting & lost-all-keys service',
     subIssues: [
       'Cut & Program New Smart Key Fob (Spare Key)',
-      'Lost All Keys — On-Site Immobilizer & Key Programming (CAS/FEM/BDC/EWS)',
-      'Ignition Switch / Steering Lock (ELV) & Start Button Repair',
-      'DME / ECU / CAS Module Cloning & Synchronization'
+      'Lost All Keys — On-Site Immobilizer & Smart Key Programming',
+      'Ignition Switch / Steering Lock & Start Button Repair',
+      'ECU / Immobilizer Module Sync & Electrical Diagnostics'
     ]
   },
   {
@@ -131,11 +131,11 @@ const PUBLIC_SERVICE_CATALOG = [
     title: 'Diagnostics, Smog & Engine Work',
     icon: 'gauge',
     accent: 'amber-400',
-    subtitle: 'Check engine light, CA Smog prep, turbos & PPI',
+    subtitle: 'Check engine lights, CA Smog prep, A/C repair & inspections',
     subIssues: [
-      'Check Engine Light (CEL) & CA Smog Failure Diagnostics',
-      'Turbocharger, Wastegate & Boost/Charge Pipe Leak Repair',
-      'A/C Compressor, Condenser & Recharge Service',
+      'Check Engine Light (CEL) & CA Smog Diagnostics',
+      'A/C Recharge, Compressor & Cooling Repair',
+      'Starter, Alternator & Battery Charging Diagnostics',
       'Master Mechanic Pre-Purchase Inspection (PPI)'
     ]
   }
@@ -161,19 +161,19 @@ function renderInteractiveServiceSelector() {
             onclick="selectServiceCategory('${cat.id}')"
             class="p-4 rounded-xl border text-left transition-all flex items-start gap-3.5 ${
               isSelected
-                ? 'bg-slate-900 border-maki-lightBlue ring-1 ring-maki-lightBlue shadow-lg shadow-blue-500/10'
-                : 'bg-maki-card border-slate-800 hover:border-slate-700'
+                ? 'bg-slate-900 border-maki-lightBlue ring-1 ring-maki-lightBlue shadow-sm'
+                : 'bg-maki-card border-slate-700 hover:border-slate-600'
             }"
           >
-            <div class="w-9 h-9 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-center shrink-0 mt-0.5">
-              <i data-lucide="${cat.icon}" class="w-4 h-4 text-${cat.accent}"></i>
+            <div class="w-10 h-10 rounded-xl bg-slate-950 border border-slate-700 flex items-center justify-center shrink-0 mt-0.5">
+              <i data-lucide="${cat.icon}" class="w-5 h-5 text-${cat.accent}"></i>
             </div>
             <div class="flex-1">
               <div class="flex items-center justify-between gap-2">
-                <h4 class="font-display font-bold text-sm text-white">${cat.title}</h4>
-                ${isSelected ? '<span class="px-2 py-0.5 rounded bg-maki-lightBlue text-slate-950 text-[10px] font-bold">SELECTED</span>' : ''}
+                <h4 class="font-display font-bold text-sm sm:text-base text-white">${cat.title}</h4>
+                ${isSelected ? '<span class="px-2 py-0.5 rounded-md bg-maki-lightBlue text-slate-950 text-xs font-bold">Selected</span>' : ''}
               </div>
-              <p class="text-xs text-slate-400 mt-1">${cat.subtitle}</p>
+              <p class="text-xs sm:text-sm text-slate-400 mt-1">${cat.subtitle}</p>
             </div>
           </button>
         `;
@@ -181,10 +181,10 @@ function renderInteractiveServiceSelector() {
     </div>
 
     <!-- Sub-Issue Breakdown Pills (Click any issue to auto-populate & scroll to form) -->
-    <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2.5">
+    <div class="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-700 space-y-3">
       <div class="flex items-center justify-between">
-        <span class="text-[11px] font-mono uppercase tracking-wider text-maki-lightBlue">
-          ${activeCat.title} // Tap Specific Job to Auto-Fill Request Form:
+        <span class="text-xs sm:text-sm font-semibold text-maki-lightBlue">
+          ${activeCat.title} — Tap a specific service to fill your form below:
         </span>
       </div>
       <div class="flex flex-wrap gap-2">
@@ -194,14 +194,14 @@ function renderInteractiveServiceSelector() {
             <button
               type="button"
               onclick="selectSpecificServiceIssue('${activeCat.id}', '${issue.replace(/'/g, "\\'")}')"
-              class="px-3.5 py-2 rounded-xl text-xs font-medium transition-all text-left flex items-center gap-2 ${
+              class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all text-left flex items-center gap-2 ${
                 isChosen
-                  ? 'bg-maki-lightBlue text-slate-950 font-bold shadow'
-                  : 'bg-slate-900 text-slate-300 border border-slate-800 hover:border-maki-lightBlue/50 hover:text-white'
+                  ? 'bg-maki-lightBlue text-slate-950 font-bold shadow-sm'
+                  : 'bg-slate-950 text-slate-200 border border-slate-700 hover:border-maki-lightBlue'
               }"
             >
               <span>${issue}</span>
-              <i data-lucide="arrow-down-right" class="w-3.5 h-3.5 opacity-75 shrink-0"></i>
+              <i data-lucide="arrow-down-right" class="w-4 h-4 opacity-75 shrink-0"></i>
             </button>
           `;
         }).join('')}
@@ -252,45 +252,43 @@ function populateMechanicFormFields(categoryTitle, issueText, scrollAndFocus) {
 }
 
 // ============================================================================
-// 1C. CHASSIS & ENGINE MILEAGE-BASED SERVICE & INVESTMENT DATABASE
+// 1C. ALL-MAKES VEHICLE PLATFORM & MILEAGE SERVICE GUIDE
 // ============================================================================
 const CHASSIS_SERVICE_DATABASE = [
   {
-    match: ['m4', 'f80', 'f82', 's55'],
-    platform: 'BMW F80/F82 M3/M4 (S55 3.0L Twin-Turbo)',
+    match: ['toyota', 'camry', 'corolla', 'rav4', 'lexus', 'is 350', 'is350', 'es350', 'rx350'],
+    platform: 'Toyota / Lexus (2.5L 4-Cyl & 3.5L V6 Platforms)',
     commonCheckpoints: [
-      { minMiles: 40000, item: 'OEM Plastic Charge Pipes & J-Pipe', oemPartCost: 240, shopHours: 2.0, roiVerdict: 'HIGH ROI (Mandatory)', note: 'Factory plastic pipes split under boost; upgrading to aluminum adds immediate buyer confidence.' },
-      { minMiles: 50000, item: 'NGK Spark Plugs (SILZKBR8D8S) & Eldor Coils', oemPartCost: 265, shopHours: 1.8, roiVerdict: 'HIGH ROI (Sign & Drive)', note: 'S55 requires 30k-50k plug intervals to prevent high-load misfires.' },
-      { minMiles: 65000, item: 'Crank Hub Capture Plate / Valve Cover PCV', oemPartCost: 420, shopHours: 4.5, roiVerdict: 'ENTHUSIAST ROI (Tier 3)', note: 'Key selling point for F82 M4 buyers paying top-tier retail money.' }
+      { minMiles: 75000, item: 'Aisin Water Pump & Coolant Flush', oemPartCost: 145, shopHours: 2.2, roiVerdict: 'High ROI (Sign & Drive)', note: 'Weep-hole seepage starts around 80k–100k miles; replacing early locks in top retail buyer confidence.' },
+      { minMiles: 90000, item: 'Denso Iridium Spark Plugs & Valve Cover Gasket', oemPartCost: 95, shopHours: 1.8, roiVerdict: 'High ROI (Smooth Idle)', note: 'Restores fuel economy and smooth idle; quick in-house job.' },
+      { minMiles: 100000, item: 'Front Lower Control Arms & Ceramic Brake Service', oemPartCost: 240, shopHours: 2.5, roiVerdict: 'Sign & Drive Standard', note: 'Eliminates highway vibration and brake squeal on test drives.' }
     ]
   },
   {
-    match: ['335', 'n54', 'n55', 'e92', 'e90 335', 'f30 335'],
-    platform: 'BMW E90/E92/F30 335i (N54 / N55 Turbo Inline-6)',
+    match: ['honda', 'accord', 'civic', 'cr-v', 'crv', 'acura', 'tsx', 'tlx'],
+    platform: 'Honda / Acura (1.5T / 2.4L K-Series / 3.5L V6)',
     commonCheckpoints: [
-      { minMiles: 60000, item: 'Oil Filter Housing Gasket (OFHG) & Mickey Mouse Flange', oemPartCost: 68, shopHours: 2.0, roiVerdict: 'CRITICAL (Prevent Belt Slip)', note: 'Oil leaking onto serpentine belt can get ingested past front crank seal—always fix first!' },
-      { minMiles: 75000, item: 'Pierburg Electric Water Pump & Behr Thermostat', oemPartCost: 345, shopHours: 3.0, roiVerdict: 'HIGH ROI (Sign & Drive)', note: 'Electric water pumps fail around 75k-100k miles; replacing unlocks full Sign & Drive retail price.' },
-      { minMiles: 85000, item: 'Intake Valve Carbon Walnut Blast + Valve Cover Gasket', oemPartCost: 110, shopHours: 3.5, roiVerdict: 'HIGH ROI (+$1,200 Value)', note: 'Restores 20+ HP & smooth cold idle on direct-injected N54/N55 engines.' },
-      { minMiles: 100000, item: 'Twin-Turbo Wastegate Actuators / Index 12 Injectors', oemPartCost: 590, shopHours: 7.0, roiVerdict: 'EVALUATE MMR SPREAD', note: 'Worth doing for clean-title coupes; keep in Tier 1 Wholesale if high-mileage sedan.' }
+      { minMiles: 75000, item: 'VTEC Solenoid Spool Valve Gasket & Valve Cover Seal', oemPartCost: 55, shopHours: 1.5, roiVerdict: 'Critical (Stop Oil Drip)', note: 'Very common oil leak point on Honda 4-cylinder & V6 engines—cheap part, huge buyer peace of mind.' },
+      { minMiles: 90000, item: 'CVT / Automatic Transmission Fluid Drain & Fill + Engine Mounts', oemPartCost: 135, shopHours: 1.8, roiVerdict: 'High ROI (Sign & Drive)', note: 'Eliminates shift shudder and idle vibration at stoplights.' },
+      { minMiles: 105000, item: 'Starter / Alternator Brush Check & Smart Key Fob Programming', oemPartCost: 160, shopHours: 1.5, roiVerdict: 'In-House Advantage', note: 'Including 2 working smart keys adds $400+ to retail sale value.' }
     ]
   },
   {
-    match: ['e46', '325', '330', 'zhp', 'm54'],
-    platform: 'BMW E46 325i / 330i / ZHP (M54 2.5L/3.0L Inline-6)',
+    match: ['ford', 'f-150', 'f150', 'chevy', 'silverado', 'tahoe', 'ram', 'gmc', 'sierra'],
+    platform: 'Domestic Trucks & SUVs (Ford F-150 / Chevy Silverado / GMC / Ram)',
     commonCheckpoints: [
-      { minMiles: 80000, item: 'Behr Expansion Tank, Water Pump & Thermostat Overhaul', oemPartCost: 225, shopHours: 2.5, roiVerdict: 'MANDATORY (High ROI)', note: 'E46 plastic cooling necks crack past 80k miles. Essential before any test drive.' },
-      { minMiles: 90000, item: 'DISA Valve Rebuild + CCV Oil Separator & Intake Boots', oemPartCost: 140, shopHours: 2.5, roiVerdict: 'HIGH ROI (CA Smog Fix)', note: 'Fixes 90% of lean codes (P0171/P0174) so the car passes CA STAR Smog easily.' },
-      { minMiles: 100000, item: 'Lemförder Front Control Arm Lower Lollipops (FCABs)', oemPartCost: 95, shopHours: 1.5, roiVerdict: 'HIGH ROI (Sign & Drive)', note: 'Eliminates steering wheel shimmy under braking; huge upgrade for buyer test drives.' },
-      { minMiles: 120000, item: 'EWS3 / Diamond Remote Key Fob Cut & Programming', oemPartCost: 35, shopHours: 0.8, roiVerdict: 'IN-HOUSE ADVANTAGE', note: 'Providing 2 working diamond keys adds $400+ in perceived retail buyer value.' }
+      { minMiles: 80000, item: 'Motorcraft / ACDelco Spark Plugs & Ignition Coils', oemPartCost: 165, shopHours: 2.0, roiVerdict: 'Mandatory (Fix Misfires)', note: 'Prevents load misfires on EcoBoost and V8 trucks; essential for passing CA Smog.' },
+      { minMiles: 95000, item: 'Thermostat, Coolant Y-Pipe / Tee & Radiator Service', oemPartCost: 120, shopHours: 1.8, roiVerdict: 'High ROI (Prevent Overheat)', note: 'Plastic heater/coolant tees commonly seep past 90k miles.' },
+      { minMiles: 110000, item: 'Front Upper Control Arms, Ball Joints & Heavy-Duty Brakes', oemPartCost: 310, shopHours: 3.0, roiVerdict: 'Sign & Drive Truck Spec', note: 'Tightens steering feel and commands top retail truck money.' }
     ]
   },
   {
-    match: ['328', 'n52', 'e90', '528', '535', 'f10'],
-    platform: 'BMW E90/F10 328i / 535i (N52 / N55 Inline-6)',
+    match: ['bmw', '335', '328', '330', 'm4', '535', 'mercedes', 'audi'],
+    platform: 'European Platforms (BMW / Mercedes / Audi Turbo & Inline-6)',
     commonCheckpoints: [
-      { minMiles: 75000, item: 'Valve Cover Gasket & Valvetronic Eccentric Shaft Sensor Seal', oemPartCost: 85, shopHours: 3.0, roiVerdict: 'HIGH ROI (Stop Burning Oil Smell)', note: 'Stops oil dripping onto exhaust manifold cat; required for clean customer cabin air.' },
-      { minMiles: 85000, item: 'Oil Filter Housing Gasket (OFHG) + Upper Radiator Hose', oemPartCost: 65, shopHours: 1.8, roiVerdict: 'MANDATORY', note: 'Prevents oil/coolant mixing and belt contamination.' },
-      { minMiles: 100000, item: 'Bosch Ignition Coils (x6) + CAS3/FEM Smart Key Fob', oemPartCost: 210, shopHours: 1.5, roiVerdict: 'HIGH ROI (Sign & Drive)', note: 'Smooths idle and gives the buyer a fresh programmed Comfort/Smart key fob.' }
+      { minMiles: 65000, item: 'Valve Cover Gasket & Oil Filter Housing Seal', oemPartCost: 85, shopHours: 2.5, roiVerdict: 'Critical (Stop Oil Leak)', note: 'Prevents oil from dripping onto belts or exhaust manifolds.' },
+      { minMiles: 80000, item: 'Electric Water Pump, Thermostat & Expansion Tank Refresh', oemPartCost: 290, shopHours: 3.0, roiVerdict: 'High ROI (Sign & Drive)', note: 'Proactive cooling refresh is the #1 selling point for European vehicles.' },
+      { minMiles: 95000, item: 'Ignition Coils, Spark Plugs & Smart Key Fob Programming', oemPartCost: 210, shopHours: 1.8, roiVerdict: 'In-House Advantage', note: 'Saves over $900 vs. dealership service & key replacement.' }
     ]
   }
 ];
@@ -299,7 +297,7 @@ function lookupChassisIntelligence(ymm, mileage) {
   const lower = (ymm || '').toLowerCase();
   const found = CHASSIS_SERVICE_DATABASE.find((entry) =>
     entry.match.some((kw) => lower.includes(kw))
-  ) || CHASSIS_SERVICE_DATABASE[2];
+  ) || CHASSIS_SERVICE_DATABASE[0];
 
   const miles = Number(mileage) || 100000;
   const dueItems = found.commonCheckpoints.map((cp) => ({
@@ -332,35 +330,35 @@ function evaluateVehicleTierRuling(car) {
   const roiT2toT3 = extraPartsT2toT3 > 0 ? Math.round((extraProfitT2toT3 / extraPartsT2toT3) * 100) : 150;
 
   let recommendedTier = 'tier2';
-  let verdictBadge = 'RECOMMENDED: TIER 2 (SIGN & DRIVE RETAIL)';
+  let verdictBadge = 'Recommended: Tier 2 (Sign & Drive Retail)';
   let verdictColor = 'emerald';
   let rulingExplanation = '';
   let investmentVerdict = '';
 
   if (car.category === 'Part-Outs') {
     recommendedTier = 'tier1';
-    verdictBadge = 'RULING: DONOR PART-OUT / SALVAGE HARVEST';
+    verdictBadge = 'Ruling: Donor Part-Out Vehicle';
     verdictColor = 'red';
-    rulingExplanation = `At ${car.mileage.toLocaleString()} miles and a $${car.buyPrice.toLocaleString()} buy-in, structural/collision damage makes full retail reconditioning uneconomical. Harvesting the engine, transmission, CAS/EWS key modules, and body panels yields the highest return.`;
-    investmentVerdict = `DO NOT INVEST in cosmetic or Tier 2/3 retail parts. Pull drivetrain & high-demand OEM assemblies in-house.`;
-  } else if (car.mileage > 140000 && car.mmrValue < 5000) {
+    rulingExplanation = `At ${car.mileage.toLocaleString()} miles and a $${car.buyPrice.toLocaleString()} buy-in, collision or structural damage makes retail reconditioning uneconomical. Harvesting the engine, transmission, electronics, and body panels yields the highest return.`;
+    investmentVerdict = `Do not spend money on cosmetic or retail parts. Pull the drivetrain and high-demand OEM assemblies in-house.`;
+  } else if (car.mileage > 140000 && car.mmrValue < 6000) {
     recommendedTier = 'tier1';
-    verdictBadge = 'RULING: TIER 1 (ECONOMY WHOLESALE FLIP)';
+    verdictBadge = 'Ruling: Tier 1 (Economy Wholesale Flip)';
     verdictColor = 'blue';
-    rulingExplanation = `With ${car.mileage.toLocaleString()} miles and a $${car.mmrValue.toLocaleString()} Manheim MMR ceiling, keeping parts spend to $${t1.partsCost} (${t1.totalHours} shop hrs) protects margin and turns cash fast.`;
-    investmentVerdict = `Investing an extra $${extraPartsT1toT2} in OEM Tier 2 parts + ${extraHoursT1toT2} hrs would add +$${extraProfitT1toT2.toLocaleString()} in net profit (${roiT1toT2}% Parts ROI) if you want to move it up to the Sign & Drive lot.`;
-  } else if (car.mmrValue >= 15000 || car.ymm.toLowerCase().includes('m4') || car.ymm.toLowerCase().includes('zhp')) {
+    rulingExplanation = `With ${car.mileage.toLocaleString()} miles and a $${car.mmrValue.toLocaleString()} market baseline, keeping parts spend to $${t1.partsCost} (${t1.totalHours} shop hrs) protects your margin and sells quickly.`;
+    investmentVerdict = `Optional Upgrade: Spending an extra $${extraPartsT1toT2} in Tier 2 parts + ${extraHoursT1toT2} hrs would add +$${extraProfitT1toT2.toLocaleString()} in net profit (${roiT1toT2}% Parts ROI) if you move it to Sign & Drive.`;
+  } else if (car.mmrValue >= 14000) {
     recommendedTier = 'tier2';
-    verdictBadge = 'RULING: HIGH-VALUE CHASSIS — TIER 2 OR TIER 3 WORTHY';
+    verdictBadge = 'Ruling: High-Demand Vehicle — Tier 2 or Tier 3 Worthy';
     verdictColor = 'emerald';
-    rulingExplanation = `Enthusiast chassis (${car.ymm}) with strong $${car.mmrValue.toLocaleString()} MMR baseline. Spending $${extraPartsT1toT2} more to move from Tier 1 to Tier 2 unlocks +$${extraProfitT1toT2.toLocaleString()} in additional net profit (${roiT1toT2}% Parts ROI).`;
-    investmentVerdict = `WORTH FULL INVESTMENT: Stepping all the way to Tier 3 (Enthusiast Spec) requires $${extraPartsT2toT3} more in parts (${extraHoursT2toT3} shop hrs) and yields +$${extraProfitT2toT3.toLocaleString()} additional profit (${roiT2toT3}% Parts ROI).`;
+    rulingExplanation = `Strong $${car.mmrValue.toLocaleString()} market value on this ${car.ymm}. Spending $${extraPartsT1toT2} more to move from Tier 1 to Tier 2 unlocks +$${extraProfitT1toT2.toLocaleString()} in additional net profit (${roiT1toT2}% Parts ROI).`;
+    investmentVerdict = `Worth Full Investment: Stepping up to Tier 3 (Full Restoration) requires $${extraPartsT2toT3} more in parts (${extraHoursT2toT3} shop hrs) and yields +$${extraProfitT2toT3.toLocaleString()} additional profit (${roiT2toT3}% Parts ROI).`;
   } else {
     recommendedTier = 'tier2';
-    verdictBadge = 'RULING: TIER 2 (SIGN & DRIVE SWEET SPOT)';
+    verdictBadge = 'Ruling: Tier 2 (Sign & Drive Sweet Spot)';
     verdictColor = 'emerald';
-    rulingExplanation = `Spending $${t2.partsCost} on OEM-grade Tier 2 parts (${t2.totalHours} hrs in-house labor) positions this ${car.ymm} for top Sign & Drive retail pricing ($${t2.estSalePrice.toLocaleString()}) while saving $${t2.retailLaborSaved.toLocaleString()} in outside mechanic labor.`;
-    investmentVerdict = `Upgrading from Tier 1 to Tier 2 costs only $${extraPartsT1toT2} in extra parts and nets +$${extraProfitT1toT2.toLocaleString()} more profit (${roiT1toT2}% ROI). Tier 3 over-restoration is optional.`;
+    rulingExplanation = `Spending $${t2.partsCost} on Tier 2 parts (${t2.totalHours} hrs in-house labor) positions this ${car.ymm} for full Sign & Drive retail pricing ($${t2.estSalePrice.toLocaleString()}) while saving $${t2.retailLaborSaved.toLocaleString()} in outside mechanic labor.`;
+    investmentVerdict = `Upgrading from Tier 1 to Tier 2 costs only $${extraPartsT1toT2} in extra parts and nets +$${extraProfitT1toT2.toLocaleString()} more profit (${roiT1toT2}% ROI).`;
   }
 
   const upgradeStepsT1toT2 = t2.items.map((item2, idx) => {
@@ -457,115 +455,115 @@ function generateThreeTierPlan(issueText, buyPrice, mmrValue) {
   return {
     tier1: buildTierSummary(
       'tier1',
-      'Tier 1: Economy Wholesale / Run & Drive',
+      'Tier 1: Economy Wholesale',
       'emerald',
       1.08,
-      'Lowest cost solution to get the vehicle running, driving, keyed, and passing CA Smog for a fast Economy Wholesale flip.'
+      'Lowest cost path to get the vehicle running, driving, keyed, and passing CA Smog for a quick Economy Wholesale sale.'
     ),
     tier2: buildTierSummary(
       'tier2',
-      'Tier 2: Sign & Drive (Retail Ready)',
+      'Tier 2: Sign & Drive Retail',
       'blue',
-      1.36,
-      'Turnkey Sign & Drive retail spec. OEM-quality parts (Lemförder/Behr/Bosch), fresh smart key fob, CA STAR Smog & full detail.'
+      1.34,
+      'Turnkey Sign & Drive retail spec. OEM-quality replacement parts, programmed smart key fob, CA STAR Smog & full detail.'
     ),
     tier3: buildTierSummary(
       'tier3',
-      'Tier 3: Full Restoration / Enthusiast Spec',
+      'Tier 3: Full Restoration',
       'red',
-      1.72,
-      'Complete mechanical & cosmetic restoration. Upgraded aluminum cooling, coilovers, big brakes, aero & full reseal.'
+      1.62,
+      'Complete mechanical & cosmetic refresh. Overhauled cooling, suspension, brakes, paint correction & 2 smart keys.'
     )
   };
 }
 
 // ============================================================================
-// 2. SEED INVENTORY WITH MATCHING MODEL PHOTOS & 3 CATEGORIES
+// 2. SEED INVENTORY: ALL-MAKES DEALERSHIP & MECHANIC FLEET
 // ============================================================================
 let vehiclesDB = [
   {
     id: 'MM-101',
-    vin: 'WBS3R9C51FK339104',
-    ymm: '2015 BMW M4 Coupe (F82)',
-    mileage: 68200,
-    source: 'Manheim OVE',
+    vin: '4T1B11HK5JU610294',
+    ymm: '2018 Toyota Camry SE',
+    mileage: 78400,
+    source: 'California Dealer Lane',
     category: 'Sign & Drive',
     selectedTier: 'tier2',
-    buyPrice: 26500,
-    mmrValue: 31500,
-    image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/BMW_M4%2C_EMS_2024%2C_Essen_%28P1032255%29.jpg/960px-BMW_M4%2C_EMS_2024%2C_Essen_%28P1032255%29.jpg',
-    issuesRaw: 'Plastic charge pipe hairline crack, needs spark plugs & ignition coils, minor brake rotor lip, spare smart key fob programmed.',
-    publicHighlights: 'S55 Twin-Turbo • Upgraded Aluminum Charge Pipes, Fresh Plugs/Coils & 2 Programmed Smart Keys'
+    buyPrice: 10900,
+    mmrValue: 14200,
+    image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&w=960&q=80',
+    issuesRaw: 'Front brake pads & rotors worn, needs spare smart key fob programmed, synthetic oil & filter service.',
+    publicHighlights: '2.5L 4-Cylinder • Fresh Ceramic Brakes, Full Synthetic Service & 2 Programmed Smart Keys'
   },
   {
     id: 'MM-102',
-    vin: 'WBAEV53494KM90112',
-    ymm: '2005 BMW 330i ZHP Sedan (E46)',
-    mileage: 131000,
+    vin: '1HGCR2F59HA184022',
+    ymm: '2017 Honda Accord Sport',
+    mileage: 92100,
     source: 'Direct Cash-for-Cars Buy',
     category: 'Sign & Drive',
     selectedTier: 'tier2',
-    buyPrice: 4200,
-    mmrValue: 7800,
-    image: 'https://upload.wikimedia.org/wikipedia/commons/8/84/BMW_E46_330i_ZHP.jpg',
-    issuesRaw: 'Coolant thermostat code, oil filter housing gasket weeping, front control arm bushings worn, needs tires and smog.',
-    publicHighlights: 'Rare ZHP 6-Speed Performance Package • Fresh Lemförder Control Arms, Cooling Refresh & CA Smogged'
+    buyPrice: 9400,
+    mmrValue: 12900,
+    image: 'https://images.unsplash.com/photo-1606611013016-969c19ba27bb?auto=format&fit=crop&w=960&q=80',
+    issuesRaw: 'Valve cover gasket oil seepage, needs 4 new tires, alignment, and CA smog check.',
+    publicHighlights: 'Turnkey Commuter Sedan • New All-Season Tires, Fresh Gasket Service & CA Smog Certified'
   },
   {
     id: 'MM-103',
-    vin: 'WBAEV33452KL48291',
-    ymm: '2004 BMW 325i Sedan (E46)',
-    mileage: 118400,
-    source: 'Manheim California Lane',
-    category: 'Economy Wholesale',
-    selectedTier: 'tier1',
-    buyPrice: 1950,
-    mmrValue: 4100,
-    image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/BMW_325i_%28E46%29_Washington_DC_Metro_Area%2C_USA.jpg/960px-BMW_325i_%28E46%29_Washington_DC_Metro_Area%2C_USA.jpg',
-    issuesRaw: 'Acquired with no key fob (immobilizer locked), cracked coolant expansion tank, valve cover gasket oil leak, needs smog check.',
-    publicHighlights: 'Economy Wholesale Special • New EWS Key Cut & Programmed In-House, Fresh Expansion Tank & Smogged'
+    vin: 'JTHBE1D25F5049182',
+    ymm: '2015 Lexus IS 350 F-Sport',
+    mileage: 86500,
+    source: 'Bay Area Trade-In',
+    category: 'Sign & Drive',
+    selectedTier: 'tier2',
+    buyPrice: 13200,
+    mmrValue: 16800,
+    image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=960&q=80',
+    issuesRaw: 'Water pump weep-hole coolant seepage, front brake pads worn, spare smart key fob needed.',
+    publicHighlights: '3.5L V6 F-Sport • New OEM Water Pump, Fresh Front Brakes & 2 Smart Key Fobs'
   },
   {
     id: 'MM-104',
-    vin: 'WBAVA33567KX81024',
-    ymm: '2008 BMW 328i Sedan (E90)',
-    mileage: 144800,
-    source: 'Stockton Local Trade-In',
+    vin: '1FTFW1ET4EFA92811',
+    ymm: '2014 Ford F-150 XLT Crew Cab',
+    mileage: 134500,
+    source: 'Stockton Local Acquisition',
     category: 'Economy Wholesale',
     selectedTier: 'tier1',
-    buyPrice: 2300,
-    mmrValue: 4600,
-    image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/BMW_328i_%28E90%29_Washington_DC_Metro_Area%2C_USA.jpg/960px-BMW_328i_%28E90%29_Washington_DC_Metro_Area%2C_USA.jpg',
-    issuesRaw: 'Valve cover gasket oil leak, cylinder 3 ignition coil misfire, needs rear brake pads and CAS smart key fob.',
-    publicHighlights: 'Reliable N52 Inline-6 Commuter • Wholesale Priced to Move • Fresh Gasket, Coils & CAS Key Fob'
+    buyPrice: 7200,
+    mmrValue: 10800,
+    image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=960&q=80',
+    issuesRaw: 'Cylinder 4 ignition coil misfire, thermostat housing coolant leak, needs smog check.',
+    publicHighlights: 'Crew Cab Work Truck • Economy Wholesale Price • New Ignition Coils, Plugs & CA Smogged'
   },
   {
     id: 'MM-105',
-    vin: 'WBAEV53402KM11840',
-    ymm: '2003 BMW 330Ci Coupe (E46 Donor Part-Out)',
-    mileage: 162000,
-    source: 'Salvage / Tow-In',
-    category: 'Part-Outs',
+    vin: 'WBA3A9C55DF491820',
+    ymm: '2013 BMW 335i Sedan',
+    mileage: 116800,
+    source: 'Northern CA Auction',
+    category: 'Economy Wholesale',
     selectedTier: 'tier1',
-    buyPrice: 950,
-    mmrValue: 3600,
-    image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/BMW_E46_ZHP_Coupe_TiAg_Side.jpg/960px-BMW_E46_ZHP_Coupe_TiAg_Side.jpg',
-    issuesRaw: 'Rear quarter collision — parting out healthy M54B30 engine, 5-speed manual swap, black sport seats, DME/EWS key kit, doors & glass.',
-    publicHighlights: 'FULL PART-OUT AVAILABLE: Tested M54B30 Engine, Manual Trans, Sport Interior, EWS/DME Key Set & Body Panels'
+    buyPrice: 4900,
+    mmrValue: 8200,
+    image: 'https://upload.wikimedia.org/wikipedia/commons/8/84/BMW_E46_330i_ZHP.jpg',
+    issuesRaw: 'Acquired with lost key fob, valve cover gasket oil leak, plastic charge pipe crack, needs smog check.',
+    publicHighlights: 'Turbo Inline-6 • Wholesale Special • New Smart Key Programmed In-House, Fresh Gasket & Smogged'
   },
   {
     id: 'MM-106',
-    vin: 'WBAVB13526PT99412',
-    ymm: '2009 BMW 328i Sedan (E90 LCI Part-Out)',
-    mileage: 151200,
-    source: 'Direct Cash-for-Cars Buy',
+    vin: '2HGFB2F81CH519204',
+    ymm: '2012 Honda Civic EX (Donor Part-Out)',
+    mileage: 148200,
+    source: 'Salvage / Tow-In',
     category: 'Part-Outs',
     selectedTier: 'tier1',
-    buyPrice: 800,
-    mmrValue: 3200,
-    image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/BMW_328i_%28E90%29_Washington_DC_Metro_Area%2C_USA_%282%29.jpg/960px-BMW_328i_%28E90%29_Washington_DC_Metro_Area%2C_USA_%282%29.jpg',
-    issuesRaw: 'Front-end damage — parting out N52 engine accessories, automatic transmission, CAS3 module + programmed keys, doors, trunk & wheels.',
-    publicHighlights: 'FULL PART-OUT AVAILABLE: Good N52 Top End, CAS3 + Key Fobs, Clean Interior Trim, Doors, Tail Lights & Alloy Wheels'
+    buyPrice: 850,
+    mmrValue: 3400,
+    image: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=960&q=80',
+    issuesRaw: 'Rear collision — parting out healthy 1.8L engine, automatic transmission, front clip, doors, alternator, starter & alloy wheels.',
+    publicHighlights: 'PART-OUT VEHICLE: Tested 1.8L Engine, Auto Transmission, Front Clip, Doors, ECU/Key Set & Wheels'
   }
 ];
 
@@ -580,7 +578,7 @@ let currentJobQueueFilter = 'All';
 let isAdminUnlocked = false;
 
 // ============================================================================
-// 2B. UNIFIED BUSINESS JOB QUEUE (CATEGORIZED MECHANIC WORK, KEYS, LEADS, SALES)
+// 2B. UNIFIED BUSINESS JOB QUEUE (ALL-MAKES MECHANIC WORK, KEYS, LEADS, SALES)
 // ============================================================================
 let leadsDB = [
   {
@@ -590,68 +588,68 @@ let leadsDB = [
     status: 'Pending Appraisal',
     name: 'Carlos M. (Stockton)',
     phone: '(209) 555-0192',
-    vin: 'WBAVB73567VF88210',
-    ymm: '2007 BMW 335i Coupe (E92)',
-    mileage: 124000,
-    askingPrice: 2900,
-    estMmr: 6400,
-    issues: 'Lost the only key fob, wastegate rattle on cold start, valve cover oil leak, needs rear tires.'
+    vin: '1HGCV1F34JA092811',
+    ymm: '2016 Honda Accord LX',
+    mileage: 128000,
+    askingPrice: 4200,
+    estMmr: 8400,
+    issues: 'Lost the main key fob, check engine light on for O2 sensor, needs front brake pads.'
   },
   {
     id: 'JOB-202',
     category: 'Key Programming',
-    type: 'Key Cutting & Immobilizer',
+    type: 'Key Cutting & Smart Fob',
     status: 'Scheduled Today',
     name: 'Marcus T. (Lodi)',
     phone: '(209) 555-0831',
-    vin: 'WBA3A5C59EF601922',
-    ymm: '2014 BMW 328i (F30)',
-    mileage: 108000,
-    askingPrice: 240,
+    vin: '2T3P1RFV8KW019283',
+    ymm: '2019 Toyota RAV4 XLE',
+    mileage: 64000,
+    askingPrice: 220,
     estMmr: 0,
-    issues: 'Cut & Program New OEM-Style Smart Key Fob (FEM Module) + Clear Lost Key Slot.'
+    issues: 'Cut & Program New Proximity Smart Key Fob (Spare Key).'
   },
   {
     id: 'JOB-203',
     category: 'Oil & Maintenance',
-    type: 'Oil & Cooling Overhaul',
+    type: 'Oil & Cooling Service',
     status: 'In Shop Bay',
     name: 'Devon R. (Stockton)',
     phone: '(510) 555-0148',
-    vin: 'WBAFR7C57DC819201',
-    ymm: '2013 BMW 535i (F10)',
-    mileage: 98000,
-    askingPrice: 680,
+    vin: '1GCVKREC8FZ109284',
+    ymm: '2015 Chevy Silverado 1500',
+    mileage: 112000,
+    askingPrice: 540,
     estMmr: 0,
-    issues: 'Full Synthetic Oil Service + Oil Filter Housing Gasket (OFHG) & Electric Water Pump.'
+    issues: 'Full Synthetic Oil Service + Thermostat, Water Pump & Coolant Flush.'
   },
   {
     id: 'JOB-204',
     category: 'Brake & Suspension',
-    type: 'Brakes & Chassis Service',
+    type: 'Brakes & Suspension Service',
     status: 'Parts Ordered',
     name: 'Alicia K. (Manteca)',
     phone: '(209) 555-0419',
-    vin: 'WBAVB13586PT10294',
-    ymm: '2008 BMW 328i (E90)',
-    mileage: 132000,
-    askingPrice: 520,
+    vin: '1N4AL3AP8HC291044',
+    ymm: '2017 Nissan Altima SR',
+    mileage: 98000,
+    askingPrice: 460,
     estMmr: 0,
-    issues: 'Front & Rear Zimmermann Coated Rotors + Akebono Ceramic Pads + Front Control Arm Bushings.'
+    issues: 'Front & Rear Ceramic Brake Pads + Coated Rotors + Front Sway Bar Links.'
   },
   {
     id: 'JOB-205',
     category: 'Diagnostics & Smog',
     type: 'Diagnostics & Smog Prep',
     status: 'Waiting Inspection',
-    name: 'ramon G. (Stockton)',
+    name: 'Ramon G. (Stockton)',
     phone: '(209) 555-0774',
-    vin: 'WBAEV53413KM44910',
-    ymm: '2004 BMW 330i (E46)',
-    mileage: 149000,
+    vin: 'WBA3A5C59EF601922',
+    ymm: '2014 BMW 328i',
+    mileage: 119000,
     askingPrice: 185,
     estMmr: 0,
-    issues: 'Check Engine Light P0171/P0174 Lean Code Smoke Test + Pre-Smog Readiness Drive Cycle.'
+    issues: 'Check Engine Light Smoke Test + Pre-Smog Diagnostic & Drive Cycle.'
   },
   {
     id: 'JOB-206',
@@ -660,12 +658,12 @@ let leadsDB = [
     status: 'Deposit Received',
     name: 'Jordan P. (Sacramento)',
     phone: '(916) 555-0311',
-    vin: 'WBAEV53494KM90112',
-    ymm: '2005 BMW 330i ZHP Sedan (MM-102)',
-    mileage: 131000,
-    askingPrice: 10600,
-    estMmr: 7800,
-    issues: 'Buyer scheduled for Saturday pickup — CA DMV Reg/Title transfer & STAR Smog certificate ready.'
+    vin: '4T1B11HK5JU610294',
+    ymm: '2018 Toyota Camry SE (MM-101)',
+    mileage: 78400,
+    askingPrice: 15800,
+    estMmr: 14200,
+    issues: 'Buyer scheduled for Saturday test drive & pickup — CA DMV paperwork & Smog certificate ready.'
   }
 ];
 
@@ -991,14 +989,26 @@ function switchPitWallTab(tabName) {
     if (!sections[k] || !buttons[k]) return;
     if (k === tabName) {
       sections[k].classList.remove('hidden');
-      buttons[k].className = 'p-4 rounded-2xl border-2 text-left transition-all flex items-center gap-3.5 bg-maki-lightBlue text-slate-950 border-maki-lightBlue shadow-lg shadow-blue-500/20';
+      buttons[k].className = 'p-3.5 rounded-xl border text-left transition-all flex items-center gap-3.5 bg-maki-lightBlue text-slate-950 border-maki-lightBlue font-semibold shadow-sm';
     } else {
       sections[k].classList.add('hidden');
-      buttons[k].className = 'p-4 rounded-2xl border-2 text-left transition-all flex items-center gap-3.5 bg-slate-950/80 text-slate-300 border-slate-800 hover:border-slate-600';
+      buttons[k].className = 'p-3.5 rounded-xl border text-left transition-all flex items-center gap-3.5 bg-slate-900/90 text-slate-200 border-slate-800 hover:border-slate-700';
     }
   });
 
   renderAdminDashboard();
+}
+
+function appendQuickIssue(issueText) {
+  const textarea = document.getElementById('new-car-issues');
+  if (!textarea) return;
+  const current = textarea.value.trim();
+  if (!current) {
+    textarea.value = issueText;
+  } else if (!current.toLowerCase().includes(issueText.toLowerCase())) {
+    textarea.value = current.replace(/,\s*$/, '') + ', ' + issueText;
+  }
+  textarea.focus();
 }
 
 function filterPublicInventory(filterValue) {
@@ -1014,9 +1024,9 @@ function filterPublicInventory(filterValue) {
     const btn = buttonMap[k];
     if (!btn) return;
     if (k === filterValue) {
-      btn.className = 'px-5 py-2.5 rounded-xl text-xs font-semibold bg-maki-lightBlue text-slate-950 transition-all flex items-center gap-2 shadow';
+      btn.className = 'px-5 py-2.5 rounded-xl text-sm font-semibold bg-maki-lightBlue text-slate-950 transition-all flex items-center gap-2 shadow-sm';
     } else {
-      btn.className = 'px-5 py-2.5 rounded-xl text-xs font-semibold bg-slate-950/60 text-slate-300 border border-slate-800 hover:border-slate-700 transition-all flex items-center gap-2';
+      btn.className = 'px-5 py-2.5 rounded-xl text-sm font-semibold bg-slate-950/60 text-slate-300 border border-slate-800 hover:border-slate-700 transition-all flex items-center gap-2';
     }
   });
 
@@ -1024,17 +1034,17 @@ function filterPublicInventory(filterValue) {
   const subtitleEl = document.getElementById('inventory-section-subtitle');
   if (headingEl && subtitleEl) {
     if (filterValue === 'Sign & Drive') {
-      headingEl.textContent = 'SIGN & DRIVE CERTIFIED VEHICLES';
+      headingEl.textContent = 'Sign & Drive Certified Vehicles';
       subtitleEl.textContent = 'Turnkey vehicles personally inspected, serviced, smogged, and keyed in-house by our Master Mechanic—ready to drive home today.';
     } else if (filterValue === 'Economy Wholesale') {
-      headingEl.textContent = 'ECONOMY WHOLESALE SPECIALS';
-      subtitleEl.textContent = 'Running, driving, smogged commuter & project cars priced at wholesale levels for maximum value.';
+      headingEl.textContent = 'Economy Wholesale Specials';
+      subtitleEl.textContent = 'Running, driving, smogged commuter & work vehicles priced near wholesale for maximum value.';
     } else if (filterValue === 'Part-Outs') {
-      headingEl.textContent = 'DONOR PART-OUT VEHICLES';
-      subtitleEl.textContent = 'OEM engines, transmissions, ECUs/CAS key modules, interior trim, and body panels pulled by our Master Mechanic in Stockton.';
+      headingEl.textContent = 'Donor Part-Out Vehicles';
+      subtitleEl.textContent = 'Tested OEM engines, transmissions, electronics, interior trim, and body panels pulled by our shop in Stockton.';
     } else {
-      headingEl.textContent = 'ALL MAKI INVENTORY & PART-OUTS';
-      subtitleEl.textContent = 'Browse our full selection of turnkey Sign & Drive cars, budget Economy Wholesale specials, and donor Part-Out vehicles.';
+      headingEl.textContent = 'All Inventory & Part-Outs';
+      subtitleEl.textContent = 'Browse our full selection of turnkey Sign & Drive vehicles, budget Economy Wholesale specials, and donor Part-Out cars.';
     }
   }
 
@@ -1056,41 +1066,41 @@ function renderPublicInventory() {
 
     let categoryBadge = '';
     if (car.category === 'Sign & Drive') {
-      categoryBadge = '<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Sign & Drive Certified</span>';
+      categoryBadge = '<span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Sign & Drive</span>';
     } else if (isWholesale) {
-      categoryBadge = '<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-maki-lightBlue/20 text-maki-lightBlue border border-maki-lightBlue/40">Economy Wholesale Price</span>';
+      categoryBadge = '<span class="px-3 py-1 rounded-full text-xs font-semibold bg-maki-lightBlue/20 text-maki-lightBlue border border-maki-lightBlue/40">Economy Wholesale</span>';
     } else {
-      categoryBadge = '<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-red-500/25 text-red-300 border border-red-500/40">Donor Part-Out Vehicle</span>';
+      categoryBadge = '<span class="px-3 py-1 rounded-full text-xs font-semibold bg-red-500/25 text-red-300 border border-red-500/40">Part-Out Donor</span>';
     }
 
     const priceDisplay = isPartOut
-      ? `<div class="font-display font-bold text-lg text-maki-red">PART-OUT</div><div class="text-[10px] text-slate-400 uppercase">Parts From $45+</div>`
-      : `<div class="font-display font-bold text-xl text-maki-lightBlue">$${activePlan.estSalePrice.toLocaleString()}</div><div class="text-[10px] text-slate-400 uppercase">${car.category}</div>`;
+      ? `<div class="font-display font-bold text-lg text-maki-red">Part-Out</div><div class="text-xs text-slate-400">Parts From $45+</div>`
+      : `<div class="font-display font-bold text-xl text-maki-lightBlue">$${activePlan.estSalePrice.toLocaleString()}</div><div class="text-xs text-slate-400">${car.category}</div>`;
 
     const detailsBox = isPartOut
-      ? `<p class="text-xs text-slate-300 bg-slate-900/90 p-3 rounded-xl border border-red-500/20">
-           <strong class="text-red-400">Available Donor Parts & Assemblies:</strong><br/>
+      ? `<div class="text-sm text-slate-300 bg-slate-900/90 p-3.5 rounded-xl border border-slate-800 leading-relaxed">
+           <strong class="text-white block mb-1">Available Donor Parts:</strong>
            ${car.publicHighlights || car.issuesRaw}
-         </p>`
-      : `<p class="text-xs text-slate-300 bg-slate-900/90 p-3 rounded-xl border border-slate-800">
-           <strong class="text-maki-lightBlue">Master Mechanic Completed Work:</strong><br/>
+         </div>`
+      : `<div class="text-sm text-slate-300 bg-slate-900/90 p-3.5 rounded-xl border border-slate-800 leading-relaxed">
+           <strong class="text-white block mb-1">Completed Shop Work:</strong>
            ${activePlan.items.map((i) => i.task).join(' • ')}
-         </p>`;
+         </div>`;
 
     return `
-      <div class="rounded-2xl bg-maki-card border border-slate-800 overflow-hidden flex flex-col justify-between hover:border-slate-700 transition-all group">
+      <div class="rounded-2xl bg-maki-card border border-slate-700/80 overflow-hidden flex flex-col justify-between hover:border-maki-lightBlue/50 transition-all shadow-sm group">
         <div>
           <div class="relative h-52 bg-slate-950 overflow-hidden">
             <img src="${car.image}" alt="${car.ymm}" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
             <div class="absolute top-3 left-3 flex gap-2">
               ${categoryBadge}
             </div>
-            <div class="absolute bottom-3 right-3 px-2.5 py-1 rounded-lg bg-maki-dark/90 backdrop-blur border border-slate-700 text-xs font-mono text-slate-300">
+            <div class="absolute bottom-3 right-3 px-3 py-1 rounded-lg bg-maki-dark/90 backdrop-blur border border-slate-700 text-xs font-mono text-slate-200">
               ${car.mileage.toLocaleString()} mi
             </div>
           </div>
 
-          <div class="p-5 space-y-3">
+          <div class="p-5 space-y-3.5">
             <div class="flex items-start justify-between gap-2">
               <h3 class="font-display font-bold text-lg text-white leading-snug">${car.ymm}</h3>
               <div class="text-right shrink-0">
@@ -1100,18 +1110,18 @@ function renderPublicInventory() {
 
             ${detailsBox}
 
-            <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1">
+            <div class="flex items-center justify-between text-xs text-slate-400 pt-1">
               <span>VIN: <code class="text-slate-300">${car.vin.slice(0, 11)}...</code></span>
               <span class="text-emerald-400 font-medium">${isPartOut ? 'Stockton Yard' : 'CA Smog & Key Ready'}</span>
             </div>
           </div>
         </div>
 
-        <div class="p-4 pt-0 flex gap-2">
-          <a href="tel:5104184822" class="flex-1 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-center text-xs font-semibold text-white transition-colors">
-            ${isPartOut ? 'Call For Parts Availability' : 'Call (510) 418-4822'}
+        <div class="p-5 pt-0 flex gap-2.5">
+          <a href="tel:5104184822" class="flex-1 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-center text-xs sm:text-sm font-semibold text-white transition-colors">
+            ${isPartOut ? 'Call For Parts' : 'Call (510) 418-4822'}
           </a>
-          <button type="button" onclick="inquireOnVehicle('${car.id}')" class="px-3.5 py-2.5 rounded-xl bg-maki-lightBlue/15 hover:bg-maki-lightBlue/25 border border-maki-lightBlue/30 text-xs font-semibold text-maki-lightBlue transition-colors">
+          <button type="button" onclick="inquireOnVehicle('${car.id}')" class="px-4 py-2.5 rounded-xl bg-maki-lightBlue hover:bg-sky-300 text-xs sm:text-sm font-bold text-slate-950 transition-colors">
             ${isPartOut ? 'Request Part' : 'Schedule Test Drive'}
           </button>
         </div>
@@ -1151,14 +1161,15 @@ function inquireOnVehicle(carId) {
 }
 
 // ============================================================================
-// 5. PIT CREW MODULES:
-//    - MODULE 02: ACQUIRED VEHICLES DATABASE & TIER RULING DOSSIER
+// 5. PIT CREW CLEAN APP WORKSPACE MODULES:
+//    - MODULE 02: VEHICLE DATABASE & TIER RULING DOSSIER
 //    - MODULE 03: STANDALONE CONDITION CALCULATOR
 //    - MODULE 04: UNIFIED BUSINESS JOB QUEUE
 // ============================================================================
 
 function renderAdminDashboard() {
-  document.getElementById('kpi-total-cars').textContent = vehiclesDB.length;
+  const totalCarsEl = document.getElementById('kpi-total-cars');
+  if (totalCarsEl) totalCarsEl.textContent = vehiclesDB.length;
 
   const totalCapital = vehiclesDB.reduce((sum, v) => {
     const plan = v.plans[v.selectedTier];
@@ -1169,9 +1180,13 @@ function renderAdminDashboard() {
     return sum + plan.netProfit;
   }, 0);
 
-  document.getElementById('kpi-capital').textContent = '$' + totalCapital.toLocaleString();
-  document.getElementById('kpi-profit').textContent = '+$' + totalProfit.toLocaleString();
-  document.getElementById('kpi-leads').textContent = leadsDB.length + ' Active';
+  const capEl = document.getElementById('kpi-capital');
+  const profEl = document.getElementById('kpi-profit');
+  const leadsEl = document.getElementById('kpi-leads');
+
+  if (capEl) capEl.textContent = '$' + totalCapital.toLocaleString();
+  if (profEl) profEl.textContent = '+$' + totalProfit.toLocaleString();
+  if (leadsEl) leadsEl.textContent = leadsDB.length + ' Active';
 
   const listEl = document.getElementById('admin-vehicle-list');
   if (listEl) {
@@ -1179,22 +1194,22 @@ function renderAdminDashboard() {
       const isSelected = car.id === selectedVehicleId;
       const activePlan = car.plans[car.selectedTier];
       return `
-        <div onclick="selectAdminVehicle('${car.id}')" class="p-3.5 rounded-xl border transition-all cursor-pointer ${
+        <div onclick="selectAdminVehicle('${car.id}')" class="p-4 rounded-xl border transition-all cursor-pointer ${
           isSelected
-            ? 'bg-slate-900 border-maki-lightBlue shadow-md shadow-blue-500/10'
-            : 'bg-slate-950/60 border-slate-800/80 hover:border-slate-700'
+            ? 'bg-slate-900 border-maki-lightBlue ring-1 ring-maki-lightBlue shadow-sm'
+            : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
         }">
-          <div class="flex items-center justify-between gap-2">
-            <div class="flex items-center gap-2.5">
-              <img src="${car.image}" alt="${car.ymm}" class="w-11 h-11 rounded-lg object-cover border border-slate-700 shrink-0" />
-              <div>
-                <div class="font-display font-bold text-sm text-white">${car.ymm}</div>
-                <div class="text-[11px] text-slate-400">${car.category} • Buy: <strong class="text-slate-200">$${car.buyPrice.toLocaleString()}</strong></div>
+          <div class="flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+              <img src="${car.image}" alt="${car.ymm}" class="w-12 h-12 rounded-xl object-cover border border-slate-700 shrink-0" />
+              <div class="min-w-0">
+                <div class="font-display font-bold text-sm sm:text-base text-white truncate">${car.ymm}</div>
+                <div class="text-xs text-slate-400 mt-0.5">${car.category} • Buy: <strong class="text-slate-200">$${car.buyPrice.toLocaleString()}</strong></div>
               </div>
             </div>
-            <div class="text-right">
-              <div class="text-xs font-bold text-emerald-400">+$${activePlan.netProfit.toLocaleString()}</div>
-              <div class="text-[10px] text-slate-400 uppercase">${car.selectedTier.toUpperCase()}</div>
+            <div class="text-right shrink-0">
+              <div class="text-sm font-bold text-emerald-400">+$${activePlan.netProfit.toLocaleString()}</div>
+              <div class="text-xs text-slate-400">${car.selectedTier.toUpperCase()}</div>
             </div>
           </div>
         </div>
@@ -1248,151 +1263,161 @@ function renderDatabaseRulingPanel() {
   const activePlan = car.plans[car.selectedTier];
 
   panel.innerHTML = `
-    <!-- Top Vehicle Banner -->
+    <!-- Top Vehicle Summary Header -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-800">
       <div class="flex items-center gap-4">
-        <img src="${car.image}" alt="${car.ymm}" class="w-16 h-16 rounded-xl object-cover border border-slate-700" />
+        <img src="${car.image}" alt="${car.ymm}" class="w-16 h-16 rounded-xl object-cover border border-slate-700 shrink-0" />
         <div>
-          <div class="flex items-center gap-2">
-            <span class="px-2 py-0.5 rounded bg-slate-800 text-maki-lightBlue font-mono text-[11px]">${car.id}</span>
-            <span class="text-xs text-slate-400 font-mono">VIN: ${car.vin}</span>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-slate-900 border border-slate-700 text-maki-lightBlue font-mono text-xs font-semibold">${car.id}</span>
+            <span class="text-xs sm:text-sm text-slate-400 font-mono">VIN: ${car.vin}</span>
           </div>
-          <h2 class="font-display font-bold text-2xl text-white mt-0.5">${car.ymm}</h2>
-          <p class="text-xs text-slate-400">${car.mileage.toLocaleString()} miles • Buy: $${car.buyPrice.toLocaleString()} • MMR: $${car.mmrValue.toLocaleString()}</p>
+          <h2 class="font-display font-bold text-2xl text-white mt-1">${car.ymm}</h2>
+          <p class="text-sm text-slate-300 mt-0.5">
+            ${car.mileage.toLocaleString()} miles • Buy Price: <strong class="text-white">$${car.buyPrice.toLocaleString()}</strong> • Market Value: <strong class="text-white">$${car.mmrValue.toLocaleString()}</strong>
+          </p>
         </div>
       </div>
 
-      <div class="flex flex-wrap items-center gap-2">
-        <button onclick="cycleVehicleCategory('${car.id}')" class="px-3.5 py-2 rounded-xl border text-xs font-semibold bg-slate-900 border-slate-700 text-slate-200 hover:border-maki-lightBlue">
-          Lot: ${car.category}
+      <div class="flex flex-wrap items-center gap-2.5">
+        <button onclick="cycleVehicleCategory('${car.id}')" class="px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold bg-slate-900 border-slate-700 text-slate-200 hover:border-maki-lightBlue">
+          Lot: ${car.category} (Switch)
         </button>
-        <button onclick="switchPitWallTab('calculator')" class="px-4 py-2 rounded-xl bg-maki-lightBlue hover:bg-blue-400 text-slate-950 font-display font-bold text-xs uppercase tracking-wider flex items-center gap-1.5">
-          Open Condition Calculator &rarr;
+        <button onclick="switchPitWallTab('calculator')" class="px-4 py-2.5 rounded-xl bg-maki-lightBlue hover:bg-sky-300 text-slate-950 font-display font-bold text-xs sm:text-sm flex items-center gap-1.5">
+          <span>Open Calculator</span>
+          <span>&rarr;</span>
         </button>
       </div>
     </div>
 
     <!-- 1. TIER STATUS RULING & INVESTMENT VERDICT CARD -->
-    <div class="p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-maki-lightBlue/40 space-y-3">
+    <div class="p-5 sm:p-6 rounded-2xl bg-slate-900/90 border border-slate-700 space-y-4">
       <div class="flex flex-wrap items-center justify-between gap-2">
-        <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+        <span class="px-3.5 py-1 rounded-full text-xs sm:text-sm font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
           ${ruling.verdictBadge}
         </span>
-        <span class="text-xs font-mono text-maki-lightBlue">
-          Current Assigned Tier: <strong>${activePlan.label}</strong> (Est. Profit: +$${activePlan.netProfit.toLocaleString()})
+        <span class="text-xs sm:text-sm text-slate-300">
+          Active Tier: <strong class="text-maki-lightBlue">${activePlan.label}</strong> (Est. Profit: <strong class="text-emerald-400">+$${activePlan.netProfit.toLocaleString()}</strong>)
         </span>
       </div>
-      <div class="space-y-1.5 pt-1">
-        <h4 class="font-display font-bold text-sm uppercase tracking-wider text-white">Why This Tier Ruling Was Assigned:</h4>
-        <p class="text-xs text-slate-300 leading-relaxed">${ruling.rulingExplanation}</p>
+
+      <div class="space-y-1.5">
+        <h4 class="font-display font-bold text-base text-white">Why This Tier Was Assigned</h4>
+        <p class="text-sm text-slate-300 leading-relaxed">${ruling.rulingExplanation}</p>
       </div>
-      <div class="p-3.5 rounded-xl bg-slate-950/90 border border-slate-800 text-xs text-emerald-300 font-medium">
-        <strong class="text-white uppercase tracking-wider block mb-0.5">Investment Worthiness Verdict:</strong>
+
+      <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-sm text-emerald-300 leading-relaxed">
+        <strong class="text-white block mb-1">Investment Recommendation:</strong>
         ${ruling.investmentVerdict}
       </div>
     </div>
 
-    <!-- 2. WHAT TO IMPROVE TO MOVE THIS VEHICLE TO A HIGHER TIER -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      
-      <!-- Step-Up Path A: Tier 1 (Wholesale) -> Tier 2 (Sign & Drive Retail) -->
-      <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3 flex flex-col justify-between">
-        <div class="space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-[11px] font-mono font-bold uppercase text-maki-lightBlue">UPGRADE PATH A // TIER 1 &rarr; TIER 2</span>
-            <span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 text-[11px] font-mono font-bold">+${ruling.roiT1toT2}% Parts ROI</span>
-          </div>
-          <h4 class="font-display font-bold text-sm text-white">Requirements to Move to "Sign & Drive" Retail</h4>
-          <div class="space-y-2 pt-1">
-            ${ruling.upgradeStepsT1toT2.map((u) => `
-              <div class="p-2.5 rounded-lg bg-slate-900 border border-slate-800/80 text-xs">
-                <div class="flex items-center justify-between font-semibold text-white">
-                  <span>${u.category}</span>
-                  <span class="font-mono text-maki-lightBlue">+$${u.extraCost} parts (${u.extraHours >= 0 ? '+' + u.extraHours : u.extraHours}h)</span>
+    <!-- 2. STEP-BY-STEP UPGRADE PATHS -->
+    <div class="space-y-3">
+      <h3 class="font-display font-bold text-lg text-white">How to Move This Vehicle to a Higher Tier</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <!-- Step-Up Path A: Tier 1 (Wholesale) -> Tier 2 (Sign & Drive Retail) -->
+        <div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-maki-lightBlue">Tier 1 &rarr; Tier 2 (Sign & Drive)</span>
+              <span class="px-2.5 py-0.5 rounded-md bg-emerald-500/15 text-emerald-300 text-xs font-semibold">+${ruling.roiT1toT2}% Parts ROI</span>
+            </div>
+            <div class="space-y-2">
+              ${ruling.upgradeStepsT1toT2.map((u) => `
+                <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-sm">
+                  <div class="flex items-center justify-between font-semibold text-white">
+                    <span>${u.category}</span>
+                    <span class="font-mono text-xs text-maki-lightBlue">+$${u.extraCost} (${u.extraHours >= 0 ? '+' + u.extraHours : u.extraHours}h)</span>
+                  </div>
+                  <p class="text-xs text-slate-300 mt-1">${u.toTask}</p>
                 </div>
-                <p class="text-[11px] text-slate-400 mt-0.5">Upgrade to: <span class="text-slate-200">${u.toTask}</span></p>
-              </div>
-            `).join('')}
+              `).join('')}
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between gap-2 text-sm">
+            <div>
+              <span class="text-slate-400 block text-xs">Extra Spend vs. Profit Gain</span>
+              <strong class="text-white">+$${ruling.extraPartsT1toT2} Parts &rarr; <span class="text-emerald-400">+$${ruling.extraProfitT1toT2.toLocaleString()}</span></strong>
+            </div>
+            <button onclick="setVehicleTier('${car.id}', 'tier2')" class="px-3.5 py-2 rounded-xl bg-maki-lightBlue hover:bg-sky-300 text-slate-950 font-bold text-xs shrink-0">
+              Set Tier 2
+            </button>
           </div>
         </div>
-        <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
-          <div>
-            <span class="text-slate-400 block text-[10px]">Extra Parts / Net Gain</span>
-            <strong class="text-white">+$${ruling.extraPartsT1toT2} Parts &rarr; <span class="text-emerald-400">+$${ruling.extraProfitT1toT2.toLocaleString()} Profit</span></strong>
-          </div>
-          <button onclick="setVehicleTier('${car.id}', 'tier2')" class="px-3 py-1.5 rounded-lg bg-maki-lightBlue text-slate-950 font-bold text-xs">
-            Promote to Tier 2
-          </button>
-        </div>
-      </div>
 
-      <!-- Step-Up Path B: Tier 2 (Sign & Drive) -> Tier 3 (Full Restoration) -->
-      <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3 flex flex-col justify-between">
-        <div class="space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-[11px] font-mono font-bold uppercase text-maki-red">UPGRADE PATH B // TIER 2 &rarr; TIER 3</span>
-            <span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 text-[11px] font-mono font-bold">+${ruling.roiT2toT3}% Parts ROI</span>
-          </div>
-          <h4 class="font-display font-bold text-sm text-white">Requirements for "Full Enthusiast Restoration"</h4>
-          <div class="space-y-2 pt-1">
-            ${ruling.upgradeStepsT2toT3.map((u) => `
-              <div class="p-2.5 rounded-lg bg-slate-900 border border-slate-800/80 text-xs">
-                <div class="flex items-center justify-between font-semibold text-white">
-                  <span>${u.category}</span>
-                  <span class="font-mono text-maki-red">+$${u.extraCost} parts (+${u.extraHours}h)</span>
+        <!-- Step-Up Path B: Tier 2 (Sign & Drive) -> Tier 3 (Full Restoration) -->
+        <div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Tier 2 &rarr; Tier 3 (Full Recon)</span>
+              <span class="px-2.5 py-0.5 rounded-md bg-emerald-500/15 text-emerald-300 text-xs font-semibold">+${ruling.roiT2toT3}% Parts ROI</span>
+            </div>
+            <div class="space-y-2">
+              ${ruling.upgradeStepsT2toT3.map((u) => `
+                <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-sm">
+                  <div class="flex items-center justify-between font-semibold text-white">
+                    <span>${u.category}</span>
+                    <span class="font-mono text-xs text-amber-300">+$${u.extraCost} (+${u.extraHours}h)</span>
+                  </div>
+                  <p class="text-xs text-slate-300 mt-1">${u.toTask}</p>
                 </div>
-                <p class="text-[11px] text-slate-400 mt-0.5">Upgrade to: <span class="text-slate-200">${u.toTask}</span></p>
-              </div>
-            `).join('')}
+              `).join('')}
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between gap-2 text-sm">
+            <div>
+              <span class="text-slate-400 block text-xs">Extra Spend vs. Profit Gain</span>
+              <strong class="text-white">+$${ruling.extraPartsT2toT3} Parts &rarr; <span class="text-emerald-400">+$${ruling.extraProfitT2toT3.toLocaleString()}</span></strong>
+            </div>
+            <button onclick="setVehicleTier('${car.id}', 'tier3')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 font-bold text-xs shrink-0">
+              Set Tier 3
+            </button>
           </div>
         </div>
-        <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
-          <div>
-            <span class="text-slate-400 block text-[10px]">Extra Parts / Net Gain</span>
-            <strong class="text-white">+$${ruling.extraPartsT2toT3} Parts &rarr; <span class="text-emerald-400">+$${ruling.extraProfitT2toT3.toLocaleString()} Profit</span></strong>
-          </div>
-          <button onclick="setVehicleTier('${car.id}', 'tier3')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 font-bold text-xs">
-            Promote to Tier 3
-          </button>
-        </div>
-      </div>
 
+      </div>
     </div>
 
-    <!-- 3. CHASSIS & MILEAGE-SPECIFIC MECHANICAL INTELLIGENCE DATABASE -->
-    <div class="p-5 rounded-xl bg-slate-950 border border-slate-800 space-y-3">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 border-b border-slate-800">
+    <!-- 3. COLLAPSIBLE MAKE / MODEL MILEAGE SERVICE GUIDE (KEEPS SCREEN CLEAN) -->
+    <details class="group rounded-2xl bg-slate-900/70 border border-slate-800 overflow-hidden">
+      <summary class="p-4 sm:p-5 cursor-pointer flex items-center justify-between gap-3 select-none hover:bg-slate-900 transition-colors">
         <div>
-          <span class="text-[10px] font-mono uppercase text-maki-lightBlue">VERIFIED PLATFORM SERVICE TABLE // NOT GENERIC AI</span>
-          <h4 class="font-display font-bold text-base text-white">${chassisIntel.platform} — High-ROI Repairs at ${car.mileage.toLocaleString()} Mi</h4>
+          <span class="text-xs font-semibold text-maki-lightBlue block">Make & Model Service Reference</span>
+          <h4 class="font-display font-bold text-base text-white mt-0.5">
+            ${chassisIntel.platform} — Common Repairs Worth Doing at ${car.mileage.toLocaleString()} Miles
+          </h4>
         </div>
-        <span class="text-xs font-mono text-slate-400">Odometer Checkpoints</span>
-      </div>
-      <div class="space-y-2">
+        <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-xs font-semibold text-slate-300 group-open:bg-maki-lightBlue group-open:text-slate-950 transition-colors shrink-0">
+          Tap to Expand / Hide
+        </span>
+      </summary>
+      <div class="p-4 sm:p-5 pt-0 border-t border-slate-800 space-y-2.5 mt-3">
         ${chassisIntel.checkpoints.map((cp) => `
-          <div class="p-3 rounded-lg bg-slate-900/90 border ${cp.isDueAtCurrentMileage ? 'border-amber-500/40' : 'border-slate-800'} flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-            <div class="space-y-0.5">
-              <div class="flex items-center gap-2">
-                <span class="px-2 py-0.5 rounded font-mono text-[10px] font-bold ${
+          <div class="p-3.5 rounded-xl bg-slate-950 border ${cp.isDueAtCurrentMileage ? 'border-amber-500/40' : 'border-slate-800'} flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-sm">
+            <div class="space-y-1">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-md font-mono text-xs font-semibold ${
                   cp.isDueAtCurrentMileage ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-400'
-                }">${cp.minMiles.toLocaleString()}+ MI INTERVAL</span>
+                }">${cp.minMiles.toLocaleString()}+ mi</span>
                 <strong class="text-white">${cp.item}</strong>
-                <span class="text-[11px] font-mono text-emerald-400">[${cp.roiVerdict}]</span>
+                <span class="text-xs font-semibold text-emerald-400">(${cp.roiVerdict})</span>
               </div>
-              <p class="text-slate-400 text-[11px]">${cp.note}</p>
+              <p class="text-slate-300 text-xs sm:text-sm">${cp.note}</p>
             </div>
-            <div class="flex items-center gap-3 shrink-0 font-mono">
+            <div class="flex items-center gap-4 shrink-0 font-mono text-sm">
               <span class="text-slate-400">${cp.shopHours} hrs</span>
-              <span class="text-white font-bold">$${cp.oemPartCost} OEM</span>
+              <span class="text-white font-bold">$${cp.oemPartCost} Parts</span>
             </div>
           </div>
         `).join('')}
       </div>
-    </div>
+    </details>
   `;
 }
 
-// Renders Section 03: Standalone Condition Calculator
+// Renders Module 03: Standalone Condition Calculator
 function renderSelectedReconAnalyzer() {
   const panel = document.getElementById('recon-analyzer-panel');
   const car = vehiclesDB.find((v) => v.id === selectedVehicleId) || vehiclesDB[0];
@@ -1408,29 +1433,29 @@ function renderSelectedReconAnalyzer() {
     const t = car.plans[tKey];
     const isChosen = car.selectedTier === tKey;
     return `
-      <div onclick="setVehicleTier('${car.id}', '${tKey}')" class="p-4 rounded-xl border cursor-pointer transition-all ${
+      <div onclick="setVehicleTier('${car.id}', '${tKey}')" class="p-5 rounded-xl border cursor-pointer transition-all ${
         isChosen
-          ? 'bg-slate-900 border-maki-lightBlue ring-1 ring-maki-lightBlue'
+          ? 'bg-slate-900 border-maki-lightBlue ring-1 ring-maki-lightBlue shadow-sm'
           : 'bg-slate-950/70 border-slate-800 hover:border-slate-700'
       }">
-        <div class="flex items-center justify-between mb-1">
-          <span class="font-display font-bold text-xs uppercase tracking-wider ${
-            isChosen ? 'text-maki-lightBlue' : 'text-slate-300'
+        <div class="flex items-center justify-between mb-2">
+          <span class="font-display font-bold text-sm ${
+            isChosen ? 'text-maki-lightBlue' : 'text-white'
           }">${t.label}</span>
-          ${isChosen ? '<span class="px-2 py-0.5 rounded bg-maki-lightBlue text-slate-950 text-[10px] font-bold">ACTIVE</span>' : ''}
+          ${isChosen ? '<span class="px-2.5 py-0.5 rounded-md bg-maki-lightBlue text-slate-950 text-xs font-bold">Active</span>' : ''}
         </div>
-        <div class="grid grid-cols-3 gap-2 pt-2 mt-2 border-t border-slate-800/80 text-xs">
+        <div class="grid grid-cols-3 gap-2 pt-3 mt-2 border-t border-slate-800 text-sm">
           <div>
-            <span class="text-[10px] text-slate-400 block">Parts Cost</span>
-            <strong class="text-white">$${t.partsCost.toLocaleString()}</strong>
+            <span class="text-xs text-slate-400 block">Parts Cost</span>
+            <strong class="text-white font-mono">$${t.partsCost.toLocaleString()}</strong>
           </div>
           <div>
-            <span class="text-[10px] text-slate-400 block">Target Sale</span>
-            <strong class="text-slate-200">$${t.estSalePrice.toLocaleString()}</strong>
+            <span class="text-xs text-slate-400 block">Target Sale</span>
+            <strong class="text-slate-200 font-mono">$${t.estSalePrice.toLocaleString()}</strong>
           </div>
           <div>
-            <span class="text-[10px] text-slate-400 block">Est. Net Profit</span>
-            <strong class="text-emerald-400">+$${t.netProfit.toLocaleString()}</strong>
+            <span class="text-xs text-slate-400 block">Net Profit</span>
+            <strong class="text-emerald-400 font-mono">+$${t.netProfit.toLocaleString()}</strong>
           </div>
         </div>
       </div>
@@ -1438,100 +1463,99 @@ function renderSelectedReconAnalyzer() {
   }).join('');
 
   panel.innerHTML = `
-    <!-- Standalone Condition Calculator Top Bar with Vehicle Switcher -->
+    <!-- Top Bar with Vehicle Switcher -->
     <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-slate-800">
       <div>
-        <span class="text-xs font-mono uppercase text-emerald-400">STEP 03 // STANDALONE VEHICLE CONDITION CALCULATOR</span>
-        <h2 class="font-display font-bold italic text-2xl text-white mt-0.5">CONDITION CALCULATOR & 3-TIER PROFIT SIMULATOR</h2>
+        <span class="text-xs font-bold uppercase tracking-wider text-maki-lightBlue">Module 3 of 4</span>
+        <h2 class="font-display font-bold text-2xl sm:text-3xl text-white mt-0.5">Condition Calculator</h2>
+        <p class="text-sm text-slate-300 mt-0.5">Compare repair tiers, parts cost, and profit side-by-side.</p>
       </div>
       <div class="flex flex-wrap items-center gap-3">
-        <select onchange="selectAdminVehicle(this.value)" class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs font-semibold text-white">
+        <select onchange="selectAdminVehicle(this.value)" class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm font-semibold text-white">
           ${vehicleSelectorOptions}
         </select>
-        <button onclick="switchPitWallTab('database')" class="px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-maki-lightBlue">
-          &larr; Back to Tier Ruling Dossier
+        <button onclick="switchPitWallTab('database')" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs sm:text-sm font-semibold text-maki-lightBlue">
+          &larr; Vehicle Dossier
         </button>
       </div>
     </div>
 
-    <!-- Raw Mechanic Inspection Note -->
-    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-      <div class="flex items-center justify-between">
-        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Logged Condition & Key Inspection Note (${car.ymm})</span>
-        <span class="text-[11px] text-maki-lightBlue">Edit below (add "lost key", "turbo", "coolant", etc.) to recalculate live</span>
+    <!-- Editable Mechanic Notes -->
+    <div class="p-4 sm:p-5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2.5">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <label class="text-sm font-semibold text-white">Inspection Notes for ${car.ymm}</label>
+        <span class="text-xs text-slate-400">Add or remove issues below and click Recalculate</span>
       </div>
-      <div class="flex gap-2">
-        <input type="text" id="live-issue-editor" value="${car.issuesRaw}" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-xs text-white" />
-        <button onclick="recalculateVehicleIssues('${car.id}')" class="px-4 py-2 rounded-lg bg-maki-lightBlue text-slate-950 font-bold text-xs shrink-0 hover:bg-blue-400">
-          Recalculate Condition
+      <div class="flex flex-col sm:flex-row gap-2.5">
+        <input type="text" id="live-issue-editor" value="${car.issuesRaw}" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white" />
+        <button onclick="recalculateVehicleIssues('${car.id}')" class="px-5 py-2.5 rounded-xl bg-maki-lightBlue hover:bg-sky-300 text-slate-950 font-bold text-sm shrink-0">
+          Recalculate
         </button>
       </div>
     </div>
 
-    <!-- 3-Tier Strategy Selector -->
-    <div class="space-y-2">
-      <div class="flex items-center justify-between">
-        <h3 class="font-display font-bold text-sm uppercase tracking-wider text-white">
-          Select Condition Strategy (Economy Wholesale vs. Sign & Drive vs. Full Restoration)
-        </h3>
-        <span class="text-xs text-slate-400">Manheim MMR Baseline: <strong class="text-white">$${car.mmrValue.toLocaleString()}</strong></span>
+    <!-- 3-Tier Strategy Cards -->
+    <div class="space-y-3">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <h3 class="font-display font-bold text-base text-white">Select a Reconditioning Tier</h3>
+        <span class="text-sm text-slate-300">Market / MMR Value: <strong class="text-white font-mono">$${car.mmrValue.toLocaleString()}</strong></span>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         ${tierCardsHtml}
       </div>
     </div>
 
-    <!-- Detailed Parts & Labor Breakdown for Chosen Tier -->
-    <div class="p-5 rounded-xl bg-slate-950 border border-slate-800 space-y-4">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-800">
+    <!-- Repair Line Items & Deal Numbers -->
+    <div class="p-5 sm:p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-800">
         <div>
-          <h4 class="font-display font-bold text-base text-white">${activePlan.label} — Action Plan</h4>
-          <p class="text-xs text-slate-400">${activePlan.description}</p>
+          <h4 class="font-display font-bold text-lg text-white">${activePlan.label} — Repair Breakdown</h4>
+          <p class="text-sm text-slate-300 mt-0.5">${activePlan.description}</p>
         </div>
-        <div class="text-right shrink-0">
-          <span class="text-[11px] text-emerald-400 font-semibold block">
-            Master Mechanic & Key Advantage: Saved $${activePlan.retailLaborSaved.toLocaleString()} in Outside Labor
+        <div class="sm:text-right shrink-0">
+          <span class="text-xs sm:text-sm text-emerald-400 font-semibold block">
+            In-House Shop Savings: $${activePlan.retailLaborSaved.toLocaleString()} Saved
           </span>
-          <span class="text-[11px] text-slate-400">Est. Shop Time: ${activePlan.totalHours} hrs</span>
+          <span class="text-xs text-slate-400">Est. Shop Time: ${activePlan.totalHours} hrs</span>
         </div>
       </div>
 
-      <div class="space-y-2">
+      <div class="space-y-2.5">
         ${activePlan.items.map((item) => `
-          <div class="flex items-center justify-between p-3 rounded-lg bg-slate-900/90 border border-slate-800/90 text-xs">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-sm">
             <div>
-              <span class="px-2 py-0.5 rounded bg-slate-800 text-maki-lightBlue font-semibold text-[10px] mr-2">${item.category}</span>
+              <span class="px-2.5 py-0.5 rounded-md bg-slate-900 border border-slate-700 text-maki-lightBlue font-semibold text-xs mr-2">${item.category}</span>
               <span class="text-slate-200 font-medium">${item.task}</span>
             </div>
-            <div class="flex items-center gap-4 shrink-0">
-              <span class="text-slate-400">${item.hours} hrs</span>
-              <span class="font-mono font-bold text-white w-16 text-right">$${item.parts}</span>
+            <div class="flex items-center gap-4 shrink-0 font-mono">
+              <span class="text-slate-400 text-xs sm:text-sm">${item.hours} hrs</span>
+              <span class="font-bold text-white w-16 text-right">$${item.parts}</span>
             </div>
           </div>
         `).join('')}
       </div>
 
-      <!-- Financial Deal Box -->
-      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-3 border-t border-slate-800 text-xs">
-        <div class="p-3 rounded-lg bg-slate-900">
-          <span class="text-slate-400 block text-[11px]">Purchase Price</span>
-          <strong class="text-white text-sm font-mono">$${car.buyPrice.toLocaleString()}</strong>
+      <!-- 5-Box Financial Summary -->
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-4 border-t border-slate-800 text-sm">
+        <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800">
+          <span class="text-slate-400 block text-xs">Buy Price</span>
+          <strong class="text-white text-base font-mono mt-0.5 block">$${car.buyPrice.toLocaleString()}</strong>
         </div>
-        <div class="p-3 rounded-lg bg-slate-900">
-          <span class="text-slate-400 block text-[11px]">Parts + Fees</span>
-          <strong class="text-white text-sm font-mono">$${(activePlan.partsCost + activePlan.auctionAndDmvFees).toLocaleString()}</strong>
+        <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800">
+          <span class="text-slate-400 block text-xs">Parts + Fees</span>
+          <strong class="text-white text-base font-mono mt-0.5 block">$${(activePlan.partsCost + activePlan.auctionAndDmvFees).toLocaleString()}</strong>
         </div>
-        <div class="p-3 rounded-lg bg-slate-900">
-          <span class="text-slate-400 block text-[11px]">All-In Cost Basis</span>
-          <strong class="text-maki-lightBlue text-sm font-mono">$${activePlan.totalAllInCost.toLocaleString()}</strong>
+        <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800">
+          <span class="text-slate-400 block text-xs">All-In Cost</span>
+          <strong class="text-maki-lightBlue text-base font-mono mt-0.5 block">$${activePlan.totalAllInCost.toLocaleString()}</strong>
         </div>
-        <div class="p-3 rounded-lg bg-slate-900">
-          <span class="text-slate-400 block text-[11px]">Target Sale Price</span>
-          <strong class="text-white text-sm font-mono">$${activePlan.estSalePrice.toLocaleString()}</strong>
+        <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800">
+          <span class="text-slate-400 block text-xs">Target Sale</span>
+          <strong class="text-white text-base font-mono mt-0.5 block">$${activePlan.estSalePrice.toLocaleString()}</strong>
         </div>
-        <div class="p-3 rounded-lg bg-emerald-500/15 border border-emerald-500/30">
-          <span class="text-emerald-300 block text-[11px] font-semibold">Projected Net Profit</span>
-          <strong class="text-emerald-400 text-base font-mono">+$${activePlan.netProfit.toLocaleString()}</strong>
+        <div class="p-3.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30">
+          <span class="text-emerald-300 block text-xs font-semibold">Est. Net Profit</span>
+          <strong class="text-emerald-400 text-lg font-mono mt-0.5 block">+$${activePlan.netProfit.toLocaleString()}</strong>
         </div>
       </div>
     </div>
@@ -1544,6 +1568,7 @@ function recalculateVehicleIssues(carId) {
   if (!car || !input) return;
   car.issuesRaw = input.value;
   car.plans = generateThreeTierPlan(car.issuesRaw, car.buyPrice, car.mmrValue);
+  saveMakiDatabase();
   renderAdminDashboard();
 }
 
@@ -1563,8 +1588,8 @@ async function decodeVinNHTSA(vin) {
         return {
           title: `${r.ModelYear} ${r.Make} ${r.Model} ${r.Trim || ''}`.trim(),
           engine: `${r.DisplacementL ? r.DisplacementL + 'L ' : ''}${r.EngineCylinders ? r.EngineCylinders + '-Cyl ' : ''}${r.EngineModel || ''}`.trim(),
-          body: r.BodyClass || 'Sedan/Coupe',
-          plant: r.PlantCountry || 'Germany'
+          body: r.BodyClass || 'Sedan',
+          plant: r.PlantCountry || 'USA'
         };
       }
     }
@@ -1578,7 +1603,7 @@ async function decodeCustomerVin() {
   const vinInput = document.getElementById('cfc-vin');
   const ymmInput = document.getElementById('cfc-ymm');
   const decoded = await decodeVinNHTSA(vinInput.value);
-  ymmInput.value = decoded ? decoded.title : '2014 BMW 335i Sedan (Decoded)';
+  ymmInput.value = decoded ? decoded.title : '2017 Honda Accord Sport';
 }
 
 async function decodeAdminVin() {
@@ -1591,36 +1616,36 @@ async function decodeAdminVin() {
     ymmInput.value = decoded.title;
     if (telemetryEl) {
       telemetryEl.classList.remove('hidden');
-      telemetryEl.innerHTML = `[NHTSA FEDERAL VIN SPEC] Vehicle: <strong>${decoded.title}</strong> • Engine: <strong>${decoded.engine || 'Inline-6'}</strong> • Body: <strong>${decoded.body}</strong> • Origin: <strong>${decoded.plant}</strong>`;
+      telemetryEl.innerHTML = `<strong>VIN Decoded:</strong> ${decoded.title} • Engine: <strong>${decoded.engine || 'Standard'}</strong> • Body: <strong>${decoded.body}</strong>`;
     }
   } else {
-    ymmInput.value = '2014 BMW 335i Sedan (F30)';
+    ymmInput.value = '2018 Toyota Camry SE';
     if (telemetryEl) {
       telemetryEl.classList.remove('hidden');
-      telemetryEl.innerHTML = `[NHTSA SPEC PRESET] Vehicle: <strong>2014 BMW 335i Sedan (F30)</strong> • Engine: <strong>3.0L Turbo N55B30</strong> • Transmission: <strong>8-Speed Sport Auto / 6MT</strong>`;
+      telemetryEl.innerHTML = `<strong>Sample Vehicle Loaded:</strong> 2018 Toyota Camry SE • 2.5L 4-Cylinder • 8-Speed Automatic`;
     }
   }
 }
 
 function fillSampleIssues() {
-  document.getElementById('new-car-vin').value = 'WBA3A9C55EF601922';
-  document.getElementById('new-car-ymm').value = '2014 BMW 335i Sedan (F30)';
-  document.getElementById('new-car-buy').value = '5800';
-  document.getElementById('new-car-mmr').value = '11500';
-  document.getElementById('new-car-miles').value = '96500';
+  document.getElementById('new-car-vin').value = '4T1B11HK5JU610294';
+  document.getElementById('new-car-ymm').value = '2018 Toyota Camry SE';
+  document.getElementById('new-car-buy').value = '8900';
+  document.getElementById('new-car-mmr').value = '13800';
+  document.getElementById('new-car-miles').value = '94500';
   document.getElementById('new-car-issues').value =
-    'Lost key fob (needs FEM smart key cut & programmed), coolant expansion tank leak, valve cover gasket smoking, cylinder 5 misfire coil, front brakes and CA smog check.';
+    'Lost spare key fob, front brakes & rotors worn, valve cover gasket oil seepage, needs CA smog check.';
   decodeAdminVin();
 }
 
 function handleAdminVehicleIntake(e) {
   e.preventDefault();
-  const vin = document.getElementById('new-car-vin').value.trim() || 'WBA' + Math.floor(100000000 + Math.random() * 900000000);
+  const vin = document.getElementById('new-car-vin').value.trim() || '1HG' + Math.floor(100000000 + Math.random() * 900000000);
   const ymm = document.getElementById('new-car-ymm').value.trim();
   const category = document.getElementById('new-car-category').value;
-  const buyPrice = Number(document.getElementById('new-car-buy').value) || 3000;
-  const mmrValue = Number(document.getElementById('new-car-mmr').value) || Math.round(buyPrice * 1.65);
-  const mileage = Number(document.getElementById('new-car-miles').value) || 110000;
+  const buyPrice = Number(document.getElementById('new-car-buy').value) || 4500;
+  const mmrValue = Number(document.getElementById('new-car-mmr').value) || Math.round(buyPrice * 1.55);
+  const mileage = Number(document.getElementById('new-car-miles').value) || 105000;
   const issuesRaw = document.getElementById('new-car-issues').value.trim();
 
   const newCar = {
@@ -1628,12 +1653,12 @@ function handleAdminVehicleIntake(e) {
     vin,
     ymm,
     mileage,
-    source: 'Pit Crew Field Intake',
+    source: 'Pit Crew Intake',
     category,
     selectedTier: category === 'Economy Wholesale' ? 'tier1' : 'tier2',
     buyPrice,
     mmrValue,
-    image: 'https://upload.wikimedia.org/wikipedia/commons/8/84/BMW_E46_330i_ZHP.jpg',
+    image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&w=960&q=80',
     issuesRaw,
     plans: generateThreeTierPlan(issuesRaw, buyPrice, mmrValue)
   };
@@ -1650,16 +1675,35 @@ function handleAdminVehicleIntake(e) {
 }
 
 // ============================================================================
-// 6. PERSISTENT DATABASE ENGINE, LIVE CLOUD SYNC & TOGGLEABLE PRE-FILLED SMS
+// 7. PERSISTENT DATABASE ENGINE, THEME MODE, CLOUD SYNC & PRE-FILLED SMS
 // ============================================================================
 
-const MAKI_STORAGE_KEY = 'maki_motorsports_db_v1';
+const MAKI_STORAGE_KEY = 'maki_motorsports_db_v2';
 const MAKI_DEALER_PHONE = '+15104184822';
 
 let pitCrewSettings = {
   autoSmsRelayEnabled: true,
-  cloudRestUrl: ''
+  cloudRestUrl: '',
+  lightMode: false
 };
+
+function toggleThemeMode() {
+  pitCrewSettings.lightMode = !pitCrewSettings.lightMode;
+  applyThemeMode();
+  saveMakiDatabase();
+}
+
+function applyThemeMode() {
+  const htmlEl = document.documentElement;
+  const labelEl = document.getElementById('theme-toggle-label');
+  if (pitCrewSettings.lightMode) {
+    htmlEl.classList.add('light-mode');
+    if (labelEl) labelEl.textContent = 'Dark Mode';
+  } else {
+    htmlEl.classList.remove('light-mode');
+    if (labelEl) labelEl.textContent = 'Daylight';
+  }
+}
 
 const makiSyncChannel = typeof BroadcastChannel !== 'undefined'
   ? new BroadcastChannel('maki_pit_crew_sync')
@@ -1669,6 +1713,7 @@ if (makiSyncChannel) {
   makiSyncChannel.onmessage = (ev) => {
     if (ev.data && ev.data.type === 'DB_UPDATED') {
       loadMakiDatabase(false);
+      applyThemeMode();
       renderPublicInventory();
       renderAdminDashboard();
       renderSmsRelayToggleUI();
@@ -1679,6 +1724,7 @@ if (makiSyncChannel) {
 window.addEventListener('storage', (ev) => {
   if (ev.key === MAKI_STORAGE_KEY) {
     loadMakiDatabase(false);
+    applyThemeMode();
     renderPublicInventory();
     renderAdminDashboard();
     renderSmsRelayToggleUI();
@@ -1755,6 +1801,7 @@ async function pullCloudSnapshot() {
       if (Array.isArray(data.leadsDB)) leadsDB = data.leadsDB;
       if (data.pitCrewSettings) pitCrewSettings = { ...pitCrewSettings, ...data.pitCrewSettings };
       localStorage.setItem(MAKI_STORAGE_KEY, JSON.stringify(data));
+      applyThemeMode();
       renderPublicInventory();
       renderAdminDashboard();
       renderSmsRelayToggleUI();
@@ -1801,12 +1848,12 @@ function renderSmsRelayToggleUI() {
   if (!btn || !dot || !label) return;
 
   if (pitCrewSettings.autoSmsRelayEnabled) {
-    btn.className = 'px-3.5 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-xs font-semibold text-emerald-300 flex items-center gap-1.5 transition-all';
-    dot.className = 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse';
+    btn.className = 'w-full px-3.5 py-2.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-xs font-semibold text-emerald-300 flex items-center justify-between transition-all';
+    dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse';
     label.textContent = 'Auto-SMS Relay: ON';
   } else {
-    btn.className = 'px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-400 flex items-center gap-1.5 transition-all';
-    dot.className = 'w-2 h-2 rounded-full bg-slate-500';
+    btn.className = 'w-full px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-400 flex items-center justify-between transition-all';
+    dot.className = 'w-2.5 h-2.5 rounded-full bg-slate-500';
     label.textContent = 'Auto-SMS Relay: OFF (Queue Only)';
   }
 }
@@ -1828,7 +1875,7 @@ function handleCashForCarsSubmit(e) {
   const vin = document.getElementById('cfc-vin').value.trim();
   const mileage = Number(document.getElementById('cfc-mileage').value) || 115000;
   const ymm = document.getElementById('cfc-ymm').value.trim();
-  const askingPrice = Number(document.getElementById('cfc-asking').value) || 2800;
+  const askingPrice = Number(document.getElementById('cfc-asking').value) || 3500;
   const issues = document.getElementById('cfc-issues').value.trim() || 'Needs general mechanical inspection & smog';
   const name = document.getElementById('cfc-name').value.trim();
   const phone = document.getElementById('cfc-phone').value.trim();
@@ -1866,10 +1913,10 @@ function handleCashForCarsSubmit(e) {
   fb.innerHTML = `
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
       <div>
-        <strong>Submitted to Maki Motorsports LLC (Stockton, CA)!</strong> We logged your <strong>${ymm}</strong> into our Business Queue (${jobId}) and will contact <strong>${phone}</strong> shortly.
+        <strong>Submitted to Maki Motorsports LLC!</strong> Your <strong>${ymm}</strong> is logged (${jobId}) and we will contact <strong>${phone}</strong> shortly.
       </div>
-      <a href="${smsHref}" class="px-3.5 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs whitespace-nowrap shrink-0 text-center">
-        Text Details to (510) 418-4822 &rarr;
+      <a href="${smsHref}" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs whitespace-nowrap shrink-0 text-center">
+        Send Pre-Filled Text to (510) 418-4822 &rarr;
       </a>
     </div>
   `;
@@ -1882,8 +1929,8 @@ function handleCashForCarsSubmit(e) {
 function mapFormCategoryToQueueCategory(catTitle, serviceText) {
   const combined = ((catTitle || '') + ' ' + (serviceText || '')).toLowerCase();
   if (combined.includes('sale') || combined.includes('test drive') || combined.includes('purchase') || combined.includes('part-out') || combined.includes('donor')) return 'Sales Status';
-  if (combined.includes('key') || combined.includes('fob') || combined.includes('lock') || combined.includes('cas')) return 'Key Programming';
-  if (combined.includes('brake') || combined.includes('suspension') || combined.includes('coilover') || combined.includes('control arm')) return 'Brake & Suspension';
+  if (combined.includes('key') || combined.includes('fob') || combined.includes('lock') || combined.includes('immobilizer')) return 'Key Programming';
+  if (combined.includes('brake') || combined.includes('suspension') || combined.includes('strut') || combined.includes('control arm')) return 'Brake & Suspension';
   if (combined.includes('oil') || combined.includes('maint') || combined.includes('coolant') || combined.includes('gasket')) return 'Oil & Maintenance';
   return 'Diagnostics & Smog';
 }
@@ -1931,9 +1978,9 @@ function handleMechanicJobSubmit(e) {
   fb.innerHTML = `
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
       <div>
-        <strong>Work Order Logged (${jobId})!</strong> Your request for <strong>${ymm}</strong> (<em>${service}</em>) is in our Stockton Business Job Queue under <strong>${queueCat}</strong>.
+        <strong>Work Order Logged (${jobId})!</strong> Your request for <strong>${ymm}</strong> (<em>${service}</em>) is in our Business Job Queue under <strong>${queueCat}</strong>.
       </div>
-      <a href="${smsHref}" class="px-3.5 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs whitespace-nowrap shrink-0 text-center">
+      <a href="${smsHref}" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs whitespace-nowrap shrink-0 text-center">
         Send Pre-Filled Text to (510) 418-4822 &rarr;
       </a>
     </div>
@@ -1983,15 +2030,15 @@ function renderAdminLeads() {
       return `
         <button
           onclick="filterJobQueue('${cat}')"
-          class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
+          class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 ${
             isSelected
-              ? 'bg-maki-lightBlue text-slate-950 font-bold shadow'
-              : 'bg-slate-950 text-slate-300 border border-slate-800 hover:border-slate-700'
+              ? 'bg-maki-lightBlue text-slate-950 font-bold shadow-sm'
+              : 'bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-600'
           }"
         >
           <span>${cat}</span>
-          <span class="px-1.5 py-0.2 rounded-full text-[10px] ${
-            isSelected ? 'bg-slate-950/20 text-slate-950' : 'bg-slate-900 text-slate-400'
+          <span class="px-2 py-0.5 rounded-full text-xs ${
+            isSelected ? 'bg-slate-950/20 text-slate-950' : 'bg-slate-800 text-slate-300'
           }">${count}</span>
         </button>
       `;
@@ -2003,12 +2050,12 @@ function renderAdminLeads() {
     : leadsDB.filter((j) => j.category === currentJobQueueFilter);
 
   const badgeColors = {
-    'Oil & Maintenance': 'bg-maki-lightBlue/20 text-maki-lightBlue border-maki-lightBlue/30',
-    'Brake & Suspension': 'bg-red-500/20 text-red-300 border-red-500/30',
-    'Key Programming': 'bg-purple-500/20 text-purple-300 border-purple-500/30',
-    'Diagnostics & Smog': 'bg-amber-500/20 text-amber-300 border-amber-500/30',
-    'Car Leads': 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
-    'Sales Status': 'bg-blue-500/20 text-blue-300 border-blue-500/30'
+    'Oil & Maintenance': 'bg-maki-lightBlue/15 text-maki-lightBlue border-maki-lightBlue/30',
+    'Brake & Suspension': 'bg-red-500/15 text-red-300 border-red-500/30',
+    'Key Programming': 'bg-purple-500/15 text-purple-300 border-purple-500/30',
+    'Diagnostics & Smog': 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+    'Car Leads': 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
+    'Sales Status': 'bg-blue-500/15 text-blue-300 border-blue-500/30'
   };
 
   container.innerHTML = filteredJobs.map((job) => {
@@ -2020,38 +2067,38 @@ function renderAdminLeads() {
       : '';
 
     return `
-      <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-slate-700 transition-all">
+      <div class="p-5 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-slate-700 transition-all">
         <div class="space-y-1.5">
-          <div class="flex flex-wrap items-center gap-2">
-            <span class="font-mono text-[11px] text-slate-500">${job.id}</span>
-            <span class="px-2.5 py-0.5 rounded-full border text-[10px] font-bold uppercase ${badgeClass}">${job.category}</span>
-            <span class="text-sm font-bold text-white">${job.ymm}</span>
-            <span class="text-xs text-slate-400">• ${job.name} (${job.phone})</span>
-            ${job.vin && job.vin !== 'Customer Vehicle' ? `<span class="text-[11px] font-mono text-slate-500">VIN: ${job.vin}</span>` : ''}
+          <div class="flex flex-wrap items-center gap-2.5">
+            <span class="font-mono text-xs text-slate-400">${job.id}</span>
+            <span class="px-3 py-0.5 rounded-full border text-xs font-semibold ${badgeClass}">${job.category}</span>
+            <span class="text-base font-bold text-white">${job.ymm}</span>
+            <span class="text-sm text-slate-300">• ${job.name} (${job.phone})</span>
+            ${job.vin && job.vin !== 'Customer Vehicle' ? `<span class="text-xs font-mono text-slate-400">VIN: ${job.vin}</span>` : ''}
           </div>
-          <p class="text-xs text-slate-200">${job.issues}</p>
+          <p class="text-sm text-slate-200 leading-relaxed">${job.issues}</p>
           ${
             isCarLead
-              ? `<div class="text-[11px] text-slate-400">Customer Asking: <strong class="text-white">$${job.askingPrice.toLocaleString()}</strong> • Est. Manheim MMR: <strong class="text-maki-lightBlue">$${job.estMmr.toLocaleString()}</strong></div>`
+              ? `<div class="text-xs sm:text-sm text-slate-400">Customer Asking: <strong class="text-white">$${job.askingPrice.toLocaleString()}</strong> • Est. Market Value: <strong class="text-maki-lightBlue">$${job.estMmr.toLocaleString()}</strong></div>`
               : job.askingPrice > 0
-              ? `<div class="text-[11px] text-slate-400">Est. Ticket / Sale Amount: <strong class="text-emerald-400 font-mono">$${job.askingPrice.toLocaleString()}</strong></div>`
+              ? `<div class="text-xs sm:text-sm text-slate-400">Est. Ticket / Sale Amount: <strong class="text-emerald-400 font-mono">$${job.askingPrice.toLocaleString()}</strong></div>`
               : ''
           }
         </div>
         <div class="flex flex-wrap items-center gap-2 shrink-0">
           ${
             cleanPhone
-              ? `<a href="tel:${cleanPhone}" class="px-2.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-300" title="Call customer">Call</a>
-                 <a href="${replySmsHref}" class="px-2.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-maki-lightBlue" title="Send pre-filled reply text to customer">Text</a>`
+              ? `<a href="tel:${cleanPhone}" class="px-3 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700 text-xs sm:text-sm font-semibold text-slate-200">Call</a>
+                 <a href="${replySmsHref}" class="px-3 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700 text-xs sm:text-sm font-semibold text-maki-lightBlue">Text</a>`
               : ''
           }
-          <button onclick="cycleJobStatus('${job.id}')" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200" title="Click to advance workflow status">
+          <button onclick="cycleJobStatus('${job.id}')" class="px-3.5 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700 text-xs sm:text-sm font-semibold text-slate-200">
             Status: <span class="text-maki-lightBlue">${job.status}</span>
           </button>
           ${
             isCarLead
-              ? `<button onclick="convertLeadToVehicle('${job.id}')" class="px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shrink-0">
-                   Acquire & View Tier Ruling
+              ? `<button onclick="convertLeadToVehicle('${job.id}')" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm shrink-0">
+                   Acquire Vehicle
                  </button>`
               : ''
           }
@@ -2068,17 +2115,17 @@ function convertLeadToVehicle(leadId) {
 
   const newCar = {
     id: 'MM-' + (101 + vehiclesDB.length),
-    vin: lead.vin || 'WBA1234567890',
+    vin: lead.vin || '1HG1234567890',
     ymm: lead.ymm,
     mileage: lead.mileage || 115000,
     source: lead.type,
     category: 'Sign & Drive',
     selectedTier: 'tier2',
-    buyPrice: lead.askingPrice || 3000,
-    mmrValue: lead.estMmr || 6000,
-    image: 'https://upload.wikimedia.org/wikipedia/commons/8/84/BMW_E46_330i_ZHP.jpg',
+    buyPrice: lead.askingPrice || 3500,
+    mmrValue: lead.estMmr || 7000,
+    image: 'https://images.unsplash.com/photo-1606611013016-969c19ba27bb?auto=format&fit=crop&w=960&q=80',
     issuesRaw: lead.issues,
-    plans: generateThreeTierPlan(lead.issues, lead.askingPrice || 3000, lead.estMmr || 6000)
+    plans: generateThreeTierPlan(lead.issues, lead.askingPrice || 3500, lead.estMmr || 7000)
   };
 
   vehiclesDB.unshift(newCar);
@@ -2091,20 +2138,20 @@ function convertLeadToVehicle(leadId) {
 function loadSampleManheimImport() {
   const importedCar = {
     id: 'MM-' + (101 + vehiclesDB.length),
-    vin: 'WBA3A9G55DNP29411',
-    ymm: '2013 BMW 335i M-Sport (F30)',
-    mileage: 104200,
-    source: 'Manheim Campaign Auto-Sync',
+    vin: '5YFBURHE8HP619284',
+    ymm: '2017 Toyota Corolla SE',
+    mileage: 89400,
+    source: 'Auction Auto-Import',
     category: 'Sign & Drive',
     selectedTier: 'tier2',
-    buyPrice: 6900,
-    mmrValue: 11800,
-    image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/BMW_M4%2C_EMS_23%2C_Essen_%28P1170092%29.jpg/960px-BMW_M4%2C_EMS_23%2C_Essen_%28P1170092%29.jpg',
-    issuesRaw: 'Manheim Report: Only 1 key fob (program spare FEM key), oil filter housing gasket leak, charge pipe boost leak code, front brake rotors warped.',
+    buyPrice: 7400,
+    mmrValue: 11200,
+    image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&w=960&q=80',
+    issuesRaw: 'Auction Condition Report: Only 1 key fob (program spare smart key), front brake pads & rotors worn, synthetic oil service & smog.',
     plans: generateThreeTierPlan(
-      'Only 1 key fob (program spare FEM key), oil filter housing gasket leak, charge pipe boost leak code, front brake rotors warped.',
-      6900,
-      11800
+      'Only 1 key fob (program spare smart key), front brake pads & rotors worn, synthetic oil service & smog.',
+      7400,
+      11200
     )
   };
   vehiclesDB.unshift(importedCar);
@@ -2115,6 +2162,7 @@ function loadSampleManheimImport() {
 
 document.addEventListener('DOMContentLoaded', () => {
   loadMakiDatabase(true);
+  applyThemeMode();
   renderPublicInventory();
   renderInteractiveServiceSelector();
   renderSmsRelayToggleUI();

@@ -1,21 +1,112 @@
 /* Custom scrollbar and fine-tuned styling for MAKI MOTORSPORTS */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #090B10;
+  background: #11141C;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1E2536;
+  background: #2E3646;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #00A3FF;
+  background: #3B82F6;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* =========================================================================
+   DAYLIGHT MODE (LIGHT THEME) OVERRIDES FOR OUTDOOR AUCTION / SHOP USE
+   ========================================================================= */
+html.light-mode body,
+html.light-mode #view-admin {
+  background-color: #F1F5F9 !important;
+  color: #0F172A !important;
+}
+
+html.light-mode header,
+html.light-mode footer,
+html.light-mode .maki-surface,
+html.light-mode .bg-maki-card,
+html.light-mode .bg-maki-dark {
+  background-color: #FFFFFF !important;
+  border-color: #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+html.light-mode .bg-slate-950,
+html.light-mode .bg-slate-950\/90,
+html.light-mode .bg-slate-950\/80,
+html.light-mode .bg-slate-950\/60,
+html.light-mode .bg-slate-900,
+html.light-mode .bg-slate-900\/90,
+html.light-mode .bg-slate-900\/80,
+html.light-mode .bg-slate-900\/60 {
+  background-color: #F8FAFC !important;
+  border-color: #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+html.light-mode .text-white,
+html.light-mode .text-slate-100,
+html.light-mode .text-slate-200 {
+  color: #0F172A !important;
+}
+
+html.light-mode .text-slate-300,
+html.light-mode .text-slate-400 {
+  color: #334155 !important;
+}
+
+html.light-mode .text-slate-500 {
+  color: #475569 !important;
+}
+
+html.light-mode .border-slate-800,
+html.light-mode .border-slate-800\/80,
+html.light-mode .border-slate-800\/90,
+html.light-mode .border-slate-700,
+html.light-mode .border-slate-700\/80,
+html.light-mode .border-maki-border {
+  border-color: #CBD5E1 !important;
+}
+
+html.light-mode input,
+html.light-mode select,
+html.light-mode textarea {
+  background-color: #FFFFFF !important;
+  border-color: #94A3B8 !important;
+  color: #0F172A !important;
+}
+
+html.light-mode .text-maki-lightBlue {
+  color: #0284C7 !important;
+}
+
+html.light-mode .text-emerald-400,
+html.light-mode .text-emerald-300 {
+  color: #047857 !important;
+}
+
+html.light-mode .text-amber-300,
+html.light-mode .text-amber-400 {
+  color: #B45309 !important;
+}
+
+/* Keep the Enclave Keypad dark concrete hardware regardless of page theme */
+html.light-mode #terminal-gate-modal .text-white {
+  color: #FFFFFF !important;
+}
+html.light-mode #terminal-gate-modal .text-slate-400 {
+  color: #94A3B8 !important;
+}
+html.light-mode #terminal-gate-modal input {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  color: #7ceeff !important;
 }
 
 /* Cast-Concrete Hardware Enclosure Surface & Bevel */
