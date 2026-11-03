@@ -1111,13 +1111,43 @@ function renderPublicInventory() {
           <a href="tel:5104184822" class="flex-1 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-center text-xs font-semibold text-white transition-colors">
             ${isPartOut ? 'Call For Parts Availability' : 'Call (510) 418-4822'}
           </a>
-          <a href="#mechanic-services" class="px-3.5 py-2.5 rounded-xl bg-maki-lightBlue/15 hover:bg-maki-lightBlue/25 border border-maki-lightBlue/30 text-xs font-semibold text-maki-lightBlue transition-colors">
+          <button type="button" onclick="inquireOnVehicle('${car.id}')" class="px-3.5 py-2.5 rounded-xl bg-maki-lightBlue/15 hover:bg-maki-lightBlue/25 border border-maki-lightBlue/30 text-xs font-semibold text-maki-lightBlue transition-colors">
             ${isPartOut ? 'Request Part' : 'Schedule Test Drive'}
-          </a>
+          </button>
         </div>
       </div>
     `;
   }).join('');
+}
+
+function inquireOnVehicle(carId) {
+  const car = vehiclesDB.find((v) => v.id === carId);
+  if (!car) return;
+  const isPartOut = car.category === 'Part-Outs';
+  const catInput = document.getElementById('mech-category');
+  const serviceInput = document.getElementById('mech-service');
+  const carInput = document.getElementById('mech-car');
+  const vinInput = document.getElementById('mech-vin');
+  const badge = document.getElementById('selected-service-badge');
+
+  if (catInput) catInput.value = isPartOut ? 'Donor Part-Out Request' : 'Vehicle Sales & Test Drive';
+  if (serviceInput) {
+    serviceInput.value = isPartOut
+      ? `OEM Part Availability Request — ${car.ymm}`
+      : `Schedule Test Drive / Purchase Inquiry (${car.category}) — $${car.plans[car.selectedTier].estSalePrice.toLocaleString()}`;
+  }
+  if (carInput) carInput.value = car.ymm;
+  if (vinInput) vinInput.value = car.vin;
+  if (badge) badge.textContent = isPartOut ? 'Part-Out Inquiry' : 'Test Drive / Sales';
+
+  const formEl = document.getElementById('mechanic-service-form');
+  if (formEl) {
+    formEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    formEl.classList.add('ring-2', 'ring-maki-lightBlue');
+    setTimeout(() => formEl.classList.remove('ring-2', 'ring-maki-lightBlue'), 1600);
+  }
+  const nameInput = document.getElementById('mech-name');
+  if (nameInput) setTimeout(() => nameInput.focus(), 450);
 }
 
 // ============================================================================
@@ -1192,6 +1222,7 @@ function setVehicleTier(carId, tierKey) {
   } else if (tierKey === 'tier2' || tierKey === 'tier3') {
     car.category = 'Sign & Drive';
   }
+  saveMakiDatabase();
   renderAdminDashboard();
   renderPublicInventory();
 }
@@ -1202,6 +1233,7 @@ function cycleVehicleCategory(carId) {
   const order = ['Sign & Drive', 'Economy Wholesale', 'Part-Outs'];
   const nextIdx = (order.indexOf(car.category) + 1) % order.length;
   car.category = order[nextIdx];
+  saveMakiDatabase();
   renderAdminDashboard();
   renderPublicInventory();
 }
@@ -1608,12 +1640,187 @@ function handleAdminVehicleIntake(e) {
 
   vehiclesDB.unshift(newCar);
   selectedVehicleId = newCar.id;
+  saveMakiDatabase();
   e.target.reset();
   const telemetryEl = document.getElementById('vin-decoded-telemetry');
   if (telemetryEl) telemetryEl.classList.add('hidden');
 
   renderPublicInventory();
   switchPitWallTab('database');
+}
+
+// ============================================================================
+// 6. PERSISTENT DATABASE ENGINE, LIVE CLOUD SYNC & TOGGLEABLE PRE-FILLED SMS
+// ============================================================================
+
+const MAKI_STORAGE_KEY = 'maki_motorsports_db_v1';
+const MAKI_DEALER_PHONE = '+15104184822';
+
+let pitCrewSettings = {
+  autoSmsRelayEnabled: true,
+  cloudRestUrl: ''
+};
+
+const makiSyncChannel = typeof BroadcastChannel !== 'undefined'
+  ? new BroadcastChannel('maki_pit_crew_sync')
+  : null;
+
+if (makiSyncChannel) {
+  makiSyncChannel.onmessage = (ev) => {
+    if (ev.data && ev.data.type === 'DB_UPDATED') {
+      loadMakiDatabase(false);
+      renderPublicInventory();
+      renderAdminDashboard();
+      renderSmsRelayToggleUI();
+    }
+  };
+}
+
+window.addEventListener('storage', (ev) => {
+  if (ev.key === MAKI_STORAGE_KEY) {
+    loadMakiDatabase(false);
+    renderPublicInventory();
+    renderAdminDashboard();
+    renderSmsRelayToggleUI();
+  }
+});
+
+function saveMakiDatabase() {
+  try {
+    const payload = {
+      updatedAt: new Date().toISOString(),
+      vehiclesDB,
+      leadsDB,
+      pitCrewSettings
+    };
+    localStorage.setItem(MAKI_STORAGE_KEY, JSON.stringify(payload));
+    if (makiSyncChannel) {
+      makiSyncChannel.postMessage({ type: 'DB_UPDATED', updatedAt: payload.updatedAt });
+    }
+    if (pitCrewSettings.cloudRestUrl) {
+      pushCloudSnapshot(payload);
+    }
+    updateDbSyncBadge('DB Sync: Saved');
+  } catch (err) {
+    console.warn('Database persistence warning:', err);
+  }
+}
+
+function loadMakiDatabase(pullRemote = true) {
+  try {
+    const raw = localStorage.getItem(MAKI_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed.vehiclesDB) && parsed.vehiclesDB.length > 0) {
+        vehiclesDB = parsed.vehiclesDB;
+      }
+      if (Array.isArray(parsed.leadsDB) && parsed.leadsDB.length > 0) {
+        leadsDB = parsed.leadsDB;
+      }
+      if (parsed.pitCrewSettings && typeof parsed.pitCrewSettings === 'object') {
+        pitCrewSettings = { ...pitCrewSettings, ...parsed.pitCrewSettings };
+      }
+    }
+    if (pullRemote && pitCrewSettings.cloudRestUrl) {
+      pullCloudSnapshot();
+    }
+  } catch (err) {
+    console.warn('Database load warning:', err);
+  }
+}
+
+async function pushCloudSnapshot(payload) {
+  if (!pitCrewSettings.cloudRestUrl) return;
+  try {
+    updateDbSyncBadge('Cloud: Syncing...');
+    await fetch(pitCrewSettings.cloudRestUrl, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    updateDbSyncBadge('Cloud: Live');
+  } catch (err) {
+    updateDbSyncBadge('Local Sync Only');
+  }
+}
+
+async function pullCloudSnapshot() {
+  if (!pitCrewSettings.cloudRestUrl) return;
+  try {
+    const res = await fetch(pitCrewSettings.cloudRestUrl);
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data && Array.isArray(data.vehiclesDB)) {
+      vehiclesDB = data.vehiclesDB;
+      if (Array.isArray(data.leadsDB)) leadsDB = data.leadsDB;
+      if (data.pitCrewSettings) pitCrewSettings = { ...pitCrewSettings, ...data.pitCrewSettings };
+      localStorage.setItem(MAKI_STORAGE_KEY, JSON.stringify(data));
+      renderPublicInventory();
+      renderAdminDashboard();
+      renderSmsRelayToggleUI();
+      updateDbSyncBadge('Cloud: Live');
+    }
+  } catch (err) {
+    updateDbSyncBadge('Local Sync Only');
+  }
+}
+
+function updateDbSyncBadge(text) {
+  const el = document.getElementById('db-sync-status-label');
+  if (el) el.textContent = text;
+}
+
+function openCloudSyncPrompt() {
+  const current = pitCrewSettings.cloudRestUrl || '';
+  const input = window.prompt(
+    'MAKI MOTORSPORTS // CLOUD DATABASE SYNC\n\n' +
+    'All vehicles & customer leads automatically persist locally and across tabs.\n' +
+    'To sync across multiple phones/laptops in real time, paste a Firebase Realtime DB (.json) or REST JSON endpoint URL below (or leave blank for local storage):',
+    current
+  );
+  if (input === null) return;
+  pitCrewSettings.cloudRestUrl = input.trim();
+  saveMakiDatabase();
+  if (pitCrewSettings.cloudRestUrl) {
+    pullCloudSnapshot();
+  } else {
+    updateDbSyncBadge('DB Sync: Active');
+  }
+}
+
+function toggleAutoSmsRelay() {
+  pitCrewSettings.autoSmsRelayEnabled = !pitCrewSettings.autoSmsRelayEnabled;
+  saveMakiDatabase();
+  renderSmsRelayToggleUI();
+}
+
+function renderSmsRelayToggleUI() {
+  const btn = document.getElementById('btn-toggle-sms-relay');
+  const dot = document.getElementById('sms-relay-dot');
+  const label = document.getElementById('sms-relay-label');
+  if (!btn || !dot || !label) return;
+
+  if (pitCrewSettings.autoSmsRelayEnabled) {
+    btn.className = 'px-3.5 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-xs font-semibold text-emerald-300 flex items-center gap-1.5 transition-all';
+    dot.className = 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse';
+    label.textContent = 'Auto-SMS Relay: ON';
+  } else {
+    btn.className = 'px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-400 flex items-center gap-1.5 transition-all';
+    dot.className = 'w-2 h-2 rounded-full bg-slate-500';
+    label.textContent = 'Auto-SMS Relay: OFF (Queue Only)';
+  }
+}
+
+function buildSmsHref(smsBody, targetPhone = MAKI_DEALER_PHONE) {
+  return `sms:${targetPhone}?body=${encodeURIComponent(smsBody)}`;
+}
+
+function triggerPreFilledSms(smsBody) {
+  if (!pitCrewSettings.autoSmsRelayEnabled) return;
+  const smsHref = buildSmsHref(smsBody, MAKI_DEALER_PHONE);
+  setTimeout(() => {
+    window.location.href = smsHref;
+  }, 250);
 }
 
 function handleCashForCarsSubmit(e) {
@@ -1627,8 +1834,9 @@ function handleCashForCarsSubmit(e) {
   const phone = document.getElementById('cfc-phone').value.trim();
 
   const estMmr = Math.round((askingPrice * 1.75) / 100) * 100;
+  const jobId = 'JOB-' + (201 + leadsDB.length);
   leadsDB.unshift({
-    id: 'JOB-' + (201 + leadsDB.length),
+    id: jobId,
     category: 'Car Leads',
     type: 'Cash-for-Cars Acquisition Lead',
     status: 'New Lead',
@@ -1641,18 +1849,39 @@ function handleCashForCarsSubmit(e) {
     estMmr,
     issues
   });
+  saveMakiDatabase();
+
+  const smsBody =
+    `[MAKI CASH FOR CARS // ${jobId}]\n` +
+    `Vehicle: ${ymm} (${mileage.toLocaleString()} mi)\n` +
+    `VIN: ${vin || 'N/A'}\n` +
+    `Asking: $${askingPrice.toLocaleString()}\n` +
+    `Notes: ${issues}\n` +
+    `Seller: ${name} (${phone})`;
+
+  const smsHref = buildSmsHref(smsBody);
 
   const fb = document.getElementById('cfc-feedback');
   fb.classList.remove('hidden');
   fb.innerHTML = `
-    <strong>Submitted to Maki Motorsports LLC (Stockton, CA)!</strong> We received your <strong>${ymm}</strong> details and will call/text <strong>${phone}</strong> with your cash offer shortly.
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div>
+        <strong>Submitted to Maki Motorsports LLC (Stockton, CA)!</strong> We logged your <strong>${ymm}</strong> into our Business Queue (${jobId}) and will contact <strong>${phone}</strong> shortly.
+      </div>
+      <a href="${smsHref}" class="px-3.5 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs whitespace-nowrap shrink-0 text-center">
+        Text Details to (510) 418-4822 &rarr;
+      </a>
+    </div>
   `;
   e.target.reset();
   renderPublicInventory();
+  renderAdminDashboard();
+  triggerPreFilledSms(smsBody);
 }
 
 function mapFormCategoryToQueueCategory(catTitle, serviceText) {
   const combined = ((catTitle || '') + ' ' + (serviceText || '')).toLowerCase();
+  if (combined.includes('sale') || combined.includes('test drive') || combined.includes('purchase') || combined.includes('part-out') || combined.includes('donor')) return 'Sales Status';
   if (combined.includes('key') || combined.includes('fob') || combined.includes('lock') || combined.includes('cas')) return 'Key Programming';
   if (combined.includes('brake') || combined.includes('suspension') || combined.includes('coilover') || combined.includes('control arm')) return 'Brake & Suspension';
   if (combined.includes('oil') || combined.includes('maint') || combined.includes('coolant') || combined.includes('gasket')) return 'Oil & Maintenance';
@@ -1669,9 +1898,10 @@ function handleMechanicJobSubmit(e) {
   const phone = document.getElementById('mech-phone').value.trim();
 
   const queueCat = mapFormCategoryToQueueCategory(catTitle, service);
+  const jobId = 'JOB-' + (201 + leadsDB.length);
 
   leadsDB.unshift({
-    id: 'JOB-' + (201 + leadsDB.length),
+    id: jobId,
     category: queueCat,
     type: catTitle,
     status: 'New Request',
@@ -1684,14 +1914,36 @@ function handleMechanicJobSubmit(e) {
     estMmr: 0,
     issues: service
   });
+  saveMakiDatabase();
+
+  const smsBody =
+    `[MAKI SERVICE REQUEST // ${jobId}]\n` +
+    `Category: ${catTitle}\n` +
+    `Requested Work: ${service}\n` +
+    `Vehicle: ${ymm}\n` +
+    `VIN: ${vin}\n` +
+    `Customer: ${name} (${phone})`;
+
+  const smsHref = buildSmsHref(smsBody);
 
   const fb = document.getElementById('mech-feedback');
   fb.classList.remove('hidden');
-  fb.innerHTML = `<strong>Work Order Logged!</strong> Your request for <strong>${ymm}</strong> (<em>${service}</em>) has been added to our Stockton Business Job Queue under <strong>${queueCat}</strong>. We will contact <strong>${phone}</strong> shortly!`;
+  fb.innerHTML = `
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div>
+        <strong>Work Order Logged (${jobId})!</strong> Your request for <strong>${ymm}</strong> (<em>${service}</em>) is in our Stockton Business Job Queue under <strong>${queueCat}</strong>.
+      </div>
+      <a href="${smsHref}" class="px-3.5 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs whitespace-nowrap shrink-0 text-center">
+        Send Pre-Filled Text to (510) 418-4822 &rarr;
+      </a>
+    </div>
+  `;
   document.getElementById('mech-car').value = '';
   document.getElementById('mech-vin').value = '';
   document.getElementById('mech-name').value = '';
   document.getElementById('mech-phone').value = '';
+  renderAdminDashboard();
+  triggerPreFilledSms(smsBody);
 }
 
 function filterJobQueue(category) {
@@ -1705,6 +1957,7 @@ function cycleJobStatus(jobId) {
   const statuses = ['New Request', 'Scheduled Today', 'In Shop Bay', 'Parts Ordered', 'Completed / Paid'];
   const idx = statuses.indexOf(job.status);
   job.status = statuses[(idx + 1) % statuses.length];
+  saveMakiDatabase();
   renderAdminLeads();
 }
 
@@ -1761,6 +2014,10 @@ function renderAdminLeads() {
   container.innerHTML = filteredJobs.map((job) => {
     const isCarLead = job.category === 'Car Leads';
     const badgeClass = badgeColors[job.category] || 'bg-slate-800 text-slate-300';
+    const cleanPhone = (job.phone || '').replace(/[^0-9+]/g, '');
+    const replySmsHref = cleanPhone
+      ? buildSmsHref(`Hi ${job.name}, this is Maki Motorsports LLC in Stockton regarding your ${job.ymm} (${job.issues}).`, cleanPhone)
+      : '';
 
     return `
       <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-slate-700 transition-all">
@@ -1781,7 +2038,13 @@ function renderAdminLeads() {
               : ''
           }
         </div>
-        <div class="flex items-center gap-2 shrink-0">
+        <div class="flex flex-wrap items-center gap-2 shrink-0">
+          ${
+            cleanPhone
+              ? `<a href="tel:${cleanPhone}" class="px-2.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-300" title="Call customer">Call</a>
+                 <a href="${replySmsHref}" class="px-2.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-maki-lightBlue" title="Send pre-filled reply text to customer">Text</a>`
+              : ''
+          }
           <button onclick="cycleJobStatus('${job.id}')" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200" title="Click to advance workflow status">
             Status: <span class="text-maki-lightBlue">${job.status}</span>
           </button>
@@ -1821,6 +2084,7 @@ function convertLeadToVehicle(leadId) {
   vehiclesDB.unshift(newCar);
   leadsDB.splice(idx, 1);
   selectedVehicleId = newCar.id;
+  saveMakiDatabase();
   switchPitWallTab('database');
 }
 
@@ -1845,11 +2109,14 @@ function loadSampleManheimImport() {
   };
   vehiclesDB.unshift(importedCar);
   selectedVehicleId = importedCar.id;
+  saveMakiDatabase();
   switchPitWallTab('database');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  loadMakiDatabase(true);
   renderPublicInventory();
   renderInteractiveServiceSelector();
+  renderSmsRelayToggleUI();
   if (window.lucide) lucide.createIcons();
 });

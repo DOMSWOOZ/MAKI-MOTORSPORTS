@@ -711,7 +711,25 @@
               MAKI MOTORSPORTS // PIT CREW TELEMETRY & RECON OS
             </h1>
           </div>
-          <div class="flex flex-wrap gap-2 shrink-0">
+          <div class="flex flex-wrap items-center gap-2 shrink-0">
+            <button
+              id="btn-toggle-sms-relay"
+              onclick="toggleAutoSmsRelay()"
+              class="px-3.5 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-xs font-semibold text-emerald-300 flex items-center gap-1.5 transition-all"
+              title="Toggle whether public form submissions automatically pop open a pre-filled text message to (510) 418-4822"
+            >
+              <span id="sms-relay-dot" class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span id="sms-relay-label">Auto-SMS Relay: ON</span>
+            </button>
+            <button
+              id="btn-cloud-sync-config"
+              onclick="openCloudSyncPrompt()"
+              class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-300 flex items-center gap-1.5 transition-all"
+              title="Configure optional Cloud Database REST URL or view local/cross-tab persistence status"
+            >
+              <i data-lucide="database" class="w-4 h-4 text-maki-lightBlue"></i>
+              <span id="db-sync-status-label">DB Sync: Active</span>
+            </button>
             <button onclick="loadSampleManheimImport()" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-maki-lightBlue flex items-center gap-1.5">
               <i data-lucide="download-cloud" class="w-4 h-4"></i> Simulate Manheim Sync
             </button>
