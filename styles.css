@@ -129,6 +129,13 @@ html.light-mode .light-scope .text-maki-lightBlue {
   color: #C2410C !important;
 }
 
+html.light-mode .light-scope .bg-maki-lightBlue\/15,
+html.light-mode .light-scope .bg-maki-lightBlue\/20 {
+  background-color: rgba(234, 88, 12, 0.14) !important;
+  border-color: rgba(194, 65, 12, 0.35) !important;
+  color: #C2410C !important;
+}
+
 html.light-mode .light-scope .bg-maki-lightBlue {
   background-color: #EA580C !important;
   color: #FFFFFF !important;

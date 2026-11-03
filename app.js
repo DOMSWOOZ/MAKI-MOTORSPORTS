@@ -998,15 +998,23 @@ function switchPitWallTab(tabName) {
     calculator: document.getElementById('pit-tab-calculator'),
     leads: document.getElementById('pit-tab-leads')
   };
+  const badges = {
+    intake: document.getElementById('pit-badge-intake'),
+    database: document.getElementById('pit-badge-database'),
+    calculator: document.getElementById('pit-badge-calculator'),
+    leads: document.getElementById('pit-badge-leads')
+  };
 
   Object.keys(sections).forEach((k) => {
     if (!sections[k] || !buttons[k]) return;
     if (k === tabName) {
       sections[k].classList.remove('hidden');
       buttons[k].className = 'p-3.5 rounded-xl border text-left transition-all flex items-center gap-3.5 bg-maki-lightBlue text-slate-950 border-maki-lightBlue font-semibold shadow-sm';
+      if (badges[k]) badges[k].className = 'w-9 h-9 rounded-lg bg-slate-950/20 flex items-center justify-center font-display font-bold text-sm text-slate-950 shrink-0';
     } else {
       sections[k].classList.add('hidden');
       buttons[k].className = 'p-3.5 rounded-xl border text-left transition-all flex items-center gap-3.5 bg-slate-900/90 text-slate-200 border-slate-800 hover:border-slate-700';
+      if (badges[k]) badges[k].className = 'w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center font-display font-bold text-sm text-maki-lightBlue shrink-0';
     }
   });
 

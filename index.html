@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  <link rel="stylesheet" href="styles.css?v=6" />
+  <link rel="stylesheet" href="styles.css?v=7" />
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -408,17 +408,17 @@
                 <i data-lucide="car" class="w-4 h-4 shrink-0"></i> Browse Inventory
               </a>
               <a href="#cash-for-cars" class="px-5 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-display font-semibold text-sm flex items-center gap-2 whitespace-nowrap shrink-0 transition-all">
-                <i data-lucide="banknote" class="w-4 h-4 text-emerald-400 shrink-0"></i> Cash For Your Car
+                <i data-lucide="banknote" class="w-4 h-4 text-maki-lightBlue shrink-0"></i> Cash For Your Car
               </a>
               <a href="#mechanic-services" class="px-5 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 font-display font-semibold text-sm flex items-center gap-2 whitespace-nowrap shrink-0 transition-all">
                 <i data-lucide="wrench" class="w-4 h-4 text-maki-lightBlue shrink-0"></i> Mechanic Services
               </a>
             </div>
 
-            <!-- Trust Stats -->
+            <!-- Trust Stats (Uniform Color) -->
             <div class="grid grid-cols-3 gap-6 pt-6 border-t border-slate-800 max-w-lg">
               <div>
-                <div class="font-display font-bold text-xl sm:text-2xl text-white">All Makes</div>
+                <div class="font-display font-bold text-xl sm:text-2xl text-maki-lightBlue">All Makes</div>
                 <div class="text-xs sm:text-sm text-slate-400">Import & Domestic</div>
               </div>
               <div>
@@ -426,7 +426,7 @@
                 <div class="text-xs sm:text-sm text-slate-400">Diagnostics, Maint & Repair</div>
               </div>
               <div>
-                <div class="font-display font-bold text-xl sm:text-2xl text-emerald-400">Stockton, CA</div>
+                <div class="font-display font-bold text-xl sm:text-2xl text-maki-lightBlue">Stockton, CA</div>
                 <div class="text-xs sm:text-sm text-slate-400">CA Dealer Lic #46615</div>
               </div>
             </div>
@@ -459,16 +459,16 @@
         <!-- 1. Centered Category Pills at the Top (Sign & Drive First & Default Active) -->
         <div class="inline-flex flex-wrap items-center justify-center gap-2 p-1.5 rounded-2xl bg-slate-900 border border-slate-800">
           <button onclick="filterPublicInventory('Sign & Drive')" id="filter-signdrive" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-maki-lightBlue text-slate-950 transition-all flex items-center gap-2 shadow-sm">
-            <span class="w-2 h-2 rounded-full bg-slate-950"></span> Sign & Drive
+            <span class="w-2 h-2 rounded-full bg-current opacity-80"></span> Sign & Drive
           </button>
           <button onclick="filterPublicInventory('Economy Wholesale')" id="filter-wholesale" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-slate-950/60 text-slate-300 border border-slate-800 hover:border-slate-700 transition-all flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-maki-lightBlue"></span> Economy Wholesale
           </button>
           <button onclick="filterPublicInventory('Part-Outs')" id="filter-partouts" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-slate-950/60 text-slate-300 border border-slate-800 hover:border-slate-700 transition-all flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-maki-red"></span> Part-Outs
+            <span class="w-2 h-2 rounded-full bg-maki-lightBlue"></span> Part-Outs
           </button>
           <button onclick="filterPublicInventory('all')" id="filter-all" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-slate-950/60 text-slate-300 border border-slate-800 hover:border-slate-700 transition-all flex items-center gap-2">
-            All Inventory
+            <span class="w-2 h-2 rounded-full bg-maki-lightBlue"></span> All Inventory
           </button>
         </div>
 
@@ -509,7 +509,7 @@
 
             <div class="space-y-4 pt-2">
               <div class="flex items-start gap-3.5">
-                <div class="w-8 h-8 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-300 font-bold text-sm shrink-0 mt-0.5">1</div>
+                <div class="w-8 h-8 rounded-lg bg-maki-lightBlue/15 border border-maki-lightBlue/30 flex items-center justify-center text-maki-lightBlue font-bold text-sm shrink-0 mt-0.5">1</div>
                 <div>
                   <h4 class="font-semibold text-white text-base">Enter Your VIN or Vehicle Info</h4>
                   <p class="text-sm text-slate-400">Tell us about your vehicle and any mechanical or cosmetic issues.</p>
@@ -523,7 +523,7 @@
                 </div>
               </div>
               <div class="flex items-start gap-3.5">
-                <div class="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-200 font-bold text-sm shrink-0 mt-0.5">3</div>
+                <div class="w-8 h-8 rounded-lg bg-maki-lightBlue/15 border border-maki-lightBlue/30 flex items-center justify-center text-maki-lightBlue font-bold text-sm shrink-0 mt-0.5">3</div>
                 <div>
                   <h4 class="font-semibold text-white text-base">Same-Day Cash & CA DMV Paperwork</h4>
                   <p class="text-sm text-slate-400">We handle all California DMV release of liability paperwork in Stockton & surrounding areas.</p>
@@ -730,10 +730,10 @@
               </button>
             </div>
 
-            <!-- 4 Clean Vertical App Navigation Buttons (2x2 on tablet/mobile, vertical stack on desktop) -->
+            <!-- 4 Clean Vertical App Navigation Buttons (Uniform Number Badges) -->
             <nav class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2.5">
               <button id="pit-tab-intake" onclick="switchPitWallTab('intake')" class="p-3.5 rounded-xl border text-left transition-all flex items-center gap-3.5 bg-maki-lightBlue text-slate-950 border-maki-lightBlue font-semibold shadow-sm">
-                <div class="w-9 h-9 rounded-lg bg-slate-950/15 flex items-center justify-center font-display font-bold text-sm shrink-0">1</div>
+                <div id="pit-badge-intake" class="w-9 h-9 rounded-lg bg-slate-950/20 flex items-center justify-center font-display font-bold text-sm text-slate-950 shrink-0">1</div>
                 <div>
                   <div class="font-display font-bold text-sm leading-tight">Log Acquired Car</div>
                   <div class="text-xs opacity-80 mt-0.5">VIN & Issue Intake</div>
@@ -741,7 +741,7 @@
               </button>
 
               <button id="pit-tab-database" onclick="switchPitWallTab('database')" class="p-3.5 rounded-xl border text-left transition-all flex items-center gap-3.5 bg-slate-900/90 text-slate-200 border-slate-800 hover:border-slate-700">
-                <div class="w-9 h-9 rounded-lg bg-slate-800 flex items-center justify-center font-display font-bold text-sm text-maki-lightBlue shrink-0">2</div>
+                <div id="pit-badge-database" class="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center font-display font-bold text-sm text-maki-lightBlue shrink-0">2</div>
                 <div>
                   <div class="font-display font-bold text-sm leading-tight">Vehicle Database</div>
                   <div class="text-xs text-slate-400 mt-0.5">Tier Rulings & Upgrades</div>
@@ -749,7 +749,7 @@
               </button>
 
               <button id="pit-tab-calculator" onclick="switchPitWallTab('calculator')" class="p-3.5 rounded-xl border text-left transition-all flex items-center gap-3.5 bg-slate-900/90 text-slate-200 border-slate-800 hover:border-slate-700">
-                <div class="w-9 h-9 rounded-lg bg-slate-800 flex items-center justify-center font-display font-bold text-sm text-emerald-400 shrink-0">3</div>
+                <div id="pit-badge-calculator" class="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center font-display font-bold text-sm text-maki-lightBlue shrink-0">3</div>
                 <div>
                   <div class="font-display font-bold text-sm leading-tight">Condition Calculator</div>
                   <div class="text-xs text-slate-400 mt-0.5">3-Tier Cost & Profit</div>
@@ -757,7 +757,7 @@
               </button>
 
               <button id="pit-tab-leads" onclick="switchPitWallTab('leads')" class="p-3.5 rounded-xl border text-left transition-all flex items-center gap-3.5 bg-slate-900/90 text-slate-200 border-slate-800 hover:border-slate-700">
-                <div class="w-9 h-9 rounded-lg bg-slate-800 flex items-center justify-center font-display font-bold text-sm text-amber-400 shrink-0">4</div>
+                <div id="pit-badge-leads" class="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center font-display font-bold text-sm text-maki-lightBlue shrink-0">4</div>
                 <div>
                   <div class="font-display font-bold text-sm leading-tight">Business Job Queue</div>
                   <div class="text-xs text-slate-400 mt-0.5">Shop Work, Leads & Sales</div>
@@ -1009,6 +1009,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=6"></script>
+  <script src="app.js?v=7"></script>
 </body>
 </html>
