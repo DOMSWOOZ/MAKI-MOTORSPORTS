@@ -5,10 +5,9 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38bdf8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 [![NHTSA vPIC API](https://img.shields.io/badge/NHTSA_vPIC-Live_VIN_Decoder-00A3FF?style=for-the-badge)](https://vpic.nhtsa.dot.gov/api/)
 [![CA DMV Licensed](https://img.shields.io/badge/CA_DMV_Dealer-Lic_%2346615-10b981?style=for-the-badge)](https://drive.dmvonline.ca.gov/s/oll)
-[![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel)](https://maki-motorsports.vercel.app)
+[![Live Site](https://img.shields.io/badge/Live_Website-Online-00A3FF?style=for-the-badge&logo=github)](https://domswooz.github.io/MAKI-MOTORSPORTS/)
 
-> **Live Production Website:** [https://maki-motorsports.vercel.app](https://maki-motorsports.vercel.app)  
-> **GitHub Pages Mirror:** [https://domswooz.github.io/MAKI-MOTORSPORTS/](https://domswooz.github.io/MAKI-MOTORSPORTS/)  
+> **Live Production Website:** [https://domswooz.github.io/MAKI-MOTORSPORTS/](https://domswooz.github.io/MAKI-MOTORSPORTS/)  
 > **Operating Location:** Stockton, CA • `(510) 418-4822` • CA Dealer License `#46615`  
 > **Instagram:** [`@makimotorsportsllc`](https://www.instagram.com/makimotorsportsllc/)
 
