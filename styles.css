@@ -1,17 +1,22 @@
-/* Custom scrollbar and fine-tuned styling for MAKI MOTORSPORTS */
+/* =========================================================================
+   MAKI MOTORSPORTS — CALIFORNIA SPEED SHOP & PRECISION SHOWROOM PALETTE
+   Warm Sandstone (#F3EFE6), Obsidian Espresso (#161412), Competition Orange
+   (#EA580C) & Signal Amber (#F59E0B)
+   ========================================================================= */
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #11141C;
+  background: #161412;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2E3646;
+  background: #3D3630;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3B82F6;
+  background: #EA580C;
 }
 
 html {
@@ -19,94 +24,157 @@ html {
 }
 
 /* =========================================================================
-   DAYLIGHT MODE (LIGHT THEME) OVERRIDES FOR OUTDOOR AUCTION / SHOP USE
+   SHOWROOM SANDSTONE MODE (DEFAULT DAYLIGHT-FIRST ARCHITECTURAL PALETTE)
+   Keeps #main-header, #hero-section, #pit-sidebar, #main-footer, and
+   #terminal-modal in rich Obsidian Espresso (#161412), while rendering all
+   content sections & the Pit Crew main workspace in Warm Sandstone (#F3EFE6)
+   and Crisp White (#FFFFFF) cards for effortless readability.
    ========================================================================= */
 html.light-mode body,
 html.light-mode #view-admin {
-  background-color: #F1F5F9 !important;
-  color: #0F172A !important;
+  background-color: #F3EFE6 !important;
+  color: #171513 !important;
 }
 
-html.light-mode header,
-html.light-mode footer,
-html.light-mode .maki-surface,
-html.light-mode .bg-maki-card,
-html.light-mode .bg-maki-dark {
+html.light-mode #cash-for-cars {
+  background-color: #EAE4D7 !important;
+  border-color: #D8D0C0 !important;
+}
+
+/* White Elevated Cards in Showroom & Pit Crew Main Workspace */
+html.light-mode .light-scope .bg-maki-card,
+html.light-mode .light-scope .bg-maki-dark {
   background-color: #FFFFFF !important;
-  border-color: #CBD5E1 !important;
-  color: #0F172A !important;
+  border-color: #DDD6C7 !important;
+  color: #171513 !important;
+  box-shadow: 0 4px 20px -2px rgba(23, 21, 19, 0.06), 0 1px 3px rgba(23, 21, 19, 0.04) !important;
 }
 
-html.light-mode .bg-slate-950,
-html.light-mode .bg-slate-950\/90,
-html.light-mode .bg-slate-950\/80,
-html.light-mode .bg-slate-950\/60,
-html.light-mode .bg-slate-900,
-html.light-mode .bg-slate-900\/90,
-html.light-mode .bg-slate-900\/80,
-html.light-mode .bg-slate-900\/60 {
-  background-color: #F8FAFC !important;
-  border-color: #CBD5E1 !important;
-  color: #0F172A !important;
+/* Warm Putty Sub-Panels inside White Cards */
+html.light-mode .light-scope .bg-slate-950,
+html.light-mode .light-scope .bg-slate-950\/90,
+html.light-mode .light-scope .bg-slate-950\/80,
+html.light-mode .light-scope .bg-slate-950\/70,
+html.light-mode .light-scope .bg-slate-950\/60,
+html.light-mode .light-scope .bg-slate-900,
+html.light-mode .light-scope .bg-slate-900\/90,
+html.light-mode .light-scope .bg-slate-900\/80,
+html.light-mode .light-scope .bg-slate-900\/70,
+html.light-mode .light-scope .bg-slate-900\/60 {
+  background-color: #F7F4EC !important;
+  border-color: #DED8C8 !important;
+  color: #171513 !important;
 }
 
-html.light-mode .text-white,
-html.light-mode .text-slate-100,
-html.light-mode .text-slate-200 {
-  color: #0F172A !important;
+html.light-mode .light-scope .bg-slate-800 {
+  background-color: #EBE5D8 !important;
+  border-color: #D5CEBE !important;
+  color: #171513 !important;
 }
 
-html.light-mode .text-slate-300,
-html.light-mode .text-slate-400 {
-  color: #334155 !important;
+html.light-mode .light-scope .bg-slate-800:hover {
+  background-color: #E2DAC9 !important;
 }
 
-html.light-mode .text-slate-500 {
-  color: #475569 !important;
+/* Typography in Showroom & Pit Crew Main Workspace */
+html.light-mode .light-scope .text-white,
+html.light-mode .light-scope .text-slate-100,
+html.light-mode .light-scope .text-slate-200 {
+  color: #171513 !important;
 }
 
-html.light-mode .border-slate-800,
-html.light-mode .border-slate-800\/80,
-html.light-mode .border-slate-800\/90,
-html.light-mode .border-slate-700,
-html.light-mode .border-slate-700\/80,
-html.light-mode .border-maki-border {
-  border-color: #CBD5E1 !important;
+html.light-mode .light-scope .text-slate-300 {
+  color: #3F3A34 !important;
 }
 
-html.light-mode input,
-html.light-mode select,
-html.light-mode textarea {
+html.light-mode .light-scope .text-slate-400,
+html.light-mode .light-scope .text-slate-500 {
+  color: #655E54 !important;
+}
+
+/* Borders in Showroom & Pit Crew Main Workspace */
+html.light-mode .light-scope .border-slate-800,
+html.light-mode .light-scope .border-slate-800\/80,
+html.light-mode .light-scope .border-slate-800\/90,
+html.light-mode .light-scope .border-slate-700,
+html.light-mode .light-scope .border-slate-700\/80,
+html.light-mode .light-scope .border-maki-border {
+  border-color: #DDD6C7 !important;
+}
+
+/* Crisp Form Inputs in Showroom & Pit Crew Main Workspace */
+html.light-mode .light-scope input,
+html.light-mode .light-scope select,
+html.light-mode .light-scope textarea {
   background-color: #FFFFFF !important;
-  border-color: #94A3B8 !important;
-  color: #0F172A !important;
+  border-color: #C7BFA9 !important;
+  color: #171513 !important;
+  box-shadow: inset 0 1px 2px rgba(23, 21, 19, 0.04) !important;
 }
 
-html.light-mode .text-maki-lightBlue {
-  color: #0284C7 !important;
+html.light-mode .light-scope input::placeholder,
+html.light-mode .light-scope textarea::placeholder {
+  color: #8C8478 !important;
 }
 
-html.light-mode .text-emerald-400,
-html.light-mode .text-emerald-300 {
+html.light-mode .light-scope input:focus,
+html.light-mode .light-scope select:focus,
+html.light-mode .light-scope textarea:focus {
+  border-color: #EA580C !important;
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.15) !important;
+}
+
+/* Accent Color Adjustments for High Contrast on Light Surfaces */
+html.light-mode .light-scope .text-maki-lightBlue {
+  color: #C2410C !important;
+}
+
+html.light-mode .light-scope .bg-maki-lightBlue {
+  background-color: #EA580C !important;
+  color: #FFFFFF !important;
+}
+
+html.light-mode .light-scope .bg-maki-lightBlue:hover {
+  background-color: #C2410C !important;
+}
+
+html.light-mode .light-scope .text-emerald-400,
+html.light-mode .light-scope .text-emerald-300 {
   color: #047857 !important;
 }
 
-html.light-mode .text-amber-300,
-html.light-mode .text-amber-400 {
+html.light-mode .light-scope .bg-emerald-500\/15,
+html.light-mode .light-scope .bg-emerald-500\/10 {
+  background-color: rgba(16, 185, 129, 0.14) !important;
+  border-color: rgba(5, 150, 105, 0.35) !important;
+}
+
+html.light-mode .light-scope .text-amber-300,
+html.light-mode .light-scope .text-amber-400 {
   color: #B45309 !important;
 }
 
-/* Keep the Enclave Keypad dark concrete hardware regardless of page theme */
-html.light-mode #terminal-gate-modal .text-white {
-  color: #FFFFFF !important;
+html.light-mode .light-scope .text-red-300,
+html.light-mode .light-scope .text-red-400 {
+  color: #BE123C !important;
 }
-html.light-mode #terminal-gate-modal .text-slate-400 {
-  color: #94A3B8 !important;
+
+html.light-mode .light-scope .text-purple-300 {
+  color: #6D28D9 !important;
 }
-html.light-mode #terminal-gate-modal input {
-  background-color: transparent !important;
-  border-color: transparent !important;
-  color: #7ceeff !important;
+
+html.light-mode .light-scope .text-blue-300 {
+  color: #1D4ED8 !important;
+}
+
+/* Keep badges overlayed on vehicle photos dark with crisp white text */
+html.light-mode .light-scope .photo-badge-dark {
+  background-color: rgba(22, 20, 18, 0.88) !important;
+  color: #FAF8F5 !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+html.light-mode .light-scope .photo-badge-dark .text-white {
+  color: #FAF8F5 !important;
 }
 
 /* Cast-Concrete Hardware Enclosure Surface & Bevel */
@@ -222,7 +290,7 @@ html.light-mode #terminal-gate-modal input {
 .enclave-unlocked-bolts .enclave-hex-bolt {
   transform: rotate(-180deg) scale(0.92);
   border-color: #00f0ff !important;
-  box-shadow: 0 0 16px rgba(0, 240, 255, 0.75), inset 0 0 8px rgba(0, 240, 255, 0.5) !important;
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.75), inset 0 0 8px rgba(0, 0, 255, 0.5) !important;
 }
 
 /* Mechanical Blast Shutter Doors Split Animation */

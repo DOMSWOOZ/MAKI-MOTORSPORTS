@@ -478,8 +478,22 @@ function generateThreeTierPlan(issueText, buyPrice, mmrValue) {
 }
 
 // ============================================================================
-// 2. SEED INVENTORY: ALL-MAKES DEALERSHIP & MECHANIC FLEET
+// 2. SEED INVENTORY: ALL-MAKES DEALERSHIP & MECHANIC FLEET (VERIFIED PHOTOS)
 // ============================================================================
+function resolveVehiclePhoto(ymm) {
+  const lower = (ymm || '').toLowerCase();
+  if (lower.includes('camry')) return 'assets/vehicles/camry-2018.jpg';
+  if (lower.includes('accord')) return 'assets/vehicles/accord-2017.jpg';
+  if (lower.includes('lexus') || lower.includes('is 350') || lower.includes('is350')) return 'assets/vehicles/lexus-is350.jpg';
+  if (lower.includes('f-150') || lower.includes('f150') || lower.includes('ford') || lower.includes('silverado') || lower.includes('truck')) return 'assets/vehicles/f150-2014.jpg';
+  if (lower.includes('bmw') || lower.includes('335') || lower.includes('328') || lower.includes('330')) return 'assets/vehicles/bmw-335i-2013.jpg';
+  if (lower.includes('civic')) return 'assets/vehicles/civic-2012.jpg';
+  if (lower.includes('corolla')) return 'assets/vehicles/corolla-2016.jpg';
+  if (lower.includes('cr-v') || lower.includes('crv') || lower.includes('rav4') || lower.includes('suv')) return 'assets/vehicles/crv-2015.jpg';
+  if (lower.includes('altima') || lower.includes('nissan')) return 'assets/vehicles/altima-2017.jpg';
+  return 'assets/vehicles/camry-2018.jpg';
+}
+
 let vehiclesDB = [
   {
     id: 'MM-101',
@@ -491,7 +505,7 @@ let vehiclesDB = [
     selectedTier: 'tier2',
     buyPrice: 10900,
     mmrValue: 14200,
-    image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&w=960&q=80',
+    image: 'assets/vehicles/camry-2018.jpg',
     issuesRaw: 'Front brake pads & rotors worn, needs spare smart key fob programmed, synthetic oil & filter service.',
     publicHighlights: '2.5L 4-Cylinder • Fresh Ceramic Brakes, Full Synthetic Service & 2 Programmed Smart Keys'
   },
@@ -505,7 +519,7 @@ let vehiclesDB = [
     selectedTier: 'tier2',
     buyPrice: 9400,
     mmrValue: 12900,
-    image: 'https://images.unsplash.com/photo-1606611013016-969c19ba27bb?auto=format&fit=crop&w=960&q=80',
+    image: 'assets/vehicles/accord-2017.jpg',
     issuesRaw: 'Valve cover gasket oil seepage, needs 4 new tires, alignment, and CA smog check.',
     publicHighlights: 'Turnkey Commuter Sedan • New All-Season Tires, Fresh Gasket Service & CA Smog Certified'
   },
@@ -519,7 +533,7 @@ let vehiclesDB = [
     selectedTier: 'tier2',
     buyPrice: 13200,
     mmrValue: 16800,
-    image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=960&q=80',
+    image: 'assets/vehicles/lexus-is350.jpg',
     issuesRaw: 'Water pump weep-hole coolant seepage, front brake pads worn, spare smart key fob needed.',
     publicHighlights: '3.5L V6 F-Sport • New OEM Water Pump, Fresh Front Brakes & 2 Smart Key Fobs'
   },
@@ -533,9 +547,9 @@ let vehiclesDB = [
     selectedTier: 'tier1',
     buyPrice: 7200,
     mmrValue: 10800,
-    image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=960&q=80',
+    image: 'assets/vehicles/f150-2014.jpg',
     issuesRaw: 'Cylinder 4 ignition coil misfire, thermostat housing coolant leak, needs smog check.',
-    publicHighlights: 'Crew Cab Work Truck • Economy Wholesale Price • New Ignition Coils, Plugs & CA Smogged'
+    publicHighlights: 'Crew Cab 4x4 Truck • Economy Wholesale Price • New Ignition Coils, Plugs & CA Smogged'
   },
   {
     id: 'MM-105',
@@ -547,9 +561,9 @@ let vehiclesDB = [
     selectedTier: 'tier1',
     buyPrice: 4900,
     mmrValue: 8200,
-    image: 'https://upload.wikimedia.org/wikipedia/commons/8/84/BMW_E46_330i_ZHP.jpg',
+    image: 'assets/vehicles/bmw-335i-2013.jpg',
     issuesRaw: 'Acquired with lost key fob, valve cover gasket oil leak, plastic charge pipe crack, needs smog check.',
-    publicHighlights: 'Turbo Inline-6 • Wholesale Special • New Smart Key Programmed In-House, Fresh Gasket & Smogged'
+    publicHighlights: 'Turbo Inline-6 F30 • Wholesale Special • New Smart Key Programmed In-House, Fresh Gasket & Smogged'
   },
   {
     id: 'MM-106',
@@ -561,7 +575,7 @@ let vehiclesDB = [
     selectedTier: 'tier1',
     buyPrice: 850,
     mmrValue: 3400,
-    image: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=960&q=80',
+    image: 'assets/vehicles/civic-2012.jpg',
     issuesRaw: 'Rear collision — parting out healthy 1.8L engine, automatic transmission, front clip, doors, alternator, starter & alloy wheels.',
     publicHighlights: 'PART-OUT VEHICLE: Tested 1.8L Engine, Auto Transmission, Front Clip, Doors, ECU/Key Set & Wheels'
   }
@@ -1066,11 +1080,11 @@ function renderPublicInventory() {
 
     let categoryBadge = '';
     if (car.category === 'Sign & Drive') {
-      categoryBadge = '<span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Sign & Drive</span>';
+      categoryBadge = '<span class="px-3 py-1 rounded-full text-xs font-bold bg-[#059669] text-white shadow-sm">Sign & Drive</span>';
     } else if (isWholesale) {
-      categoryBadge = '<span class="px-3 py-1 rounded-full text-xs font-semibold bg-maki-lightBlue/20 text-maki-lightBlue border border-maki-lightBlue/40">Economy Wholesale</span>';
+      categoryBadge = '<span class="px-3 py-1 rounded-full text-xs font-bold bg-[#EA580C] text-white shadow-sm">Economy Wholesale</span>';
     } else {
-      categoryBadge = '<span class="px-3 py-1 rounded-full text-xs font-semibold bg-red-500/25 text-red-300 border border-red-500/40">Part-Out Donor</span>';
+      categoryBadge = '<span class="px-3 py-1 rounded-full text-xs font-bold bg-[#E11D48] text-white shadow-sm">Part-Out Donor</span>';
     }
 
     const priceDisplay = isPartOut
@@ -1090,12 +1104,12 @@ function renderPublicInventory() {
     return `
       <div class="rounded-2xl bg-maki-card border border-slate-700/80 overflow-hidden flex flex-col justify-between hover:border-maki-lightBlue/50 transition-all shadow-sm group">
         <div>
-          <div class="relative h-52 bg-slate-950 overflow-hidden">
+          <div class="relative h-56 bg-[#161412] overflow-hidden">
             <img src="${car.image}" alt="${car.ymm}" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
             <div class="absolute top-3 left-3 flex gap-2">
               ${categoryBadge}
             </div>
-            <div class="absolute bottom-3 right-3 px-3 py-1 rounded-lg bg-maki-dark/90 backdrop-blur border border-slate-700 text-xs font-mono text-slate-200">
+            <div class="photo-badge-dark absolute bottom-3 right-3 px-3 py-1 rounded-lg bg-[#161412]/90 backdrop-blur border border-white/15 text-xs font-mono text-white">
               ${car.mileage.toLocaleString()} mi
             </div>
           </div>
@@ -1658,7 +1672,7 @@ function handleAdminVehicleIntake(e) {
     selectedTier: category === 'Economy Wholesale' ? 'tier1' : 'tier2',
     buyPrice,
     mmrValue,
-    image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&w=960&q=80',
+    image: resolveVehiclePhoto(ymm),
     issuesRaw,
     plans: generateThreeTierPlan(issuesRaw, buyPrice, mmrValue)
   };
@@ -1678,13 +1692,13 @@ function handleAdminVehicleIntake(e) {
 // 7. PERSISTENT DATABASE ENGINE, THEME MODE, CLOUD SYNC & PRE-FILLED SMS
 // ============================================================================
 
-const MAKI_STORAGE_KEY = 'maki_motorsports_db_v2';
+const MAKI_STORAGE_KEY = 'maki_motorsports_db_v3';
 const MAKI_DEALER_PHONE = '+15104184822';
 
 let pitCrewSettings = {
   autoSmsRelayEnabled: true,
   cloudRestUrl: '',
-  lightMode: false
+  lightMode: true
 };
 
 function toggleThemeMode() {
@@ -1698,10 +1712,10 @@ function applyThemeMode() {
   const labelEl = document.getElementById('theme-toggle-label');
   if (pitCrewSettings.lightMode) {
     htmlEl.classList.add('light-mode');
-    if (labelEl) labelEl.textContent = 'Dark Mode';
+    if (labelEl) labelEl.textContent = 'Night Garage';
   } else {
     htmlEl.classList.remove('light-mode');
-    if (labelEl) labelEl.textContent = 'Daylight';
+    if (labelEl) labelEl.textContent = 'Showroom Light';
   }
 }
 
@@ -2123,7 +2137,7 @@ function convertLeadToVehicle(leadId) {
     selectedTier: 'tier2',
     buyPrice: lead.askingPrice || 3500,
     mmrValue: lead.estMmr || 7000,
-    image: 'https://images.unsplash.com/photo-1606611013016-969c19ba27bb?auto=format&fit=crop&w=960&q=80',
+    image: resolveVehiclePhoto(lead.ymm),
     issuesRaw: lead.issues,
     plans: generateThreeTierPlan(lead.issues, lead.askingPrice || 3500, lead.estMmr || 7000)
   };
@@ -2135,24 +2149,53 @@ function convertLeadToVehicle(leadId) {
   switchPitWallTab('database');
 }
 
+let auctionImportCursor = 0;
 function loadSampleManheimImport() {
+  const auctionSamples = [
+    {
+      vin: '5YFBURHE8GP419284',
+      ymm: '2016 Toyota Corolla LE',
+      mileage: 89400,
+      buyPrice: 7400,
+      mmrValue: 11200,
+      image: 'assets/vehicles/corolla-2016.jpg',
+      issuesRaw: 'Auction Condition Report: Only 1 key fob (program spare smart key), front brake pads & rotors worn, synthetic oil service & smog.'
+    },
+    {
+      vin: '2HKRM4H56FH610293',
+      ymm: '2015 Honda CR-V EX',
+      mileage: 98200,
+      buyPrice: 8800,
+      mmrValue: 13100,
+      image: 'assets/vehicles/crv-2015.jpg',
+      issuesRaw: 'Auction Condition Report: Valve cover gasket seepage, needs 4 new tires & alignment, spare smart key fob, CA smog check.'
+    },
+    {
+      vin: '1N4AL3AP8HC284910',
+      ymm: '2017 Nissan Altima 2.5 SV',
+      mileage: 104600,
+      buyPrice: 5600,
+      mmrValue: 9400,
+      image: 'assets/vehicles/altima-2017.jpg',
+      issuesRaw: 'Auction Condition Report: Lost spare smart key fob, front struts & brake pads worn, synthetic oil & CVT fluid service.'
+    }
+  ];
+  const sample = auctionSamples[auctionImportCursor % auctionSamples.length];
+  auctionImportCursor += 1;
+
   const importedCar = {
     id: 'MM-' + (101 + vehiclesDB.length),
-    vin: '5YFBURHE8HP619284',
-    ymm: '2017 Toyota Corolla SE',
-    mileage: 89400,
+    vin: sample.vin,
+    ymm: sample.ymm,
+    mileage: sample.mileage,
     source: 'Auction Auto-Import',
     category: 'Sign & Drive',
     selectedTier: 'tier2',
-    buyPrice: 7400,
-    mmrValue: 11200,
-    image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&w=960&q=80',
-    issuesRaw: 'Auction Condition Report: Only 1 key fob (program spare smart key), front brake pads & rotors worn, synthetic oil service & smog.',
-    plans: generateThreeTierPlan(
-      'Only 1 key fob (program spare smart key), front brake pads & rotors worn, synthetic oil service & smog.',
-      7400,
-      11200
-    )
+    buyPrice: sample.buyPrice,
+    mmrValue: sample.mmrValue,
+    image: sample.image,
+    issuesRaw: sample.issuesRaw,
+    plans: generateThreeTierPlan(sample.issuesRaw, sample.buyPrice, sample.mmrValue)
   };
   vehiclesDB.unshift(importedCar);
   selectedVehicleId = importedCar.id;
