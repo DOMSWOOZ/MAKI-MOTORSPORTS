@@ -1010,11 +1010,12 @@ function switchPitWallTab(tabName) {
     if (k === tabName) {
       sections[k].classList.remove('hidden');
       buttons[k].className = 'p-3.5 rounded-xl border text-left transition-all flex items-center gap-3.5 bg-maki-lightBlue text-slate-950 border-maki-lightBlue font-semibold shadow-sm';
-      if (badges[k]) badges[k].className = 'w-9 h-9 rounded-lg bg-slate-950/20 flex items-center justify-center font-display font-bold text-sm text-slate-950 shrink-0';
     } else {
       sections[k].classList.add('hidden');
       buttons[k].className = 'p-3.5 rounded-xl border text-left transition-all flex items-center gap-3.5 bg-slate-900/90 text-slate-200 border-slate-800 hover:border-slate-700';
-      if (badges[k]) badges[k].className = 'w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center font-display font-bold text-sm text-maki-lightBlue shrink-0';
+    }
+    if (badges[k]) {
+      badges[k].className = 'w-9 h-9 rounded-lg bg-[#12100E] border border-[#3D3833] flex items-center justify-center font-display font-bold text-sm text-[#F59E0B] shrink-0';
     }
   });
 
@@ -1303,7 +1304,7 @@ function renderDatabaseRulingPanel() {
 
       <div class="flex flex-wrap items-center gap-2.5">
         <button onclick="cycleVehicleCategory('${car.id}')" class="px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold bg-slate-900 border-slate-700 text-slate-200 hover:border-maki-lightBlue">
-          Lot: ${car.category} (Switch)
+          ${car.category} (Switch)
         </button>
         <button onclick="switchPitWallTab('calculator')" class="px-4 py-2.5 rounded-xl bg-maki-lightBlue hover:bg-sky-300 text-slate-950 font-display font-bold text-xs sm:text-sm flex items-center gap-1.5">
           <span>Open Calculator</span>
@@ -2020,12 +2021,30 @@ function filterJobQueue(category) {
   renderAdminLeads();
 }
 
+const JOB_STATUS_OPTIONS = [
+  'New Request',
+  'New Lead',
+  'Pending Appraisal',
+  'Scheduled Today',
+  'In Shop Bay',
+  'Parts Ordered',
+  'Ready for Pickup',
+  'Completed / Paid'
+];
+
+function updateJobStatus(jobId, newStatus) {
+  const job = leadsDB.find((j) => j.id === jobId);
+  if (!job || !newStatus) return;
+  job.status = newStatus;
+  saveMakiDatabase();
+  renderAdminLeads();
+}
+
 function cycleJobStatus(jobId) {
   const job = leadsDB.find((j) => j.id === jobId);
   if (!job) return;
-  const statuses = ['New Request', 'Scheduled Today', 'In Shop Bay', 'Parts Ordered', 'Completed / Paid'];
-  const idx = statuses.indexOf(job.status);
-  job.status = statuses[(idx + 1) % statuses.length];
+  const idx = JOB_STATUS_OPTIONS.indexOf(job.status);
+  job.status = JOB_STATUS_OPTIONS[(idx + 1) % JOB_STATUS_OPTIONS.length];
   saveMakiDatabase();
   renderAdminLeads();
 }
@@ -2114,9 +2133,16 @@ function renderAdminLeads() {
                  <a href="${replySmsHref}" class="px-3 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700 text-xs sm:text-sm font-semibold text-maki-lightBlue">Text</a>`
               : ''
           }
-          <button onclick="cycleJobStatus('${job.id}')" class="px-3.5 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700 text-xs sm:text-sm font-semibold text-slate-200">
-            Status: <span class="text-maki-lightBlue">${job.status}</span>
-          </button>
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700">
+            <label for="status-select-${job.id}" class="text-xs font-semibold text-slate-400 whitespace-nowrap">Status:</label>
+            <select
+              id="status-select-${job.id}"
+              onchange="updateJobStatus('${job.id}', this.value)"
+              class="bg-transparent text-xs sm:text-sm font-bold text-maki-lightBlue focus:outline-none cursor-pointer pr-1"
+            >
+              ${JOB_STATUS_OPTIONS.map((st) => `<option value="${st}" ${job.status === st ? 'selected' : ''} class="bg-slate-900 text-white">${st}</option>`).join('')}
+            </select>
+          </div>
           ${
             isCarLead
               ? `<button onclick="convertLeadToVehicle('${job.id}')" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm shrink-0">
