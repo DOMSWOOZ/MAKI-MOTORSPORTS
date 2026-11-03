@@ -751,7 +751,7 @@ function resetEnclaveVisualState() {
   [1, 2, 3, 4].forEach((n) => {
     const pin = document.getElementById(`pin-status-${n}`);
     if (pin) {
-      pin.className = 'py-1.5 border border-[#28303d] bg-[#0d1117] text-slate-500';
+      pin.className = 'py-1.5 border border-[#332C25] bg-[#161310] text-slate-500';
       pin.textContent = `PIN 0${n}: LOCKED`;
     }
   });
@@ -775,15 +775,15 @@ function openTerminalGate() {
   input.value = '';
 
   if (badge) {
-    badge.className = 'w-9 h-9 bg-[#151a22] border border-[#2b3442] flex items-center justify-center text-[#00f0ff] shadow-inner';
+    badge.className = 'w-9 h-9 bg-[#1C1814] border border-[#3B3229] flex items-center justify-center text-[#F59E0B] shadow-inner';
     badge.innerHTML = `<i data-lucide="lock" class="w-4 h-4"></i>`;
   }
   if (slotLed) {
-    slotLed.className = 'w-2.5 h-2.5 rounded-full bg-[#00f0ff] shadow-[0_0_10px_#00f0ff]';
+    slotLed.className = 'w-2.5 h-2.5 rounded-full bg-[#F59E0B] shadow-[0_0_10px_#F59E0B]';
   }
   status.innerHTML = `
     <span class="text-slate-400">STATUS: STANDBY // AWAITING CIPHER</span>
-    <span class="text-[#00f0ff]/80">AES-256 ENCLAVE</span>
+    <span class="text-[#F59E0B]/90">AES-256 ENCLAVE</span>
   `;
   refreshIcons();
   setTimeout(() => input.focus(), 80);
@@ -800,8 +800,8 @@ function handleEnclaveInput(val) {
   const slotLed = document.getElementById('enclave-slot-led');
   if (slotLed) {
     slotLed.className = val && val.length > 0
-      ? 'w-2.5 h-2.5 rounded-full bg-[#e2fd52] shadow-[0_0_12px_#e2fd52] animate-ping'
-      : 'w-2.5 h-2.5 rounded-full bg-[#00f0ff] shadow-[0_0_10px_#00f0ff]';
+      ? 'w-2.5 h-2.5 rounded-full bg-[#10B981] shadow-[0_0_12px_#10B981] animate-ping'
+      : 'w-2.5 h-2.5 rounded-full bg-[#F59E0B] shadow-[0_0_10px_#F59E0B]';
   }
 }
 
@@ -844,8 +844,8 @@ function runMechanicalUnlockSequence() {
   if (monolith) {
     monolith.classList.add('enclave-unlocked-bolts');
   }
-  if (cable1) cable1.className = 'w-10 h-2 bg-[#00f0ff] shadow-[0_0_12px_#00f0ff] transition-all duration-300';
-  if (cable2) cable2.className = 'w-10 h-2 bg-[#e2fd52] shadow-[0_0_12px_#e2fd52] transition-all duration-300';
+  if (cable1) cable1.className = 'w-10 h-2 bg-[#F59E0B] shadow-[0_0_12px_#F59E0B] transition-all duration-300';
+  if (cable2) cable2.className = 'w-10 h-2 bg-[#10B981] shadow-[0_0_12px_#10B981] transition-all duration-300';
   refreshIcons();
 
   // Stage 1: Solenoid Bolt Retraction (0ms - 500ms)
@@ -857,7 +857,7 @@ function runMechanicalUnlockSequence() {
       playEnclaveTone(480 + idx * 110, 'triangle', 0.07);
       const pin = document.getElementById(`pin-status-${n}`);
       if (pin) {
-        pin.className = 'py-1.5 border border-[#00f0ff] bg-[#00f0ff]/15 text-[#7ceeff] font-bold shadow-[0_0_8px_rgba(0,240,255,0.3)]';
+        pin.className = 'py-1.5 border border-[#F59E0B] bg-[#F59E0B]/15 text-[#FBBF24] font-bold shadow-[0_0_8px_rgba(245,158,11,0.3)]';
         pin.textContent = `PIN 0${n}: OPEN`;
       }
     }, idx * 105);
@@ -877,7 +877,7 @@ function runMechanicalUnlockSequence() {
   setTimeout(() => {
     playEnclaveTone(980, 'sine', 0.22, 1480);
     if (stageTag) {
-      stageTag.className = 'text-[10px] font-bold tracking-[0.25em] text-[#e2fd52] uppercase';
+      stageTag.className = 'text-[10px] font-bold tracking-[0.25em] text-[#10B981] uppercase';
       stageTag.textContent = 'STAGE 03 // ENCLAVE VAULT UNSEALED';
     }
     if (stageTitle) stageTitle.textContent = 'ENTERING PIT CREW HOMEPAGE';
@@ -906,15 +906,15 @@ function handleTerminalSubmit(e) {
   if (verifyEnclaveCipher(input.value)) {
     isAdminUnlocked = true;
     if (badge) {
-      badge.className = 'w-9 h-9 bg-[#e2fd52]/15 border border-[#e2fd52] flex items-center justify-center text-[#e2fd52] shadow-[0_0_15px_rgba(226,253,82,0.4)]';
+      badge.className = 'w-9 h-9 bg-[#10B981]/15 border border-[#10B981] flex items-center justify-center text-[#10B981] shadow-[0_0_15px_rgba(16,185,129,0.4)]';
       badge.innerHTML = `<i data-lucide="unlock" class="w-4 h-4"></i>`;
     }
     if (slotLed) {
-      slotLed.className = 'w-2.5 h-2.5 rounded-full bg-[#e2fd52] shadow-[0_0_12px_#e2fd52]';
+      slotLed.className = 'w-2.5 h-2.5 rounded-full bg-[#10B981] shadow-[0_0_12px_#10B981]';
     }
     status.innerHTML = `
-      <span class="text-[#e2fd52] font-bold animate-pulse">CIPHER VERIFIED // STARTING ENGINE SEQUENCE...</span>
-      <span class="text-[#e2fd52]">UNLOCKING</span>
+      <span class="text-[#10B981] font-bold animate-pulse">CIPHER VERIFIED // STARTING ENGINE SEQUENCE...</span>
+      <span class="text-[#10B981]">UNLOCKING</span>
     `;
     refreshIcons();
     runMechanicalUnlockSequence();
