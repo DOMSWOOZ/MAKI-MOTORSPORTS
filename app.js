@@ -952,10 +952,9 @@ document.addEventListener('keydown', (e) => {
 // 4. VIEW SWITCHING & PIT CREW STANDALONE TAB SECTIONS
 // ============================================================================
 
-function switchMode(mode) {
+function switchMode(mode, skipScrollTop = false) {
   const publicView = document.getElementById('view-public');
   const adminView = document.getElementById('view-admin');
-  const publicNav = document.getElementById('public-nav');
   const btnOpenTerminal = document.getElementById('btn-open-terminal');
   const btnExitAdmin = document.getElementById('btn-exit-admin');
 
@@ -966,7 +965,6 @@ function switchMode(mode) {
     }
     publicView.classList.add('hidden');
     adminView.classList.remove('hidden');
-    publicNav.classList.add('hidden');
     btnOpenTerminal.classList.add('hidden');
     btnExitAdmin.classList.remove('hidden');
     btnExitAdmin.classList.add('inline-flex');
@@ -974,14 +972,31 @@ function switchMode(mode) {
   } else {
     adminView.classList.add('hidden');
     publicView.classList.remove('hidden');
-    publicNav.classList.remove('hidden');
     btnOpenTerminal.classList.remove('hidden');
     btnExitAdmin.classList.add('hidden');
     btnExitAdmin.classList.remove('inline-flex');
     renderPublicInventory();
   }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (!skipScrollTop) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
   if (window.lucide) lucide.createIcons();
+}
+
+function navigatePublicSection(e, sectionId, categoryFilter) {
+  if (e) e.preventDefault();
+  switchMode('public', true);
+  if (categoryFilter) {
+    filterPublicInventory(categoryFilter);
+  }
+  requestAnimationFrame(() => {
+    const target = document.getElementById(sectionId);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
 }
 
 function switchPitWallTab(tabName) {
