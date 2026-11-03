@@ -1061,10 +1061,13 @@ function filterPublicInventory(filterValue) {
   Object.keys(buttonMap).forEach((k) => {
     const btn = buttonMap[k];
     if (!btn) return;
+    const dot = btn.querySelector('span');
     if (k === filterValue) {
-      btn.className = 'px-5 py-2.5 rounded-xl text-sm font-semibold bg-maki-lightBlue text-slate-950 transition-all flex items-center gap-2 shadow-sm';
+      btn.className = 'group px-5 py-2.5 rounded-xl text-sm font-semibold bg-maki-lightBlue text-slate-950 transition-all flex items-center gap-2 shadow-sm';
+      if (dot) dot.className = 'hidden group-hover:inline-block w-2 h-2 rounded-full bg-current';
     } else {
-      btn.className = 'px-5 py-2.5 rounded-xl text-sm font-semibold bg-slate-950/60 text-slate-300 border border-slate-800 hover:border-slate-700 transition-all flex items-center gap-2';
+      btn.className = 'group px-5 py-2.5 rounded-xl text-sm font-semibold bg-slate-950/60 text-slate-300 border border-slate-800 hover:border-slate-700 transition-all flex items-center gap-2';
+      if (dot) dot.className = 'hidden group-hover:inline-block w-2 h-2 rounded-full bg-maki-lightBlue';
     }
   });
 

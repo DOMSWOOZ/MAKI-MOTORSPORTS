@@ -81,14 +81,20 @@
         </div>
       </a>
 
-      <!-- Public Nav Links (Single-line whitespace-nowrap, works from both Public & Pit Crew views) -->
+      <!-- Public Nav Links (Single-line whitespace-nowrap, yellow dot appears on hover only) -->
       <nav id="public-nav" class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300 whitespace-nowrap">
-        <a href="#inventory" onclick="navigatePublicSection(event, 'inventory', 'Sign & Drive')" class="hover:text-maki-lightBlue transition-colors">Showroom Inventory</a>
-        <a href="#cash-for-cars" onclick="navigatePublicSection(event, 'cash-for-cars')" class="hover:text-maki-lightBlue transition-colors flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-maki-lightBlue"></span>
-          Cash For Cars
+        <a href="#inventory" onclick="navigatePublicSection(event, 'inventory', 'Sign & Drive')" class="group hover:text-maki-lightBlue transition-colors flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-maki-lightBlue opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all"></span>
+          <span>Showroom Inventory</span>
         </a>
-        <a href="#mechanic-services" onclick="navigatePublicSection(event, 'mechanic-services')" class="hover:text-maki-lightBlue transition-colors">Mechanic Shop</a>
+        <a href="#cash-for-cars" onclick="navigatePublicSection(event, 'cash-for-cars')" class="group hover:text-maki-lightBlue transition-colors flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-maki-lightBlue opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all"></span>
+          <span>Cash For Cars</span>
+        </a>
+        <a href="#mechanic-services" onclick="navigatePublicSection(event, 'mechanic-services')" class="group hover:text-maki-lightBlue transition-colors flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-maki-lightBlue opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all"></span>
+          <span>Mechanic Shop</span>
+        </a>
       </nav>
 
       <!-- Right Action Bar: Theme Toggle + Direct Phone Call + Pit Crew Trigger -->
@@ -456,19 +462,19 @@
     <section id="inventory" class="light-scope py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col items-center text-center mb-10 space-y-5">
         
-        <!-- 1. Centered Category Pills at the Top (Sign & Drive First & Default Active) -->
+        <!-- 1. Centered Category Pills at the Top (Sign & Drive First & Default Active, Dot on Hover Only) -->
         <div class="inline-flex flex-wrap items-center justify-center gap-2 p-1.5 rounded-2xl bg-slate-900 border border-slate-800">
-          <button onclick="filterPublicInventory('Sign & Drive')" id="filter-signdrive" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-maki-lightBlue text-slate-950 transition-all flex items-center gap-2 shadow-sm">
-            <span class="w-2 h-2 rounded-full bg-current opacity-80"></span> Sign & Drive
+          <button onclick="filterPublicInventory('Sign & Drive')" id="filter-signdrive" class="group px-5 py-2.5 rounded-xl text-sm font-semibold bg-maki-lightBlue text-slate-950 transition-all flex items-center gap-2 shadow-sm">
+            <span class="hidden group-hover:inline-block w-2 h-2 rounded-full bg-current"></span> Sign & Drive
           </button>
-          <button onclick="filterPublicInventory('Economy Wholesale')" id="filter-wholesale" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-slate-950/60 text-slate-300 border border-slate-800 hover:border-slate-700 transition-all flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-maki-lightBlue"></span> Economy Wholesale
+          <button onclick="filterPublicInventory('Economy Wholesale')" id="filter-wholesale" class="group px-5 py-2.5 rounded-xl text-sm font-semibold bg-slate-950/60 text-slate-300 border border-slate-800 hover:border-slate-700 transition-all flex items-center gap-2">
+            <span class="hidden group-hover:inline-block w-2 h-2 rounded-full bg-maki-lightBlue"></span> Economy Wholesale
           </button>
-          <button onclick="filterPublicInventory('Part-Outs')" id="filter-partouts" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-slate-950/60 text-slate-300 border border-slate-800 hover:border-slate-700 transition-all flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-maki-lightBlue"></span> Part-Outs
+          <button onclick="filterPublicInventory('Part-Outs')" id="filter-partouts" class="group px-5 py-2.5 rounded-xl text-sm font-semibold bg-slate-950/60 text-slate-300 border border-slate-800 hover:border-slate-700 transition-all flex items-center gap-2">
+            <span class="hidden group-hover:inline-block w-2 h-2 rounded-full bg-maki-lightBlue"></span> Part-Outs
           </button>
-          <button onclick="filterPublicInventory('all')" id="filter-all" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-slate-950/60 text-slate-300 border border-slate-800 hover:border-slate-700 transition-all flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-maki-lightBlue"></span> All Inventory
+          <button onclick="filterPublicInventory('all')" id="filter-all" class="group px-5 py-2.5 rounded-xl text-sm font-semibold bg-slate-950/60 text-slate-300 border border-slate-800 hover:border-slate-700 transition-all flex items-center gap-2">
+            <span class="hidden group-hover:inline-block w-2 h-2 rounded-full bg-maki-lightBlue"></span> All Inventory
           </button>
         </div>
 
@@ -1009,6 +1015,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=9"></script>
+  <script src="app.js?v=10"></script>
 </body>
 </html>
