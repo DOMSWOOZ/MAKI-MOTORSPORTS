@@ -2255,6 +2255,47 @@ function loadSampleManheimImport() {
   switchPitWallTab('database');
 }
 
+async function shareOrDownloadAdImages() {
+  const adFiles = [
+    { url: 'assets/ads/ad-1-preventative-maintenance.jpg', name: 'ad-1-preventative-maintenance.jpg', type: 'image/jpeg' },
+    { url: 'assets/ads/ad-2-diagnostics-key-programming.jpg', name: 'ad-2-diagnostics-key-programming.jpg', type: 'image/jpeg' },
+    { url: 'assets/ads/ad-3-cars-and-cash-for-cars.jpg', name: 'ad-3-cars-and-cash-for-cars.jpg', type: 'image/jpeg' },
+    { url: 'assets/ads/Maki-Motorsports-Ad-Copy-and-Templates.txt', name: 'Maki-Motorsports-Ad-Copy-and-Templates.txt', type: 'text/plain' }
+  ];
+
+  try {
+    const fileObjects = await Promise.all(
+      adFiles.map(async (f) => {
+        const res = await fetch(f.url);
+        const blob = await res.blob();
+        return new File([blob], f.name, { type: f.type });
+      })
+    );
+
+    if (navigator.canShare && navigator.canShare({ files: fileObjects })) {
+      await navigator.share({
+        title: 'Maki Motorsports LLC — Ad Graphics & Copy Kit',
+        text: '3 Promotional Ad Graphics + Facebook Marketplace, Instagram & SMS Copy Templates for Maki Motorsports LLC.',
+        files: fileObjects
+      });
+      return;
+    }
+  } catch (err) {
+    // Fallback to direct individual file downloads below
+  }
+
+  adFiles.forEach((f, idx) => {
+    setTimeout(() => {
+      const a = document.createElement('a');
+      a.href = f.url;
+      a.download = f.name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }, idx * 350);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   loadMakiDatabase(true);
   applyThemeMode();
