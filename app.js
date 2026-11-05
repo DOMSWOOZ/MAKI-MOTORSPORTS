@@ -1725,25 +1725,17 @@ const MAKI_DEALER_PHONE = '+15104184822';
 let pitCrewSettings = {
   autoSmsRelayEnabled: true,
   cloudRestUrl: '',
-  lightMode: true
+  lightMode: false
 };
 
 function toggleThemeMode() {
-  pitCrewSettings.lightMode = !pitCrewSettings.lightMode;
+  pitCrewSettings.lightMode = false;
   applyThemeMode();
-  saveMakiDatabase();
 }
 
 function applyThemeMode() {
   const htmlEl = document.documentElement;
-  const labelEl = document.getElementById('theme-toggle-label');
-  if (pitCrewSettings.lightMode) {
-    htmlEl.classList.add('light-mode');
-    if (labelEl) labelEl.textContent = 'Night Garage';
-  } else {
-    htmlEl.classList.remove('light-mode');
-    if (labelEl) labelEl.textContent = 'Showroom Light';
-  }
+  htmlEl.classList.remove('light-mode');
 }
 
 const makiSyncChannel = typeof BroadcastChannel !== 'undefined'
