@@ -1,14 +1,13 @@
 # MAKI MOTORSPORTS LLC
-### Licensed California Auto Dealer (`#46615`), Master Mechanic Shop & Pit Crew Telemetry OS
+### Stockton, CA Auto Sales, Master Mechanic Shop & Pit Crew Telemetry OS
 
 [![HTML5 & ES6+](https://img.shields.io/badge/JavaScript-ES6%2B-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38bdf8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 [![NHTSA vPIC API](https://img.shields.io/badge/NHTSA_vPIC-Live_VIN_Decoder-00A3FF?style=for-the-badge)](https://vpic.nhtsa.dot.gov/api/)
-[![CA DMV Licensed](https://img.shields.io/badge/CA_DMV_Dealer-Lic_%2346615-10b981?style=for-the-badge)](https://drive.dmvonline.ca.gov/s/oll)
 [![Live Site](https://img.shields.io/badge/Live_Website-Online-00A3FF?style=for-the-badge&logo=github)](https://domswooz.github.io/MAKI-MOTORSPORTS/)
 
 > **Live Production Website:** [https://domswooz.github.io/MAKI-MOTORSPORTS/](https://domswooz.github.io/MAKI-MOTORSPORTS/)  
-> **Operating Location:** Stockton, CA • `(510) 418-4822` • CA Dealer License `#46615`  
+> **Operating Location:** Stockton, CA • `(510) 418-4822`  
 > **Instagram:** [`@makimotorsportsllc`](https://www.instagram.com/makimotorsportsllc/)
 
 ---
@@ -26,7 +25,7 @@ Because every vehicle is acquired, diagnosed, keyed, and reconditioned in-house 
 ```mermaid
 graph TD
     subgraph Public ["Public Customer Storefront (Stockton, CA)"]
-        Nav["Clean Header Bar<br/>(Stockton, CA • CA Lic #46615 • (510) 418-4822)"]
+        Nav["Clean Header Bar<br/>(Stockton, CA • Auto Sales & Shop • (510) 418-4822)"]
         Hero["Hero Showcase & Single-Line Action Bar<br/>(Browse Inventory | Cash For Your Car | Mechanic Services)"]
         Inv["Tiered Public Inventory<br/>(Sign & Drive Default | Economy Wholesale | Part-Outs | All)"]
         CFC["Private Cash-For-Cars Intake<br/>(Direct Stockton Buying Program + Live VIN Decode)"]
@@ -68,7 +67,7 @@ graph TD
 ## Core Features & Innovations
 
 ### 1. Public Customer Storefront
-* **Privacy-First Licensing Compliance**: Displays only the verified California DMV Dealer License number (`#46615`), operating city (`Stockton, CA`), and direct business phone (`(510) 418-4822`), keeping personal and wholesale partner records strictly private.
+* **Privacy-First Storefront**: Displays only the operating city (`Stockton, CA`) and direct business phone (`(510) 418-4822`), keeping personal and wholesale partner records strictly private.
 * **Centered Category-First Inventory**: Defaults to **Sign & Drive** certified retail vehicles when customers click *Inventory & Part-Outs*, with instant filtering across:
   * **Sign & Drive**: Turnkey retail vehicles fully inspected, smogged, and keyed in-house.
   * **Economy Wholesale**: Budget-friendly mechanical specials priced near wholesale.
@@ -149,4 +148,4 @@ Open `http://localhost:4173` in your browser and click **`Pit Crew`** to launch 
 
 ## License
 
-Proprietary © 2026 **Maki Motorsports LLC** (`CA Dealer License #46615`). All rights reserved.
+Proprietary © 2026 **Maki Motorsports LLC**. All rights reserved.
