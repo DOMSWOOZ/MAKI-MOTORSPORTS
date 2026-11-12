@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maki Auto Group | Live Mechanic Shirt & Logo Mockup Studio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=JetBrains+Mono:wght@500;700&family=Orbitron:wght@600;800&family=Pacifico&family=Righteous&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #141210;
+      color: #F5F5F4;
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+    .shirt-shadow {
+      filter: drop-shadow(0 28px 40px rgba(0, 0, 0, 0.78));
+    }
+    .patch-embroidery {
+      box-shadow:
+        0 3px 8px rgba(0,0,0,0.65),
+        inset 0 1px 1px rgba(255,255,255,0.35);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="border-b border-[#2E2924] bg-[#141210]/95 backdrop-blur sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF5A1F] to-[#EA580C] flex items-center justify-center font-bold text-white text-sm">MA</div>
+        <div>
+          <div class="font-bold text-white text-sm sm:text-base tracking-tight">MAKI AUTO GROUP // LIVE APPAREL STUDIO</div>
+          <div class="text-xs text-stone-400">boohooMAN Oversized Crop Half-Sleeve Mono-Stripe Patch Mechanic Shirt (CMM23934)</div>
+        </div>
+      </div>
+      <a href="index.html" class="px-3.5 py-2 rounded-xl bg-stone-900 hover:bg-stone-800 border border-stone-700 text-xs sm:text-sm font-semibold text-amber-400 transition">
+        ← Back to Website
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+    <!-- Left Controls Sidebar -->
+    <aside class="lg:col-span-4 bg-[#1C1916] border border-[#2E2924] rounded-2xl p-5 sm:p-6 space-y-6">
+      <div>
+        <span class="text-xs font-mono uppercase tracking-widest text-amber-400">Interactive Customizer</span>
+        <h1 class="text-xl font-bold text-white mt-1">Live Mechanic Shirt Mockup</h1>
+        <p class="text-xs text-stone-400 mt-1">Customize the Name Tag patch, switch between Concept 1A &amp; 1B slant styles, and inspect Front &amp; Back placement live.</p>
+      </div>
+
+      <!-- 1. Name Tag Input -->
+      <div class="space-y-2">
+        <label class="block text-xs font-bold uppercase tracking-wider text-stone-300">1. Right-Chest Name Tag Text</label>
+        <input
+          id="input-nametag"
+          type="text"
+          value="DERICK"
+          maxlength="16"
+          placeholder="Type Name or leave blank..."
+          oninput="updateLiveShirt()"
+          class="w-full px-3.5 py-2.5 rounded-xl bg-[#12100E] border border-stone-700 text-white font-mono text-sm focus:outline-none focus:border-amber-500"
+        />
+        <div class="flex flex-wrap gap-1.5 pt-1">
+          <button onclick="setNameTag('DERICK')" class="px-2.5 py-1 rounded-lg bg-stone-900 hover:bg-stone-800 border border-stone-700 text-xs text-stone-300">DERICK</button>
+          <button onclick="setNameTag('MASTER TECH')" class="px-2.5 py-1 rounded-lg bg-stone-900 hover:bg-stone-800 border border-stone-700 text-xs text-stone-300">MASTER TECH</button>
+          <button onclick="setNameTag('[ NAME TAG ]')" class="px-2.5 py-1 rounded-lg bg-stone-900 hover:bg-stone-800 border border-stone-700 text-xs text-stone-300">Blank Slot</button>
+        </div>
+      </div>
+
+      <!-- 2. Concept 1 Logo Variant -->
+      <div class="space-y-2">
+        <label class="block text-xs font-bold uppercase tracking-wider text-stone-300">2. Concept 1 Logo Slant</label>
+        <div class="grid grid-cols-2 gap-2">
+          <button id="btn-slant-a" onclick="setLogoSlant('1A')" class="p-2.5 rounded-xl border text-xs font-bold bg-amber-500 text-stone-950 border-amber-400 transition">
+            Concept 1A (Huni-Slant)
+          </button>
+          <button id="btn-slant-b" onclick="setLogoSlant('1B')" class="p-2.5 rounded-xl border text-xs font-bold bg-stone-900 text-stone-300 border-stone-700 hover:border-stone-600 transition">
+            Concept 1B (25° Kinetic)
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. Stripe Pattern -->
+      <div class="space-y-2">
+        <label class="block text-xs font-bold uppercase tracking-wider text-stone-300">3. Shirt Mono-Stripe Style</label>
+        <div class="grid grid-cols-2 gap-2">
+          <button id="btn-stripe-mono" onclick="setStripeStyle('mono')" class="p-2.5 rounded-xl border text-xs font-bold bg-amber-500 text-stone-950 border-amber-400 transition">
+            Black Mono-Stripe
+          </button>
+          <button id="btn-stripe-split" onclick="setStripeStyle('split')" class="p-2.5 rounded-xl border text-xs font-bold bg-stone-900 text-stone-300 border-stone-700 hover:border-stone-600 transition">
+            Orange Edge Stripe
+          </button>
+        </div>
+      </div>
+
+      <!-- 4. Swap Chest Sides -->
+      <div class="space-y-2">
+        <label class="block text-xs font-bold uppercase tracking-wider text-stone-300">4. Chest Patch Layout</label>
+        <button onclick="toggleSwapChest()" class="w-full py-2.5 px-4 rounded-xl bg-stone-900 hover:bg-stone-800 border border-stone-700 text-xs font-semibold text-amber-400 transition">
+          ⇄ Swap Left/Right Chest Patches
+        </button>
+      </div>
+    </aside>
+
+    <!-- Right Interactive Live Shirt Canvas (Front & Back Side-by-Side) -->
+    <section class="lg:col-span-8 space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- FRONT VIEW LIVE SVG SHIRT -->
+        <div class="bg-[#1C1916] border border-[#2E2924] rounded-2xl p-5 flex flex-col items-center">
+          <div class="w-full flex items-center justify-between mb-2">
+            <span class="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold">FRONT VIEW (OVERSIZED CROP HALF-SLEEVE)</span>
+            <span class="text-[11px] font-mono text-stone-400">CMM23934 • BLACK</span>
+          </div>
+
+          <svg viewBox="0 0 500 520" class="w-full max-w-[420px] shirt-shadow select-none">
+            <defs>
+              <clipPath id="frontShirtClip">
+                <!-- Boxy Oversized Crop Half-Sleeve Silhouette -->
+                <path d="M155,55 L205,40 L295,40 L345,55 L465,145 L425,275 L365,250 L365,465 L135,465 L135,250 L75,275 L35,145 Z" />
+              </clipPath>
+            </defs>
+
+            <!-- Shirt Base Body -->
+            <g clip-path="url(#frontShirtClip)">
+              <rect x="0" y="0" width="500" height="520" fill="#151517" />
+
+              <!-- Vertical Mono-Stripe Panel (Wearer's Left / Viewer's Right) -->
+              <g id="front-stripe-group">
+                <rect id="front-stripe-1" x="288" y="40" width="18" height="430" fill="#F2EFE9" />
+                <rect id="front-stripe-2" x="312" y="40" width="18" height="430" fill="#F2EFE9" />
+                <rect id="front-stripe-accent" x="284" y="40" width="3" height="430" fill="transparent" />
+              </g>
+
+              <!-- Center Button Placket -->
+              <rect x="241" y="135" width="18" height="330" fill="#101012" stroke="#242428" stroke-width="1" />
+              <circle cx="250" cy="185" r="4.5" fill="#232327" stroke="#09090B" stroke-width="1.5" />
+              <circle cx="250" cy="255" r="4.5" fill="#232327" stroke="#09090B" stroke-width="1.5" />
+              <circle cx="250" cy="325" r="4.5" fill="#232327" stroke="#09090B" stroke-width="1.5" />
+              <circle cx="250" cy="395" r="4.5" fill="#232327" stroke="#09090B" stroke-width="1.5" />
+
+              <!-- Lower Hem Spec Patch -->
+              <g transform="translate(152, 415)">
+                <rect width="54" height="26" rx="3" fill="#0E0E10" stroke="#3A3A40" stroke-width="1.2" />
+                <text x="6" y="10" fill="#F2EFE9" font-family="JetBrains Mono" font-size="5.5" font-weight="700">MAKI SPEC // 01</text>
+                <text x="6" y="18" fill="#FF5A1F" font-family="JetBrains Mono" font-size="5">STOCKTON, CA</text>
+              </g>
+            </g>
+
+            <!-- Revere / Camp Collar -->
+            <path d="M205,40 L295,40 L278,125 L250,145 L222,125 Z" fill="#0D0D0F" />
+            <!-- Left Collar Lapel -->
+            <path d="M205,40 L165,88 L208,112 L250,145 L225,85 Z" fill="#1D1D20" stroke="#2C2C32" stroke-width="1.2" />
+            <!-- Right Collar Lapel -->
+            <path d="M295,40 L335,88 L292,112 L250,145 L275,85 Z" fill="#1D1D20" stroke="#2C2C32" stroke-width="1.2" />
+
+            <!-- CHEST PATCH SLOT A (Viewer's Left / Wearer's Right Chest) -->
+            <g id="chest-slot-left" transform="translate(148, 175)">
+              <!-- Populated dynamically by JS -->
+            </g>
+
+            <!-- CHEST PATCH SLOT B (Viewer's Right / Wearer's Left Chest) -->
+            <g id="chest-slot-right" transform="translate(268, 175)">
+              <!-- Populated dynamically by JS -->
+            </g>
+          </svg>
+        </div>
+
+        <!-- BACK VIEW LIVE SVG SHIRT -->
+        <div class="bg-[#1C1916] border border-[#2E2924] rounded-2xl p-5 flex flex-col items-center">
+          <div class="w-full flex items-center justify-between mb-2">
+            <span class="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold">BACK VIEW (CONCEPT 1 CENTERPIECE)</span>
+            <span class="text-[11px] font-mono text-stone-400">FULL BACK PRINT</span>
+          </div>
+
+          <svg viewBox="0 0 500 520" class="w-full max-w-[420px] shirt-shadow select-none">
+            <defs>
+              <clipPath id="backShirtClip">
+                <path d="M155,55 L205,38 L295,38 L345,55 L465,145 L425,275 L365,250 L365,465 L135,465 L135,250 L75,275 L35,145 Z" />
+              </clipPath>
+            </defs>
+
+            <g clip-path="url(#backShirtClip)">
+              <rect x="0" y="0" width="500" height="520" fill="#151517" />
+
+              <!-- Vertical Mono-Stripe Panel on Back -->
+              <rect id="back-stripe-1" x="295" y="38" width="18" height="430" fill="#F2EFE9" />
+              <rect id="back-stripe-2" x="319" y="38" width="18" height="430" fill="#F2EFE9" />
+              <rect id="back-stripe-accent" x="291" y="38" width="3" height="430" fill="transparent" />
+
+              <!-- Back Yoke Seam -->
+              <line x1="135" y1="120" x2="365" y2="120" stroke="#232328" stroke-width="1.5" />
+            </g>
+
+            <!-- Back Collar Band -->
+            <path d="M198,38 Q250,50 302,38 L312,58 Q250,68 188,58 Z" fill="#1E1E22" stroke="#2D2D33" stroke-width="1" />
+
+            <!-- LARGE BACK CONCEPT 1 LOGO -->
+            <g id="back-logo-container" transform="translate(250, 215)">
+              <!-- Populated dynamically by JS -->
+            </g>
+          </svg>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    let currentSlant = '1A';
+    let currentStripe = 'mono';
+    let swapChestSides = false;
+
+    function buildConcept1LogoSVG(scale = 1, isSlant1B = false) {
+      const rot = isSlant1B ? -11 : -3;
+      const skew = isSlant1B ? -10 : -4;
+      return `
+        <g transform="scale(${scale}) rotate(${rot}) skewX(${skew})">
+          <!-- Thick Cream Sticker Cloud Outline -->
+          <text x="0" y="0" text-anchor="middle" font-family="'Pacifico', 'Righteous', cursive" font-size="64" font-weight="900"
+            stroke="#F4F1EA" stroke-width="18" stroke-linejoin="round" stroke-linecap="round" paint-order="stroke fill" fill="#F4F1EA">maki</text>
+          <!-- Thin Dark Inner Separation Rim -->
+          <text x="0" y="0" text-anchor="middle" font-family="'Pacifico', 'Righteous', cursive" font-size="64" font-weight="900"
+            stroke="#141210" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" paint-order="stroke fill" fill="#FF5A1F">maki</text>
+          <!-- 4 Signature Concept 1 Orange/Cream Dots (••••) Above Top Right -->
+          <g transform="translate(34, -48)">
+            <circle cx="0" cy="0" r="6.5" fill="#FF5A1F" stroke="#F4F1EA" stroke-width="3.2" />
+            <circle cx="15" cy="0" r="6.5" fill="#FF5A1F" stroke="#F4F1EA" stroke-width="3.2" />
+            <circle cx="30" cy="0" r="6.5" fill="#FF5A1F" stroke="#F4F1EA" stroke-width="3.2" />
+            <circle cx="45" cy="0" r="6.5" fill="#FF5A1F" stroke="#F4F1EA" stroke-width="3.2" />
+          </g>
+          <!-- Subtitle: auto group -->
+          <text x="2" y="26" text-anchor="middle" font-family="'Orbitron', 'Space Grotesk', sans-serif" font-size="16.5" font-weight="800"
+            letter-spacing="3.5" fill="#F4F1EA" stroke="#141210" stroke-width="3" paint-order="stroke fill">auto group</text>
+        </g>
+      `;
+    }
+
+    function buildNameTagPatchSVG(nameText) {
+      const display = (nameText || '').trim() || '[ NAME TAG ]';
+      return `
+        <g transform="translate(0, 6)">
+          <!-- Outer Cream Merrowed Border -->
+          <rect x="0" y="0" width="84" height="44" rx="7" fill="#141210" stroke="#F4F1EA" stroke-width="3" />
+          <!-- Inner Competition Orange Stitch Line -->
+          <rect x="4" y="4" width="76" height="36" rx="5" fill="#181614" stroke="#FF5A1F" stroke-width="1.2" stroke-dasharray="3,2" />
+          <!-- Mini 'maki' Header Crest -->
+          <text x="42" y="15" text-anchor="middle" font-family="'Pacifico', cursive" font-size="10" fill="#FF5A1F" stroke="#F4F1EA" stroke-width="2" paint-order="stroke fill">maki</text>
+          <!-- Cream Nameplate Window -->
+          <rect x="8" y="19" width="68" height="17" rx="3" fill="#F4F1EA" stroke="#FF5A1F" stroke-width="1.2" />
+          <!-- Mechanic Name Text -->
+          <text x="42" y="30.5" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700" fill="#141210" letter-spacing="0.8">${display}</text>
+        </g>
+      `;
+    }
+
+    function updateLiveShirt() {
+      const nameVal = document.getElementById('input-nametag').value;
+      const is1B = currentSlant === '1B';
+
+      const chestLogoSVG = `<g transform="translate(42, 28)">${buildConcept1LogoSVG(0.46, is1B)}</g>`;
+      const namePatchSVG = buildNameTagPatchSVG(nameVal);
+
+      const leftSlot = document.getElementById('chest-slot-left');
+      const rightSlot = document.getElementById('chest-slot-right');
+
+      if (!swapChestSides) {
+        leftSlot.innerHTML = chestLogoSVG;
+        rightSlot.innerHTML = namePatchSVG;
+      } else {
+        leftSlot.innerHTML = namePatchSVG;
+        rightSlot.innerHTML = chestLogoSVG;
+      }
+
+      const backContainer = document.getElementById('back-logo-container');
+      backContainer.innerHTML = buildConcept1LogoSVG(1.38, is1B);
+
+      // Update stripe accents
+      const accentColor = currentStripe === 'split' ? '#FF5A1F' : 'transparent';
+      document.getElementById('front-stripe-accent').setAttribute('fill', accentColor);
+      document.getElementById('back-stripe-accent').setAttribute('fill', accentColor);
+    }
+
+    function setNameTag(val) {
+      document.getElementById('input-nametag').value = val;
+      updateLiveShirt();
+    }
+
+    function setLogoSlant(slant) {
+      currentSlant = slant;
+      document.getElementById('btn-slant-a').className = slant === '1A'
+        ? 'p-2.5 rounded-xl border text-xs font-bold bg-amber-500 text-stone-950 border-amber-400 transition'
+        : 'p-2.5 rounded-xl border text-xs font-bold bg-stone-900 text-stone-300 border-stone-700 hover:border-stone-600 transition';
+      document.getElementById('btn-slant-b').className = slant === '1B'
+        ? 'p-2.5 rounded-xl border text-xs font-bold bg-amber-500 text-stone-950 border-amber-400 transition'
+        : 'p-2.5 rounded-xl border text-xs font-bold bg-stone-900 text-stone-300 border-stone-700 hover:border-stone-600 transition';
+      updateLiveShirt();
+    }
+
+    function setStripeStyle(style) {
+      currentStripe = style;
+      document.getElementById('btn-stripe-mono').className = style === 'mono'
+        ? 'p-2.5 rounded-xl border text-xs font-bold bg-amber-500 text-stone-950 border-amber-400 transition'
+        : 'p-2.5 rounded-xl border text-xs font-bold bg-stone-900 text-stone-300 border-stone-700 hover:border-stone-600 transition';
+      document.getElementById('btn-stripe-split').className = style === 'split'
+        ? 'p-2.5 rounded-xl border text-xs font-bold bg-amber-500 text-stone-950 border-amber-400 transition'
+        : 'p-2.5 rounded-xl border text-xs font-bold bg-stone-900 text-stone-300 border-stone-700 hover:border-stone-600 transition';
+      updateLiveShirt();
+    }
+
+    function toggleSwapChest() {
+      swapChestSides = !swapChestSides;
+      updateLiveShirt();
+    }
+
+    updateLiveShirt();
+  </script>
+</body>
+</html>
